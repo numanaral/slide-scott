@@ -26,8 +26,9 @@ const LazyLogin = loadable(() => import('./pages/Login'));
  * - If the user is not logged in (userName === '')
  * 	- If the requested path requires roles and we are not back at the /login
  * 		- Redirect to login with returnUrl
- * 	- If there was a user error and the path is /login
- * 		- Redirect to login w/ error message asking user to log in
+ * 	- If the path is /login
+ * 		- If there was a user error or referrer requires roles and the user is not logged in
+ * 			- Redirect to login w/ error message asking user to log in
  * - If requested path requires roles
  * 	- If user is trying to access '/login' or '/unauthorized'
  * 		- Redirect back to '/' (root)
@@ -52,10 +53,16 @@ const RouteWrapper = ({ component: Component, roles, ...rest }) => {
 	const userAuthPending = false; // Either public user or is logged in
 	// const userAuthPending = true; // TEST: User data is being fetched
 
-	const { push } = useHistory();
+	const {
+		push,
+		location: { state },
+	} = useHistory();
 	const { pathname } = useLocation();
+	const referrerRoles = state?.roles || [];
 
 	const isAuthRequired = roles.length;
+	const isReferrerAuthRequired = referrerRoles.length;
+	const requiredRoles = (isAuthRequired && roles) || referrerRoles;
 
 	const render = renderProps => {
 		if (isAuthRequired && userAuthPending) {
@@ -63,19 +70,20 @@ const RouteWrapper = ({ component: Component, roles, ...rest }) => {
 		}
 		if (!userName) {
 			if (isAuthRequired && pathname !== '/login') {
-				push(`/login?returnUrl=${pathname}`);
+				push(`/login?returnUrl=${pathname}`, { roles });
 			}
 
-			if (userAuthError && pathname === '/login') {
-				return (
-					<LazyLogin
-						{...renderProps}
-						error={
-							(userAuthError && 'Please login to continue') ||
-							null
-						}
-					/>
-				);
+			if (pathname === '/login') {
+				if (
+					userAuthError ||
+					(isReferrerAuthRequired && !userAuthPending)
+				)
+					return (
+						<LazyLogin
+							{...renderProps}
+							error={userAuthError || 'Please login to continue'}
+						/>
+					);
 			}
 		}
 
@@ -85,7 +93,7 @@ const RouteWrapper = ({ component: Component, roles, ...rest }) => {
 				push('/');
 			}
 
-			if (!hasAnyFrom(roles, userRoles)) {
+			if (!hasAnyFrom(requiredRoles, userRoles)) {
 				return <LazyUnauthorized {...renderProps} />;
 			}
 		}
