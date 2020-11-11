@@ -1,24 +1,48 @@
 import React from 'react';
+import { Typography, Divider, Grid, Link } from '@material-ui/core';
+import { SadIcon } from 'icons';
 
+import styled from 'styled-components';
+import LazyPageContainer from 'components/PageContainer/Lazy';
 import { routerBasePropTypes, routerBaseDefaultProps } from './types';
 
+const StyledSadIcon = styled(SadIcon)`
+	font-size: 3rem;
+	margin-left: 10px;
+`;
+
 const NotFound = ({ location }) => {
+	console.log(location);
 	const referrer = location?.state?.referrer;
 	return (
-		<div>
-			<h1>404 - PAGE NOT FOUND :(</h1>
-			The page you are looking for might have been removed had its name
-			changed or is temporarily unavailable.
-			<br />
-			<br />
-			{referrer && (
-				<>
-					You requested the following url:
-					<br />
-					<a href={referrer}> {referrer} </a>
-				</>
-			)}
-		</div>
+		<Grid>
+			<LazyPageContainer>
+				<Grid container item alignItems="center" justify="center">
+					<Typography variant="h3" component="h1">
+						404 - PAGE NOT FOUND
+					</Typography>
+					<StyledSadIcon />
+				</Grid>
+				<br />
+				<Divider />
+				<br />
+				<Typography>
+					The page you are looking for might have been removed had its
+					name changed or is temporarily unavailable.
+					{referrer && (
+						<>
+							<br />
+							<br />
+							You requested the following url:
+							<br />
+							<Link href={referrer}>{referrer}</Link>
+						</>
+					)}
+				</Typography>
+				<br />
+				<Divider />
+			</LazyPageContainer>
+		</Grid>
 	);
 };
 

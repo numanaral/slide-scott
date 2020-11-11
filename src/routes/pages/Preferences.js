@@ -1,5 +1,7 @@
 import React from 'react';
 
-const Preferences = () => <div>Preferences</div>;
+import Container from 'components/PageContainer';
+
+const Preferences = () => <Container>Preferences Page</Container>;
 
 export default Preferences;

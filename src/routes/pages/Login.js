@@ -1,23 +1,39 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Divider, Grid, Typography } from '@material-ui/core';
 
 import LoadingIndicator from 'components/LoadingIndicator';
+import { SadIcon } from 'icons';
+import PageContainer from 'components/PageContainer';
 import { routerBasePropTypes, routerBaseDefaultProps } from './types';
 
-const Login = ({ location: { search }, error }) => {
+const StyledSadIcon = styled(SadIcon)`
+	font-size: 3rem;
+	margin-left: 10px;
+`;
+
+const Login = ({ error }) => {
 	return (
-		<div>
-			<h1>{(error && 'AUTHENTICATION FAILED') || 'AUTHENTICATING'}</h1>
-			{(error && ':(') || <LoadingIndicator />}
-			{error && (
-				<>
-					<br />
-					<br />
-					<p>{error}</p>
-					<br />
-				</>
-			)}
-			{error && <p>ReturnUrl: {search.replace('?returnUrl=', '')}</p>}
-		</div>
+		<Grid>
+			<PageContainer>
+				<Grid container item alignItems="center" justify="center">
+					<Typography variant="h3" component="h1">
+						{(error && 'AUTHENTICATION FAILED') || 'AUTHENTICATING'}
+					</Typography>
+					{(error && <StyledSadIcon />) || <LoadingIndicator />}
+				</Grid>
+				{error && (
+					<>
+						<br />
+						<Divider />
+						<br />
+						<Typography>{error}</Typography>
+						<br />
+						<Divider />
+					</>
+				)}
+			</PageContainer>
+		</Grid>
 	);
 };
 
