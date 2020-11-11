@@ -34,12 +34,17 @@ module.exports = {
 	rules: {
 		'arrow-parens': [ERROR, 'as-needed'],
 		'default-case': [ERROR, { commentPattern: 'No Default' }],
+		'no-param-reassign': [
+			ERROR,
+			{ props: true, ignorePropertyModificationsFor: ['draft'] },
+		],
 		'import/no-named-as-default': OFF,
 		'import/prefer-default-export': OFF,
 		'linebreak-style': [ERROR, 'windows'],
 		'max-len': [
 			ERROR,
 			{
+				ignorePattern: '^import .*',
 				ignoreComments: true,
 				ignoreUrls: true,
 				ignoreRegExpLiterals: true,
@@ -62,4 +67,4 @@ module.exports = {
 		'react/no-array-index-key': OFF,
 		'prettier/prettier': ERROR,
 	},
-}
+};
