@@ -19,6 +19,13 @@ const configureStore = initialState => {
 		composeWithDevTools(enhancer)
 	);
 
+	// Hot reload the store
+	if (process.env.NODE_ENV !== 'production' && module.hot) {
+		module.hot.accept('./reducers', () => {
+			store.replaceReducer(rootReducer);
+		});
+	}
+
 	return store;
 };
 
