@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	BrowserRouter as Router,
-	Redirect,
-	Switch,
-	useLocation,
-} from 'react-router-dom';
+import { Redirect, Switch, useLocation } from 'react-router-dom';
 
 import loadable from 'utils/loadable';
 import RouteWrapper from './RouteWrapper';
@@ -71,22 +66,20 @@ const RedirectToNotFound = () => {
 
 const Routes = () => {
 	return (
-		<Router>
-			<Switch>
-				{ROUTE_LIST.map(({ component, path, ...rest }) => {
-					return (
-						<RouteWrapper
-							key={path}
-							path={path}
-							component={component}
-							exact
-							{...rest}
-						/>
-					);
-				})}
-				<RedirectToNotFound />
-			</Switch>
-		</Router>
+		<Switch>
+			{ROUTE_LIST.map(({ component, path, ...rest }) => {
+				return (
+					<RouteWrapper
+						key={path}
+						path={path}
+						component={component}
+						exact
+						{...rest}
+					/>
+				);
+			})}
+			<RedirectToNotFound />
+		</Switch>
 	);
 };
 
