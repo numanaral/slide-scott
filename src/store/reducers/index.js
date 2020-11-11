@@ -4,6 +4,10 @@
 
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({});
+import userPreferenceReducer, { userPreferenceKey } from './userPreference';
+
+const rootReducer = combineReducers({
+	[userPreferenceKey]: userPreferenceReducer,
+});
 
 export default rootReducer;
