@@ -55,9 +55,11 @@ module.exports = {
 		'no-alert': WARN,
 		'no-console': OFF,
 		'no-continue': OFF,
+		'no-debugger': OFF,
 		'no-plusplus': OFF,
 		'no-tabs': OFF,
 		'no-underscore-dangle': OFF,
+		'no-unused-vars': WARN,
 		'react-hooks/exhaustive-deps': WARN, // Checks effect dependencies
 		'react-hooks/rules-of-hooks': ERROR, // Checks rules of Hooks
 		'react/jsx-filename-extension': [WARN, { extensions: ['.js', '.jsx'] }],
