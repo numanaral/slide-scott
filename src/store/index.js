@@ -4,6 +4,7 @@
 
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './reducers';
 
 const configureStore = initialState => {
@@ -12,7 +13,11 @@ const configureStore = initialState => {
 	const middleware = [thunkMiddleware];
 	const enhancer = applyMiddleware(...middleware);
 
-	const store = createStore(rootReducer, initialState, enhancer);
+	const store = createStore(
+		rootReducer,
+		initialState,
+		composeWithDevTools(enhancer)
+	);
 
 	return store;
 };
