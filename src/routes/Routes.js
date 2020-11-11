@@ -39,7 +39,17 @@ const ROUTE_LIST = [
 	{ path: '/not-found', component: <AsyncNotFound /> },
 ];
 
-export const RedirectToNotFound = () => {
+const NAV_LIST = [
+	// Public Paths
+	...[{ text: 'Home', to: '/home' }],
+	// Private Paths
+	...[
+		{ text: 'Dashboard', to: '/dashboard' },
+		{ text: 'Preferences', to: '/preferences' },
+	].map(e => ({ ...e, roles: TEMP_TEST_ROLES })),
+];
+
+const RedirectToNotFound = () => {
 	const { pathname } = useLocation();
 	return (
 		<RouteWrapper
@@ -80,4 +90,5 @@ const Routes = () => {
 	);
 };
 
+export { NAV_LIST };
 export default Routes;
