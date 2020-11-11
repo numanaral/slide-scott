@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@loadable/component": "^5.14.1",
     "immer": "^7.0.14",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
