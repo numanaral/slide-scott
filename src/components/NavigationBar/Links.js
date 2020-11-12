@@ -4,18 +4,25 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { NAV_LIST } from 'routes/Routes';
 
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+	margin-right: 10px;
+`;
+
 // TODO: When user roles are created, ensure the links
 // don't show up if the user doesn't have the role
 const Links = () =>
 	NAV_LIST.map(link => (
-		<Link
+		<StyledLink
 			component={ReactRouterLink}
-			key={link.to}
+			variant="h6"
+			underline="none"
+			color="textPrimary"
 			to={link.to}
-			style={{ marginRight: 10 }}
 		>
 			{link.text}
-		</Link>
+		</StyledLink>
 	));
 
 export default Links;
