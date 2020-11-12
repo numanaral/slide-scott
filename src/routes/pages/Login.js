@@ -4,7 +4,7 @@ import { Divider, Grid, Typography } from '@material-ui/core';
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import { SadIcon } from 'icons';
-import PageContainer from 'components/PageContainer';
+import LazyPageContainer from 'components/PageContainer/Lazy';
 import { routerBasePropTypes, routerBaseDefaultProps } from './types';
 
 const StyledSadIcon = styled(SadIcon)`
@@ -14,26 +14,24 @@ const StyledSadIcon = styled(SadIcon)`
 
 const Login = ({ error }) => {
 	return (
-		<Grid>
-			<PageContainer>
-				<Grid container item alignItems="center" justify="center">
-					<Typography variant="h3" component="h1">
-						{(error && 'AUTHENTICATION FAILED') || 'AUTHENTICATING'}
-					</Typography>
-					{(error && <StyledSadIcon />) || <LoadingIndicator />}
-				</Grid>
-				{error && (
-					<>
-						<br />
-						<Divider />
-						<br />
-						<Typography>{error}</Typography>
-						<br />
-						<Divider />
-					</>
-				)}
-			</PageContainer>
-		</Grid>
+		<LazyPageContainer>
+			<Grid container item alignItems="center" justify="center">
+				<Typography variant="h3" component="h1">
+					{(error && 'AUTHENTICATION FAILED') || 'AUTHENTICATING'}
+				</Typography>
+				{(error && <StyledSadIcon />) || <LoadingIndicator />}
+			</Grid>
+			{error && (
+				<>
+					<br />
+					<Divider />
+					<br />
+					<Typography>{error}</Typography>
+					<br />
+					<Divider />
+				</>
+			)}
+		</LazyPageContainer>
 	);
 };
 

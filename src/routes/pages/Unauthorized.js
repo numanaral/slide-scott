@@ -3,7 +3,7 @@ import { Typography, Divider, Grid, Link } from '@material-ui/core';
 import styled from 'styled-components';
 
 import { SadIcon } from 'icons';
-import PageContainer from 'components/PageContainer';
+import LazyPageContainer from 'components/PageContainer/Lazy';
 import { routerBasePropTypes, routerBaseDefaultProps } from './types';
 
 const StyledSadIcon = styled(SadIcon)`
@@ -14,33 +14,31 @@ const StyledSadIcon = styled(SadIcon)`
 const Unauthorized = ({ location }) => {
 	const referrer = location?.state?.referrer;
 	return (
-		<Grid>
-			<PageContainer>
-				<Grid container item alignItems="center" justify="center">
-					<Typography variant="h3" component="h1">
-						403 - FORBIDDEN
-					</Typography>
-					<StyledSadIcon />
-				</Grid>
-				<br />
-				<Divider />
-				<br />
-				<Typography>
-					You do not have access to this page!
-					{referrer && (
-						<>
-							<br />
-							<br />
-							You requested the following url:
-							<br />
-							<Link href={referrer}>{referrer}</Link>
-						</>
-					)}
+		<LazyPageContainer>
+			<Grid container item alignItems="center" justify="center">
+				<Typography variant="h3" component="h1">
+					403 - FORBIDDEN
 				</Typography>
-				<br />
-				<Divider />
-			</PageContainer>
-		</Grid>
+				<StyledSadIcon />
+			</Grid>
+			<br />
+			<Divider />
+			<br />
+			<Typography>
+				You do not have access to this page!
+				{referrer && (
+					<>
+						<br />
+						<br />
+						You requested the following url:
+						<br />
+						<Link href={referrer}>{referrer}</Link>
+					</>
+				)}
+			</Typography>
+			<br />
+			<Divider />
+		</LazyPageContainer>
 	);
 };
 

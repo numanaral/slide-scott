@@ -15,34 +15,32 @@ const NotFound = ({ location }) => {
 	console.log(location);
 	const referrer = location?.state?.referrer;
 	return (
-		<Grid>
-			<LazyPageContainer>
-				<Grid container item alignItems="center" justify="center">
-					<Typography variant="h3" component="h1">
-						404 - PAGE NOT FOUND
-					</Typography>
-					<StyledSadIcon />
-				</Grid>
-				<br />
-				<Divider />
-				<br />
-				<Typography>
-					The page you are looking for might have been removed had its
-					name changed or is temporarily unavailable.
-					{referrer && (
-						<>
-							<br />
-							<br />
-							You requested the following url:
-							<br />
-							<Link href={referrer}>{referrer}</Link>
-						</>
-					)}
+		<LazyPageContainer>
+			<Grid container item alignItems="center" justify="center">
+				<Typography variant="h3" component="h1">
+					404 - PAGE NOT FOUND
 				</Typography>
-				<br />
-				<Divider />
-			</LazyPageContainer>
-		</Grid>
+				<StyledSadIcon />
+			</Grid>
+			<br />
+			<Divider />
+			<br />
+			<Typography>
+				The page you are looking for might have been removed had its
+				name changed or is temporarily unavailable.
+				{referrer && (
+					<>
+						<br />
+						<br />
+						You requested the following url:
+						<br />
+						<Link href={referrer}>{referrer}</Link>
+					</>
+				)}
+			</Typography>
+			<br />
+			<Divider />
+		</LazyPageContainer>
 	);
 };
 
