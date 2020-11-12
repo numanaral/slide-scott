@@ -5,6 +5,8 @@ const setUserPreferences = payload => ({
 	payload,
 });
 
-const toggleTheme = () => toggleTheme(TOGGLE_THEME);
+const toggleTheme = () => ({
+	type: TOGGLE_THEME,
+});
 
 export { setUserPreferences, toggleTheme };
