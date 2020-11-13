@@ -3,6 +3,8 @@ import { AppBar, Toolbar } from '@material-ui/core';
 import ThemeToggle from 'containers/ThemeToggle';
 import Links from './Links';
 
+const NAVIGATION_BAR_HEIGHT = 64;
+
 const TopNavigationBar = themeProps => {
 	return (
 		<AppBar position="sticky">
@@ -15,4 +17,5 @@ const TopNavigationBar = themeProps => {
 	);
 };
 
+export { NAVIGATION_BAR_HEIGHT };
 export default TopNavigationBar;
