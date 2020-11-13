@@ -92,6 +92,9 @@ const ConstGlobalStyle = createGlobalStyle`
 
 const VariantGlobalStyle = createGlobalStyle`
 	${({ $theme }) => `
+		#root {
+			background-color: ${$theme.palette.background.level1};
+		}
 		/* #region CHROME AUTOCOMPLETE DEFAULT */
 		
 		/* https://stackoverflow.com/a/14205976/13161405 */

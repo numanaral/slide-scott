@@ -19,6 +19,7 @@ const Links = () =>
 			variant="h6"
 			underline="none"
 			color="textPrimary"
+			key={link.to}
 			to={link.to}
 		>
 			{link.text}
