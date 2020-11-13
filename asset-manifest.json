@@ -1,0 +1,28 @@
+{
+  "files": {
+    "static/js/0.c8a2d63c.chunk.js": "/slide-scott/static/js/0.c8a2d63c.chunk.js",
+    "static/js/1.a896ff11.chunk.js": "/slide-scott/static/js/1.a896ff11.chunk.js",
+    "main.js": "/slide-scott/static/js/main.3c7705b0.chunk.js",
+    "runtime-main.js": "/slide-scott/static/js/runtime-main.bedbe172.js",
+    "static/js/4.402d0f3d.chunk.js": "/slide-scott/static/js/4.402d0f3d.chunk.js",
+    "static/js/5.f2b3089d.chunk.js": "/slide-scott/static/js/5.f2b3089d.chunk.js",
+    "static/js/6.7fec3ff7.chunk.js": "/slide-scott/static/js/6.7fec3ff7.chunk.js",
+    "static/js/7.020b281b.chunk.js": "/slide-scott/static/js/7.020b281b.chunk.js",
+    "static/js/8.89662985.chunk.js": "/slide-scott/static/js/8.89662985.chunk.js",
+    "static/js/9.23942c80.chunk.js": "/slide-scott/static/js/9.23942c80.chunk.js",
+    "static/js/10.307ab4a0.chunk.js": "/slide-scott/static/js/10.307ab4a0.chunk.js",
+    "static/js/11.b8f7bda3.chunk.js": "/slide-scott/static/js/11.b8f7bda3.chunk.js",
+    "static/js/12.7b416c09.chunk.js": "/slide-scott/static/js/12.7b416c09.chunk.js",
+    "static/js/13.1ed624ac.chunk.js": "/slide-scott/static/js/13.1ed624ac.chunk.js",
+    "static/js/14.abe6d523.chunk.js": "/slide-scott/static/js/14.abe6d523.chunk.js",
+    "static/js/15.e9518a48.chunk.js": "/slide-scott/static/js/15.e9518a48.chunk.js",
+    "index.html": "/slide-scott/index.html",
+    "static/js/15.e9518a48.chunk.js.LICENSE.txt": "/slide-scott/static/js/15.e9518a48.chunk.js.LICENSE.txt",
+    "static/js/4.402d0f3d.chunk.js.LICENSE.txt": "/slide-scott/static/js/4.402d0f3d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bedbe172.js",
+    "static/js/4.402d0f3d.chunk.js",
+    "static/js/main.3c7705b0.chunk.js"
+  ]
+}
