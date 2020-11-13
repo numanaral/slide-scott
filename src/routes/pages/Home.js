@@ -1,7 +1,6 @@
 import React from 'react';
+import LazySlideBuilder from 'containers/SlideBuilder/Lazy';
 
-import Container from 'components/PageContainer';
-
-const Home = () => <Container>Home Page</Container>;
+const Home = () => <LazySlideBuilder>Home Page</LazySlideBuilder>;
 
 export default Home;
