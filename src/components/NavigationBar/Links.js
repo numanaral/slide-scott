@@ -7,13 +7,14 @@ import { NAV_LIST } from 'routes/Routes';
 import styled from 'styled-components';
 
 const StyledLink = styled(Link)`
-	margin-right: 10px;
+	margin-left: 20px;
 `;
 
 // TODO: When user roles are created, ensure the links
 // don't show up if the user doesn't have the role
 const Links = () =>
-	NAV_LIST.map(link => (
+	// Ignore home as we got the logo link
+	NAV_LIST.filter(link => link.text !== 'Home').map(link => (
 		<StyledLink
 			component={ReactRouterLink}
 			variant="h6"
