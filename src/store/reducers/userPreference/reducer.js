@@ -1,6 +1,7 @@
 import produce from 'immer';
 
 import { updateImmerDraft } from 'utils';
+import { updateLocalStorageItem } from 'utils/localStorage';
 
 import {
 	DARK_THEME,
@@ -8,6 +9,7 @@ import {
 	DEFAULT_VALUES,
 	SET_USER_PREFERENCES,
 	TOGGLE_THEME,
+	LOCAL_STORAGE_THEME_KEY,
 } from './constants';
 
 export const initialState = DEFAULT_VALUES;
@@ -21,6 +23,8 @@ export const userPreferenceReducer = (state = initialState, action) =>
 			case TOGGLE_THEME:
 				draft.theme =
 					draft.theme === DARK_THEME ? LIGHT_THEME : DARK_THEME;
+
+				updateLocalStorageItem(LOCAL_STORAGE_THEME_KEY, draft.theme);
 				break;
 			default:
 				// No default

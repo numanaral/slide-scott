@@ -1,9 +1,12 @@
+import { getOrSetLocalStorageItem } from 'utils/localStorage';
+
 // Defaults
 const KEY = 'UserPreference';
 const DARK_THEME = 'dark';
 const LIGHT_THEME = 'light';
+const LOCAL_STORAGE_THEME_KEY = 'theme';
 const DEFAULT_VALUES = {
-	theme: DARK_THEME,
+	theme: getOrSetLocalStorageItem(LOCAL_STORAGE_THEME_KEY, DARK_THEME),
 };
 
 // Types
@@ -14,6 +17,7 @@ export {
 	KEY,
 	DARK_THEME,
 	LIGHT_THEME,
+	LOCAL_STORAGE_THEME_KEY,
 	DEFAULT_VALUES,
 	SET_USER_PREFERENCES,
 	TOGGLE_THEME,
