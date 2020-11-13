@@ -23,7 +23,7 @@ const SlideBox = ({ onDrop, allowDrop, onDropZoneClick, frames }) => (
 		<Grid container justify="center" style={{ height: '30px' }}>
 			<Typography variant="h5">Config (Temporary - For Dev)</Typography>
 		</Grid>
-		<Grid item style={{ height: '29%' }}>
+		<Grid item style={{ height: '30%' }}>
 			<PrettyJson json={frames} />
 		</Grid>
 	</FullSizeGrid>

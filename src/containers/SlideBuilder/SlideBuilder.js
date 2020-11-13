@@ -53,12 +53,12 @@ const SlideBuilder = () => {
 	return (
 		<FullSizeGrid container>
 			<FullSizeGrid item xs={2}>
-				<ContainerSpacingWrapper topBottom rightLeft>
+				<ContainerSpacingWrapper spacing={2} topBottom rightLeft>
 					<LazyToolBox onDragStart={onDragStart} />
 				</ContainerSpacingWrapper>
 			</FullSizeGrid>
 			<FullSizeGrid item xs={8}>
-				<ContainerSpacingWrapper topBottom>
+				<ContainerSpacingWrapper spacing={2} topBottom>
 					<LazyMoveable {...options} />
 					<LazySlideBox
 						onDrop={onDrop}
@@ -69,7 +69,7 @@ const SlideBuilder = () => {
 				</ContainerSpacingWrapper>
 			</FullSizeGrid>
 			<FullSizeGrid item xs={2}>
-				<ContainerSpacingWrapper topBottom rightLeft>
+				<ContainerSpacingWrapper spacing={2} topBottom rightLeft>
 					<LazyConfigBox />
 				</ContainerSpacingWrapper>
 			</FullSizeGrid>

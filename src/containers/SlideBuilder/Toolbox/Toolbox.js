@@ -17,7 +17,7 @@ const Toolbox = ({ onDragStart }) => {
 			if (toolboxRef.current) {
 				// margin on left, in-between and right
 				const itemSize =
-					(toolboxRef.current.clientWidth - MARGIN * 7) / 2;
+					(toolboxRef.current.clientWidth - MARGIN * 8) / 2;
 				if (itemSize > 60) setToolSize(itemSize);
 				else setToolSize(toolboxRef.current.clientWidth - MARGIN * 4);
 			}
