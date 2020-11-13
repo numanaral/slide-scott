@@ -14,9 +14,10 @@ const AsyncUnauthorized = loadable(() => import(`./pages/Unauthorized`));
 const AsyncLogin = loadable(() => import(`./pages/Login`));
 
 const ROUTE_LIST = [
+	{ path: '/slide-scott/', component: <AsyncHome /> },
 	{
 		path: '/',
-		component: <AsyncHome to="/home" />,
+		component: <Redirect to="/slide-scott/" />,
 	},
 	{
 		path: '/dashboard',
