@@ -1,16 +1,19 @@
 # slide-scott
+
 SlideScott Front End
 
-- Enforce code styling (eslint and prettier)
-- Precommit check (husky & lint-staged)
+-   Enforce code styling (eslint and prettier)
+-   Precommit check (husky & lint-staged)
 
-#### Eg failure on ```git add . && git commit -m "test"``` due to linting failure.
+#### Eg failure on `git add . && git commit -m "test"` due to linting failure.
+
 ---
+
 ```js
 // test.js
 const hello = 5;
-
 ```
+
 ```
 C:\Projects\GIT\slide-scott>git add .
 
