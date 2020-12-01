@@ -2,6 +2,7 @@ import React from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
 import Spacer from 'components/Spacer';
+import { getElementFromElementOrType } from 'utils/react';
 import { propTypes, defaultProps } from './types';
 
 /**
@@ -31,8 +32,8 @@ import { propTypes, defaultProps } from './types';
  * @param {...(import('@material-ui/lab').ToggleButtonGroupProps)}
  */
 const Toggle = ({ value, onChange, options, size, ...rest }) => {
-	const handleOnChange = (event, newValue) => {
-		if (!newValue || value === newValue) return;
+	const handleOnChange = (_, newValue) => {
+		if (value === newValue) return;
 		onChange(newValue);
 	};
 	return (
@@ -46,7 +47,7 @@ const Toggle = ({ value, onChange, options, size, ...rest }) => {
 				>
 					{elm.icon && (
 						<>
-							{elm.icon}
+							{getElementFromElementOrType(elm.icon)}
 							<Spacer direction="right" />
 						</>
 					)}
