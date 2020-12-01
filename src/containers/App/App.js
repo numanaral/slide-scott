@@ -5,7 +5,7 @@ import { Provider as StoreProvider } from 'react-redux';
 import ThemeProvider from 'providers/ThemeProvider';
 import NavigationBar from 'components/NavigationBar';
 import Routes from 'routes';
-import configureStore from 'store';
+import configureStore from 'store/redux';
 import Background from './Background';
 
 const initialState = {};

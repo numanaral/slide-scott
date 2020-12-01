@@ -6,8 +6,8 @@ import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
 import getMuiTheme, { ConstGlobalStyle, VariantGlobalStyle } from 'theme';
-import { makeSelectTheme } from 'store/reducers/userPreference/selectors';
-import { toggleTheme } from 'store/reducers/userPreference/actions';
+import { makeSelectTheme } from 'store/redux/reducers/userPreference/selectors';
+import { toggleTheme } from 'store/redux/reducers/userPreference/actions';
 
 export const ThemeProvider = ({ children }) => {
 	const dispatch = useDispatch();
