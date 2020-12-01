@@ -1,48 +1,9 @@
 import React from 'react';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
-import loadable from 'utils/loadable';
+import usePageView from 'store/firebase/hooks/usePageView';
 import RouteWrapper from './RouteWrapper';
-
-const TEMP_TEST_ROLES = ['LoggedInUser'];
-
-const AsyncHome = loadable(() => import(`routes/pages/Home`));
-const AsyncDashboard = loadable(() => import(`routes/pages/Dashboard`));
-const AsyncPreferences = loadable(() => import(`routes/pages/Preferences`));
-const AsyncNotFound = loadable(() => import(`./pages/NotFound`));
-const AsyncUnauthorized = loadable(() => import(`./pages/Unauthorized`));
-const AsyncLogin = loadable(() => import(`./pages/Login`));
-
-const ROUTE_LIST = [
-	{ path: '/slide-scott/', component: <AsyncHome /> },
-	{
-		path: '/',
-		component: <Redirect to="/slide-scott/" />,
-	},
-	{
-		path: '/dashboard',
-		component: <AsyncDashboard />,
-		roles: TEMP_TEST_ROLES,
-	},
-	{
-		path: '/preferences',
-		component: <AsyncPreferences />,
-		roles: TEMP_TEST_ROLES,
-	},
-	{ path: '/unauthorized', component: <AsyncUnauthorized /> },
-	{ path: '/login', component: <AsyncLogin /> },
-	{ path: '/not-found', component: <AsyncNotFound /> },
-];
-
-const NAV_LIST = [
-	// Public Paths
-	...[{ text: 'Home', to: '/home' }],
-	// Private Paths
-	...[
-		{ text: 'Dashboard', to: '/dashboard' },
-		{ text: 'Preferences', to: '/preferences' },
-	].map(e => ({ ...e, roles: TEMP_TEST_ROLES })),
-];
+import { BASE_PATH, ROUTE_LIST } from './constants';
 
 const RedirectToNotFound = () => {
 	const { pathname } = useLocation();
@@ -53,7 +14,7 @@ const RedirectToNotFound = () => {
 			component={
 				<Redirect
 					to={{
-						pathname: '/not-found',
+						pathname: `${BASE_PATH}/not-found`,
 						state: {
 							referrer: pathname,
 						},
@@ -64,7 +25,8 @@ const RedirectToNotFound = () => {
 	);
 };
 
-const Routes = () => {
+const Routes = props => {
+	usePageView();
 	return (
 		<Switch>
 			{ROUTE_LIST.map(({ component, path, ...rest }) => {
@@ -75,6 +37,7 @@ const Routes = () => {
 						component={component}
 						exact
 						{...rest}
+						{...props}
 					/>
 				);
 			})}
@@ -83,5 +46,4 @@ const Routes = () => {
 	);
 };
 
-export { NAV_LIST };
 export default Routes;

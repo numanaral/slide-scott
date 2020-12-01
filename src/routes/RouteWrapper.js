@@ -1,4 +1,5 @@
 import React, { cloneElement } from 'react';
+import Helmet from 'react-helmet';
 // TODO: Will add these as we progress
 // import { useSelector } from 'react-redux';
 import { Route, useHistory, useLocation } from 'react-router-dom';
@@ -14,6 +15,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import loadable from 'utils/loadable';
 import { hasAnyFrom } from 'utils/object';
 import { routeWrapperPropTypes, routeWrapperDefaultProps } from './types';
+import { BASE_PATH } from './constants';
 
 const LazyUnauthorized = loadable(() => import('./pages/Unauthorized'));
 const LazyLogin = loadable(() => import('./pages/Login'));
@@ -36,7 +38,14 @@ const LazyLogin = loadable(() => import('./pages/Login'));
  * 		- Redirect to Unauthorized
  * - Else access the path
  */
-const RouteWrapper = ({ component: Component, roles, ...rest }) => {
+const RouteWrapper = ({
+	component: Component,
+	roles,
+	themeProps,
+	title,
+	description,
+	...rest
+}) => {
 	// TODO: Will add these as we progress
 	// const userName = useSelector(makeSelectUserName());
 	// const userRoles = useSelector(makeSelectUserRoles());
@@ -70,7 +79,7 @@ const RouteWrapper = ({ component: Component, roles, ...rest }) => {
 		}
 		if (!userName) {
 			if (isAuthRequired && pathname !== '/login') {
-				push(`/login?returnUrl=${pathname}`, { roles });
+				push(`${BASE_PATH}/login?returnUrl=${pathname}`, { roles });
 			}
 
 			if (pathname === '/login') {
@@ -90,7 +99,7 @@ const RouteWrapper = ({ component: Component, roles, ...rest }) => {
 		if (isAuthRequired) {
 			// If logged in, don't allow to /login or /unauthorized directly
 			if (pathname === '/login' || pathname === '/unauthorized') {
-				push('/');
+				push(`${BASE_PATH}/learn`);
 			}
 
 			if (!hasAnyFrom(requiredRoles, userRoles)) {
@@ -98,7 +107,17 @@ const RouteWrapper = ({ component: Component, roles, ...rest }) => {
 			}
 		}
 
-		return cloneElement(Component, { ...renderProps });
+		return (
+			<>
+				{title && (
+					<Helmet>
+						<title>{title}</title>
+						<meta name="description" content={description} />
+					</Helmet>
+				)}
+				{cloneElement(Component, { ...renderProps, themeProps })}
+			</>
+		);
 	};
 
 	return (
