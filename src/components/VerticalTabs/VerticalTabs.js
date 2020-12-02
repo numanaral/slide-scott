@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledTabs = styled(Tabs)`
+	overflow: initial;
 	${({ theme }) => `
 		border-right: 1px solid ${theme.palette.divider};
 	`}

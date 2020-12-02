@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Link, Toolbar, useTheme } from '@material-ui/core';
 import ThemeToggle from 'containers/ThemeToggle';
 import { Link as ReactRouterLink, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
 import Menu from 'components/Menu';
 import useMenu from 'components/Menu/useMenu';
@@ -9,8 +10,42 @@ import useLogin from 'store/firebase/hooks/useLogin';
 import { AccountIcon } from 'icons';
 import useAuth from 'store/firebase/hooks/useAuth';
 import { BASE_PATH } from 'routes/constants';
+import Spacer from 'components/Spacer';
 import Links from './Links';
 import logo from './full-logo.png';
+// import logo from './full-logo-transparent.png';
+
+const StyledAppBar = styled(AppBar)`
+	${({ theme }) => `
+		background-color: ${
+			theme.palette.secondary[
+				(theme.palette.type === 'dark' && 'dark') || 'main'
+			]
+		};
+	`}
+`;
+
+const StyledLink = styled(Link)`
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	top: 0;
+	height: 80px;
+	border-radius: 20px;
+	width: 260px;
+`;
+
+const LogoPlaceholder = styled.img`
+	width: 300px;
+`;
+
+const StyledLogo = styled.img`
+	height: 80px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+`;
 
 const NAVIGATION_BAR_HEIGHT = 64;
 
@@ -56,22 +91,20 @@ const TopNavigationBar = () => {
 	});
 
 	return (
-		<AppBar position="sticky" color="secondary">
+		<StyledAppBar position="sticky" color="secondary">
 			<Toolbar>
-				<Link component={ReactRouterLink} to="/">
-					<img
-						src={logo}
-						alt="logo"
-						height="45px"
-						style={{ borderRadius: 10 }}
-					/>
-				</Link>
+				<div style={{ flexGrow: 1 }} />
 				<Links />
+				<LogoPlaceholder />
+				<StyledLink component={ReactRouterLink} to="/">
+					<StyledLogo src={logo} alt="logo" />
+				</StyledLink>
 				<div style={{ flexGrow: 1 }} />
 				<ThemeToggle />
 				<Menu {...menuProps} />
+				<div style={{ flexGrow: 1 }} />
 			</Toolbar>
-		</AppBar>
+		</StyledAppBar>
 	);
 };
 

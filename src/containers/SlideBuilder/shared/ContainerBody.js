@@ -8,7 +8,7 @@ const Wrapper = styled(FullSizeGrid)`
 	height: 95%;
 	${({ theme }) => `
 		border-radius: ${theme.shape.borderRadius}px;
-		background-color: ${theme.palette.background.level2}
+		background-color: ${theme.palette.background.paper}
 	`}
 `;
 

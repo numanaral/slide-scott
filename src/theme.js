@@ -136,14 +136,18 @@ const getThemeOptions = mode => {
 				light: '#71f2ff',
 				main: '#30BFCE',
 				dark: '#008e9d',
-				contrastText: '#fff',
+				contrastText:
+					(isDark && '#fff') ||
+					defaultTheme.palette.getContrastText('#30BFCE'),
 			},
 			// secondary: pink,
 			secondary: {
 				light: '#ffe479',
 				main: '#FFB249',
 				dark: '#c88214',
-				contrastText: '#fff',
+				contrastText:
+					(isDark && '#fff') ||
+					defaultTheme.palette.getContrastText('#FFB249'),
 			},
 			error: {
 				light: '#e57373',
@@ -214,6 +218,11 @@ const getThemeOptions = mode => {
 			MuiIcon: {
 				root: {
 					transition: THEME_COLOR_TRANSITION,
+				},
+			},
+			MuiListItemIcon: {
+				root: {
+					transition: transitionGenerator(['color']),
 				},
 			},
 			MuiSvgIcon: {

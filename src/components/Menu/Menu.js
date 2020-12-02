@@ -21,13 +21,13 @@ const StyleCheckbox = styled(Checkbox)`
 const StyleListItemIcon = styled(ListItemIcon)`
 	${({ theme, $small, $isSelected }) => `
 		${($small && `min-width: ${theme.spacing(5)}px;`) || ''}
-		${($isSelected && `color: ${theme.palette.primary.main}`) || ''}
+		${($isSelected && `color: ${theme.palette.primary.contrastText}`) || ''}
 	`}
 `;
 
 const StyleListItemText = styled(ListItemText)`
 	${({ theme, $isSelected }) => `
-		${($isSelected && `color: ${theme.palette.primary.main}`) || ''}
+		${($isSelected && `color: ${theme.palette.primary.contrastText}`) || ''}
 	`}
 `;
 
