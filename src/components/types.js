@@ -1,9 +1,13 @@
 import {
 	element,
 	elementType,
+	func,
+	instanceOf,
 	number,
+	object,
 	oneOf,
 	oneOfType,
+	shape,
 	string,
 } from 'prop-types';
 
@@ -13,19 +17,17 @@ import {
 const elementOrType = oneOfType([element, elementType]);
 const icon = elementOrType;
 
+const severityOptions = ['error', 'warning', 'info', 'success'];
+
 /**
- * @implements { ReadonlyArray<T>, Color }
  * @returns { Requireable<T> }
  */
-const color = oneOf([
-	'default',
-	'primary',
-	'secondary',
-	'error',
-	'warning',
-	'info',
-	'success',
-]);
+const severity = oneOf(severityOptions);
+
+/**
+ * @returns { Requireable<T> }
+ */
+const color = oneOf(['default', 'primary', 'secondary', ...severityOptions]);
 
 /**
  * @returns { Requireable<T> }
@@ -33,13 +35,16 @@ const color = oneOf([
 const direction = oneOf(['top', 'right', 'bottom', 'left']);
 
 /**
- * @implements { ReadonlyArray<T>, ButtonSize }
  * @returns { Requireable<T> }
  */
 const size = oneOf(['small', 'medium', 'large']);
 
 /**
- * @implements { ReadonlyArray<T>, ButtonVariant }
+ * @returns { Requireable<T> }
+ */
+const iconSize = oneOf(['default', 'inherit', 'large', 'small']);
+
+/**
  * @returns { Requireable<T> }
  */
 const buttonVariant = oneOf(['text', 'outlined', 'contained']);
@@ -49,12 +54,21 @@ const buttonVariant = oneOf(['text', 'outlined', 'contained']);
  */
 const numberOrString = oneOfType([number, string]);
 
+const refType = oneOfType([func, shape({ current: instanceOf(Element) })]);
+
+// TODO: Fill this out properly
+const theme = object;
+
 export {
 	elementOrType,
 	icon,
+	severity,
 	color,
 	direction,
 	size,
 	buttonVariant,
 	numberOrString,
+	refType,
+	theme,
+	iconSize,
 };
