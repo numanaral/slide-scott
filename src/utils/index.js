@@ -41,6 +41,32 @@ const smoothScroll = element =>
 		// inline: 'end',
 	});
 
+/**
+ * Grab the appropriate error message from the Error
+ *
+ * @param {Error} err - Caught error object
+ * @param {String} fallbackError - Default error message
+ * @returns - Error message
+ */
+const getErrorMessageFromFetch = (
+	err,
+	fallbackError = '',
+	returnHtmlBody = false
+) => {
+	const { response } = err;
+	const _error = err.message || 'There was an error with your request';
+	if (!response) return _error;
+	const responseData = response.data?.Data || response.data;
+	if (
+		typeof responseData === 'string' &&
+		responseData.indexOf('<!DOCTYPE') === 0 &&
+		returnHtmlBody
+	) {
+		return responseData;
+	}
+	return responseData.Message || fallbackError || _error;
+};
+
 export {
 	firstCapital,
 	pascalToSentence,
@@ -48,4 +74,5 @@ export {
 	updateImmerDraft,
 	getNiceDateVanilla,
 	smoothScroll,
+	getErrorMessageFromFetch,
 };

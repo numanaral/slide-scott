@@ -24,6 +24,9 @@ export {
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,
 	Palette as PaletteIcon,
+	// Modal
+	Fullscreen as FullscreenIcon,
+	FullscreenExit as ExitFullscreenIcon,
 } from '@material-ui/icons';
 
 const LazyIcon = loadable(async ({ name }) => {

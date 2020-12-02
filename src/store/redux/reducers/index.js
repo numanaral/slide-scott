@@ -9,6 +9,7 @@ import { firestoreReducer } from 'redux-firestore';
 import userPreferenceReducer, { userPreferenceKey } from './userPreference';
 import devSettingsReducer, { devSettingsKey } from './devSettings';
 import snackbarReducer, { snackbarKey } from './snackbar';
+import dialogReducer, { dialogKey } from './dialog';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
 	[userPreferenceKey]: userPreferenceReducer,
 	[devSettingsKey]: devSettingsReducer,
 	[snackbarKey]: snackbarReducer,
+	[dialogKey]: dialogReducer,
 });
 
 export default rootReducer;

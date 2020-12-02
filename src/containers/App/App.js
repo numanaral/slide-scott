@@ -9,6 +9,7 @@ import Routes from 'routes';
 import configureStore from 'store/redux';
 import { getReactReduxFirebaseProps } from 'store/firebase';
 import NotificationProvider from 'providers/NotificationProvider';
+import DialogProvider from 'providers/DialogProvider';
 import Background from './Background';
 
 const initialState = {};
@@ -26,6 +27,7 @@ const App = () => (
 							<>
 								<NavigationBar />
 								<NotificationProvider />
+								<DialogProvider />
 								<Background>
 									<Routes />
 								</Background>
