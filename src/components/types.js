@@ -59,6 +59,8 @@ const refType = oneOfType([func, shape({ current: instanceOf(Element) })]);
 // TODO: Fill this out properly
 const theme = object;
 
+const date = oneOfType([string, number, instanceOf(Date)]);
+
 export {
 	elementOrType,
 	icon,
@@ -71,4 +73,5 @@ export {
 	refType,
 	theme,
 	iconSize,
+	date,
 };

@@ -21,4 +21,23 @@ const updateImmerDraft = (draft, payload) => {
 	});
 };
 
-export { firstCapital, pascalToSentence, getImmerState, updateImmerDraft };
+const getNiceDateVanilla = d => {
+	if (!d) return d;
+
+	return new Date(d).toLocaleDateString('en-US', {
+		day: 'numeric',
+		month: 'short',
+		year: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: true,
+	});
+};
+
+export {
+	firstCapital,
+	pascalToSentence,
+	getImmerState,
+	updateImmerDraft,
+	getNiceDateVanilla,
+};

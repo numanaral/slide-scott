@@ -21,15 +21,17 @@ const App = () => (
 		<ReactReduxFirebaseProvider {...getReactReduxFirebaseProps(store)}>
 			<Router>
 				<ThemeProvider>
-					{themeProps => (
-						<>
-							<NavigationBar {...themeProps} />
-							<NotificationProvider />
-							<Background>
-								<Routes />
-							</Background>
-						</>
-					)}
+					{
+						(/* themeProps */) => (
+							<>
+								<NavigationBar />
+								<NotificationProvider />
+								<Background>
+									<Routes />
+								</Background>
+							</>
+						)
+					}
 				</ThemeProvider>
 			</Router>
 		</ReactReduxFirebaseProvider>

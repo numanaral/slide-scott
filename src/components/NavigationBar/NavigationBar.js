@@ -14,7 +14,7 @@ import logo from './full-logo.png';
 
 const NAVIGATION_BAR_HEIGHT = 64;
 
-const TopNavigationBar = themeProps => {
+const TopNavigationBar = () => {
 	const { logOut } = useLogin();
 	const { isLoggedIn, user } = useAuth();
 	const { push } = useHistory();
@@ -33,7 +33,7 @@ const TopNavigationBar = themeProps => {
 		menuProps: {
 			PaperProps: {
 				style: {
-					backgroundColor: theme.palette.primary.main,
+					backgroundColor: theme.palette.secondary.main,
 				},
 			},
 		},
@@ -56,7 +56,7 @@ const TopNavigationBar = themeProps => {
 	});
 
 	return (
-		<AppBar position="sticky">
+		<AppBar position="sticky" color="secondary">
 			<Toolbar>
 				<Link component={ReactRouterLink} to="/">
 					<img
@@ -68,7 +68,7 @@ const TopNavigationBar = themeProps => {
 				</Link>
 				<Links />
 				<div style={{ flexGrow: 1 }} />
-				<ThemeToggle {...themeProps} />
+				<ThemeToggle />
 				<Menu {...menuProps} />
 			</Toolbar>
 		</AppBar>

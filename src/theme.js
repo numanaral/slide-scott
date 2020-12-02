@@ -180,10 +180,11 @@ const getThemeOptions = mode => {
 			},
 			black: '#121212',
 			background: (isDark && {
+				// l1 and paper from https://overreacted.io/
 				default: '#212121',
 				level1: '#282c35',
 				level2: '#333',
-				paper: '#50555f',
+				paper: '#363c48',
 			}) || {
 				default: '#fff',
 				level1: '#ededed',

@@ -5,7 +5,7 @@ import { icon, size } from 'components/types';
 const toggleOptionItemType = shape({
 	// eslint-disable-next-line react/forbid-prop-types
 	value: any.isRequired,
-	label: string.isRequired,
+	label: string,
 	icon,
 	disabled: bool,
 }).isRequired;

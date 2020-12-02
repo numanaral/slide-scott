@@ -11,7 +11,7 @@ const Alert = forwardRef((props, ref) => (
 const Snackbar = ({ open, autoHideDuration, onClose, severity, message }) => {
 	// ??!!: I don't know what's going on, I have to manually handle this
 	useEffect(() => {
-		if (open) {
+		if (open && autoHideDuration) {
 			setTimeout(() => {
 				onClose();
 			}, autoHideDuration);
