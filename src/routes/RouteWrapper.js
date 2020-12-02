@@ -1,19 +1,12 @@
 import React, { cloneElement } from 'react';
 import Helmet from 'react-helmet';
-// TODO: Will add these as we progress
-// import { useSelector } from 'react-redux';
 import { Route, useHistory, useLocation } from 'react-router-dom';
 
-// TODO: Will add these as we progress
-// import {
-// 	makeSelectUserRoles,
-// 	makeSelectUserName,
-// 	makeSelectUserAuthError,
-// 	makeSelectUserAuthPending,
-// } from 'store/reducers/userReducer/selectors';
 import ErrorBoundary from 'components/ErrorBoundary';
 import loadable from 'utils/loadable';
 import { hasAnyFrom } from 'utils/object';
+import useAuth from 'store/firebase/hooks/useAuth';
+import useProfile from 'store/firebase/hooks/useProfile';
 import { routeWrapperPropTypes, routeWrapperDefaultProps } from './types';
 import { BASE_PATH } from './constants';
 
@@ -46,21 +39,14 @@ const RouteWrapper = ({
 	description,
 	...rest
 }) => {
-	// TODO: Will add these as we progress
-	// const userName = useSelector(makeSelectUserName());
-	// const userRoles = useSelector(makeSelectUserRoles());
-	// const userAuthError = useSelector(makeSelectUserAuthError());
-	// const userAuthPending = useSelector(makeSelectUserAuthPending());
+	const { isAuthorizing, user } = useAuth();
+	const { isAuthorizing: isAuthorizingProfile, profile } = useProfile();
 
-	// NOTE: Commented out lines are temporary test cases.
-	const userName = ''; // Either public user or haven't gotten the user data yet
-	// const userName = 'test'; // TEST: Logged in user
-	const userRoles = []; // Public user or user without any roles
-	// const userRoles = ['LoggedInUser']; // TEST: User w/ required roles
-	const userAuthError = ''; // Either public user or logged in user
-	// const userAuthError = 'Temp auth failed'; // TEST: Some error with login, i.e. wrong credentials
-	const userAuthPending = false; // Either public user or is logged in
-	// const userAuthPending = true; // TEST: User data is being fetched
+	const userName = user.displayName;
+	const userRoles = profile.roles || [];
+	const userAuthError = '';
+
+	const _isAuthorizing = isAuthorizing || isAuthorizingProfile;
 
 	const {
 		push,
@@ -74,7 +60,7 @@ const RouteWrapper = ({
 	const requiredRoles = (isAuthRequired && roles) || referrerRoles;
 
 	const render = renderProps => {
-		if (isAuthRequired && userAuthPending) {
+		if (isAuthRequired && _isAuthorizing) {
 			return <LazyLogin {...renderProps} authorizing />;
 		}
 		if (!userName) {
@@ -85,7 +71,7 @@ const RouteWrapper = ({
 			if (pathname === '/login') {
 				if (
 					userAuthError ||
-					(isReferrerAuthRequired && !userAuthPending)
+					(isReferrerAuthRequired && !_isAuthorizing)
 				)
 					return (
 						<LazyLogin
@@ -115,7 +101,7 @@ const RouteWrapper = ({
 						<meta name="description" content={description} />
 					</Helmet>
 				)}
-				{cloneElement(Component, { ...renderProps, themeProps })}
+				{cloneElement(Component, { ...renderProps, themeProps, user })}
 			</>
 		);
 	};
