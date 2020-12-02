@@ -103,6 +103,7 @@ const TopNavigationBar = () => {
 				<ThemeToggle />
 				<Menu {...menuProps} />
 				<div style={{ flexGrow: 1 }} />
+				<div style={{ flexGrow: 1 }} />
 			</Toolbar>
 		</StyledAppBar>
 	);

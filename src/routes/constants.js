@@ -144,6 +144,12 @@ const SHARED_DISPLAY_PAGES = [
 			text: 'Preferences',
 			to: '/preferences',
 		},
+		{
+			label: 'Slide Builder',
+			tooltip: 'Slide Builder',
+			text: 'Slide Builder',
+			to: '/slide-builder',
+		},
 	].map(e => ({ ...e, roles: TEMP_TEST_ROLES })),
 	// {
 	// 	label: 'Account',
