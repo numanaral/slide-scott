@@ -1,9 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { initialState } from './reducer';
-import { KEY } from './constants';
+import { KEY, DEFAULT_VALUES } from './constants';
 
 // Direct selector to the userPreferences state
-const selectUserPreferences = state => state[KEY] || initialState;
+const selectUserPreferences = state => state[KEY] || DEFAULT_VALUES;
 
 // Other specific selectors
 const makeSelectTheme = () =>

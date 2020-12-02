@@ -12,9 +12,7 @@ import {
 	LOCAL_STORAGE_THEME_KEY,
 } from './constants';
 
-export const initialState = DEFAULT_VALUES;
-
-export const userPreferenceReducer = (state = initialState, action) =>
+const userPreferenceReducer = (state = DEFAULT_VALUES, action) =>
 	produce(state, draft => {
 		switch (action.type) {
 			case SET_USER_PREFERENCES:
