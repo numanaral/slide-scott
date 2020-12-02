@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Container from 'components/PageContainer';
+import DashboardWrapper from 'containers/Dashboard';
 
-const Dashboard = () => <Container>Dashboard Page</Container>;
+const Dashboard = () => <DashboardWrapper />;
 
 export default Dashboard;
