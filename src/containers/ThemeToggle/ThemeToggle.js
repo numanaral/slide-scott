@@ -6,7 +6,6 @@ import { LightThemeIcon, DarkThemeIcon } from 'icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeSelectTheme } from 'store/redux/reducers/userPreference/selectors';
 import { toggleTheme } from 'store/redux/reducers/userPreference/actions';
-import { propTypes } from './prop-types';
 
 const ThemeToggle = () => {
 	const theme = useSelector(makeSelectTheme());
@@ -35,7 +34,5 @@ const ThemeToggle = () => {
 		/>
 	);
 };
-
-ThemeToggle.propTypes = propTypes;
 
 export default ThemeToggle;

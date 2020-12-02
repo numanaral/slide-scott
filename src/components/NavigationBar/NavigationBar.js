@@ -11,6 +11,7 @@ import { AccountIcon } from 'icons';
 import useAuth from 'store/firebase/hooks/useAuth';
 import { BASE_PATH } from 'routes/constants';
 import Spacer from 'components/Spacer';
+import ClearLocalStorageButton from 'components/ClearLocalStorageButton';
 import Links from './Links';
 import logo from './full-logo.png';
 // import logo from './full-logo-transparent.png';
@@ -100,6 +101,7 @@ const TopNavigationBar = () => {
 					<StyledLogo src={logo} alt="logo" />
 				</StyledLink>
 				<div style={{ flexGrow: 1 }} />
+				<ClearLocalStorageButton />
 				<ThemeToggle />
 				<Menu {...menuProps} />
 				<div style={{ flexGrow: 1 }} />

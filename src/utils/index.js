@@ -34,10 +34,18 @@ const getNiceDateVanilla = d => {
 	});
 };
 
+const smoothScroll = element =>
+	element?.scrollIntoView({
+		block: 'center',
+		behavior: 'smooth',
+		// inline: 'end',
+	});
+
 export {
 	firstCapital,
 	pascalToSentence,
 	getImmerState,
 	updateImmerDraft,
 	getNiceDateVanilla,
+	smoothScroll,
 };

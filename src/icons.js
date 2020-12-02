@@ -19,6 +19,7 @@ export {
 	Delete as DeleteIcon,
 	Star as StarIcon,
 	FeaturedPlayList as TemplateIcon,
+	Add as AddIcon,
 	// Temp on the preferences
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,

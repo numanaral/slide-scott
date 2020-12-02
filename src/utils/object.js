@@ -10,5 +10,7 @@
  * @param {Array} source - List to match at least 1 element with
  * @param {Array} list - List to check if the element exists
  */
-export const hasAnyFrom = (source, from) =>
+const hasAnyFrom = (source, from) =>
 	source?.length === 0 || source.some(e => from.indexOf(e) >= 0);
+
+export { hasAnyFrom };
