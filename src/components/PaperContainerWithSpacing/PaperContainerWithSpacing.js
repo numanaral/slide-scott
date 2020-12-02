@@ -21,7 +21,7 @@ const PaperContainerWithSpacing = props => {
 	return (
 		<ContainerWithCenteredItems>
 			<PaperWrapper
-				elevation={(isHovering && 3) || 0}
+				elevation={(isHovering && 3) || 1}
 				onMouseEnter={onEnter}
 				onMouseLeave={onLeave}
 			>

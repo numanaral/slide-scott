@@ -25,12 +25,6 @@ const StyleListItemIcon = styled(ListItemIcon)`
 	`}
 `;
 
-const ListItemTextForMenu = styled(ListItemText)`
-	${({ theme }) => `
-		color: ${theme.palette.text.primary};
-	`}
-`;
-
 const StyleListItemText = styled(ListItemText)`
 	${({ theme, $isSelected }) => `
 		${($isSelected && `color: ${theme.palette.primary.main}`) || ''}
@@ -94,7 +88,7 @@ const Menu = ({
 								{getElementFromElementOrType(icon)}
 							</StyleListItemIcon>
 						)}
-						<ListItemTextForMenu
+						<ListItemText
 							primary={label}
 							{...(displaySelected && {
 								secondary: selectedOptionLabel || 'N/A',

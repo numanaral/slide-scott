@@ -3,9 +3,10 @@ import { NAVIGATION_BAR_HEIGHT } from 'components/NavigationBar/NavigationBar';
 import styled from 'styled-components';
 
 const Background = styled(Grid)`
+	overflow: auto;
 	${({ theme }) => `
-		background-color: ${theme.palette.background.level1};
 		height: calc(100% - ${NAVIGATION_BAR_HEIGHT}px);
+		padding: ${theme.spacing(2)}px;
 	`}
 `;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { yellow, brown } from '@material-ui/core/colors';
+import { yellow, indigo } from '@material-ui/core/colors';
 
 import Toggle from 'components/Toggle';
 import { LightThemeIcon, DarkThemeIcon } from 'icons';
@@ -12,12 +12,12 @@ const ThemeToggle = ({ theme, setTheme }) => (
 		options={[
 			{
 				value: 'dark',
-				label: 'Dark',
-				icon: <DarkThemeIcon style={{ color: brown[500] }} />,
+				// label: 'Dark',
+				icon: <DarkThemeIcon style={{ color: indigo.A700 }} />,
 			},
 			{
 				value: 'light',
-				label: 'Light',
+				// label: 'Light',
 				icon: <LightThemeIcon style={{ color: yellow[500] }} />,
 			},
 		]}

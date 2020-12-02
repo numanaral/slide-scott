@@ -29,8 +29,6 @@ const Toolbox = ({ onDragStart }) => {
 		};
 	}, []);
 
-	console.log(toolSize);
-
 	return (
 		<FullSizeGrid innerRef={toolboxRef}>
 			<ContainerTitle> Tools </ContainerTitle>

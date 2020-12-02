@@ -26,7 +26,7 @@ const RedirectToNotFound = () => {
 };
 
 const Routes = props => {
-	usePageView();
+	// usePageView();
 	return (
 		<Switch>
 			{ROUTE_LIST.map(({ component, path, ...rest }) => {
