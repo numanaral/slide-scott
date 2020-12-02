@@ -1,7 +1,17 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import { useRef, useState } from 'react';
 
-const useMoveable = (previousFrames, setPreviousFrames) => {
+// 	1: {
+// 		frames: {},
+// 	},
+// 	2: {
+// 		frames: {},
+// 	},
+const useMoveable = (previousFrames, setFramesForSlide) => {
+	// debugger;
+	const slideId = useRef('');
 	const targetId = useRef('');
 	const frames = useRef(previousFrames);
 
@@ -9,7 +19,7 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 	// This won't be needed after the testing phase
 	const [, setTriggerCounter] = useState(0);
 	const updateLocalStorageFrames = () => {
-		setPreviousFrames(frames.current);
+		setFramesForSlide(frames.current[slideId.current].frames, slideId.current);
 	};
 	const updateTriggerCounter = () => {
 		setTriggerCounter(v => v + 1);
@@ -39,14 +49,14 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 			setOrigin(['%', '%']);
 			if (!targetId.current || !dragStart) return;
 
-			dragStart.set(frames.current[targetId.current].translateXY);
+			dragStart.set(frames.current[slideId.current].frames[targetId.current].translateXY);
 		},
 		onResize: ({ target, width, height, drag }) => {
 			if (!targetId.current) return;
 			const { beforeTranslate } = drag;
 
-			frames.current[targetId.current].translateXY = beforeTranslate;
-			frames.current[targetId.current].widthHeight = [width, height];
+			frames.current[slideId.current].frames[targetId.current].translateXY = beforeTranslate;
+			frames.current[slideId.current].frames[targetId.current].widthHeight = [width, height];
 			target.style.width = `${width}px`;
 			target.style.height = `${height}px`;
 			target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
@@ -57,12 +67,12 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 		onRotateStart: ({ set }) => {
 			if (!targetId.current) return;
 
-			set(frames.current[targetId.current].rotate);
+			set(frames.current[slideId.current].frames[targetId.current].rotate);
 		},
 		onRotate: ({ target, beforeRotate }) => {
 			if (!targetId.current) return;
 
-			frames.current[targetId.current].rotate = beforeRotate;
+			frames.current[slideId.current].frames[targetId.current].rotate = beforeRotate;
 			target.style.transform = `rotate(${beforeRotate}deg)`;
 		},
 		onRotateEnd: () => {
@@ -71,13 +81,13 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 		onDragOriginStart: ({ dragStart }) => {
 			if (!targetId.current || !dragStart) return;
 
-			dragStart.set(frames.current[targetId.current].translateXY);
+			dragStart.set(frames.current[slideId.current].frames[targetId.current].translateXY);
 		},
 		onDragOrigin: ({ drag, transformOrigin }) => {
 			if (!targetId.current) return;
 
-			frames.current[targetId.current].translateXY = drag.beforeTranslate;
-			frames.current[targetId.current].transformOrigin = transformOrigin;
+			frames.current[slideId.current].frames[targetId.current].translateXY = drag.beforeTranslate;
+			frames.current[slideId.current].frames[targetId.current].transformOrigin = transformOrigin;
 		},
 		onDragOriginEnd: () => {
 			updateTriggerCounter();
@@ -85,12 +95,12 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 		onDragStart: ({ set }) => {
 			if (!targetId.current) return;
 
-			set(frames.current[targetId.current].translateXY);
+			set(frames.current[slideId.current].frames[targetId.current].translateXY);
 		},
 		onDrag: ({ beforeTranslate }) => {
 			if (!targetId.current) return;
 
-			frames.current[targetId.current].translateXY = beforeTranslate;
+			frames.current[slideId.current].frames[targetId.current].translateXY = beforeTranslate;
 		},
 		// This is auto updating on every change, not needed
 		// onDragEnd: () => {
@@ -99,9 +109,7 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 		onRender: ({ target }) => {
 			if (!targetId.current) return;
 
-			const { translateXY, rotate, transformOrigin } = frames.current[
-				targetId.current
-			];
+			const { translateXY, rotate, transformOrigin } = frames.current[slideId.current].frames[targetId.current];
 			target.style.transformOrigin = transformOrigin;
 			target.style.transform =
 				`translate(${translateXY[0]}px, ${translateXY[1]}px)` +
@@ -109,7 +117,7 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 		},
 	});
 
-	const setTarget = target => {
+	const setTarget = (target, slide) => {
 		setOptions(v => ({
 			...v,
 			target,
@@ -117,11 +125,12 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 
 		// Set the current targetId
 		targetId.current = target?.id;
+		slideId.current = slide;
 
-		if (target) {
+		if (target) {debugger;
 			// Update current frame
-			if (!frames.current[target.id]) {
-				frames.current[target.id] = {
+			if (!frames.current[slideId.current].frames[target.id]) {
+				frames.current[slideId.current].frames[target.id] = {
 					translateXY: [0, 0],
 					widthHeight: [
 						parseFloat(target.style.width),
@@ -139,8 +148,10 @@ const useMoveable = (previousFrames, setPreviousFrames) => {
 		}
 	};
 
-	const removeTarget = id => {
-		delete frames.current[id];
+	const removeTarget = (id, slide) => {
+		slideId.current = slide;
+
+		delete [slideId.current].frames[id];
 		updateLocalStorageFrames();
 	};
 

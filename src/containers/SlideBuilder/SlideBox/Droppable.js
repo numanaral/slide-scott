@@ -5,7 +5,8 @@ const Droppable = styled.div`
 	position: relative;
 	overflow: hidden;
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
+	height: 90%;
 	${({ theme }) => `
 		border: 1px dashed ${theme.palette.getContrastText(
 			theme.palette.background.level2

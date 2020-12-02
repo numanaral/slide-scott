@@ -1,9 +1,10 @@
-import { func } from 'prop-types';
+import { string, func, number } from 'prop-types';
 
 const propTypes = {
-	onDrop: func.isRequired,
-	allowDrop: func.isRequired,
-	onDropZoneClick: func.isRequired,
+	setTarget: func.isRequired,
+	removeTarget: func.isRequired,
+	id: string.isRequired,
+	index: number.isRequired,
 };
 const defaultProps = {};
 

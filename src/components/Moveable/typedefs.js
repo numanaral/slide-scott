@@ -27,6 +27,6 @@
  * - 0
  * @param {String} transformOrigin style.transformOrigin
  * - '50% 50%'
- * @param {React.RefObject} [container = null] Container reference or null
+ * @param {String} slideId Container slide's Id
  * - useRef();
  */

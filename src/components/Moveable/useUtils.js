@@ -103,7 +103,11 @@ const useUtils = (onDelete, setTarget) => {
 			e.preventDefault();
 			e.stopPropagation();
 			clonedContainer.remove();
-			onDelete(id);
+
+			const parentContainer = e.target.closest('.container');
+			const slideId = parentContainer?.id.replace('container-', '');
+
+			onDelete(id, slideId);
 			setTarget(null);
 		});
 
@@ -156,9 +160,9 @@ const useUtils = (onDelete, setTarget) => {
 		topLeft,
 		rotate,
 		transformOrigin,
-		container = null
+		slideId
 	) => {
-		const _container = container || document.getElementById('container');
+		const _container = document.getElementById(`container-${slideId}`);
 		// cloned-draggable-image-1605254768341
 		// cloneNameConvention - classifierNameConvention - classifierType - uid
 		const idParts = id.split('-');
@@ -186,24 +190,31 @@ const useUtils = (onDelete, setTarget) => {
 		);
 	};
 
-	const generateElements = frames => {
-		if (!frames) return;
-		Object.keys(frames).forEach(key => {
-			const {
-				translateXY,
-				widthHeight,
-				topLeft,
-				rotate,
-				transformOrigin,
-			} = frames[key];
-			generateElement(
-				key,
-				translateXY,
-				widthHeight,
-				topLeft,
-				rotate,
-				transformOrigin
-			);
+	const generateElements = slides => {
+		if (!slides && !slides.length) return;
+
+		Object.keys(slides).forEach(key => {
+			const { frames } = slides[key];
+			if (frames) {
+				Object.keys(frames).forEach(frameKey => {
+					const {
+						translateXY,
+						widthHeight,
+						topLeft,
+						rotate,
+						transformOrigin,
+					} = frames[frameKey];
+					generateElement(
+						frameKey,
+						translateXY,
+						widthHeight,
+						topLeft,
+						rotate,
+						transformOrigin,
+						key
+					);
+				});
+			}
 		});
 	};
 
