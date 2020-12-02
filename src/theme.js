@@ -5,8 +5,9 @@ import {
 	// eslint-disable-next-line camelcase
 	unstable_createMuiStrictModeTheme,
 } from '@material-ui/core/styles';
-import { blue, pink } from '@material-ui/core/colors';
+// import { blue, pink } from '@material-ui/core/colors';
 import { createGlobalStyle } from 'styled-components';
+import 'fontsource-montserrat';
 
 const TRANSITION_CSS_PROPS = [
 	'background',
@@ -42,6 +43,7 @@ const ConstGlobalStyle = createGlobalStyle`
 			overflow: auto;
 		} */
 		#root {
+			transition: ${THEME_COLOR_TRANSITION};
 			overflow: auto;
 			position: relative;
 		}
@@ -129,8 +131,20 @@ const getThemeOptions = mode => {
 	return {
 		palette: {
 			type: mode,
-			primary: blue,
-			secondary: pink,
+			// primary: blue,
+			primary: {
+				light: '#71f2ff',
+				main: '#30BFCE',
+				dark: '#008e9d',
+				contrastText: '#fff',
+			},
+			// secondary: pink,
+			secondary: {
+				light: '#ffe479',
+				main: '#FFB249',
+				dark: '#c88214',
+				contrastText: '#fff',
+			},
 			error: {
 				light: '#e57373',
 				main: '#f44336',
@@ -166,16 +180,19 @@ const getThemeOptions = mode => {
 			},
 			black: '#121212',
 			background: (isDark && {
-				default: '#121212',
-				level1: '#212121',
+				default: '#212121',
+				level1: '#282c35',
 				level2: '#333',
-				paper: '#424242',
+				paper: '#50555f',
 			}) || {
 				default: '#fff',
-				level1: '#eeeeee',
-				level2: '#cccccc',
+				level1: '#ededed',
+				level2: '#e2e2e2',
 				paper: '#f5f5f5',
 			},
+		},
+		typography: {
+			fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
 		},
 		overrides: {
 			MuiPaper: {
