@@ -115,8 +115,8 @@ const SlideBuilder = () => {
 					style={{ height: 400 }}
 				>
 				</ContainerSpacingWrapper> */}
-				<ContainerTitle> Slide </ContainerTitle>
 				<Spacer direction="top" spacing="2" />
+				<ContainerTitle> Slides </ContainerTitle>
 				<ContainerWithCenteredItems
 					style={{
 						height: 500,

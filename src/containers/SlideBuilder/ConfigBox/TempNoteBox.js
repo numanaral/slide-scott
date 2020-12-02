@@ -54,7 +54,7 @@ const TempNoteBox = () => {
 
 	return (
 		<>
-			<ContainerTitle> Temp Notes </ContainerTitle>
+			<ContainerTitle> Notes </ContainerTitle>
 			<StyledContainerBody
 				style={{ height: '60%' }}
 				container
