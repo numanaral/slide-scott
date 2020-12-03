@@ -1,24 +1,28 @@
+import PrettyPre from 'components/PrettyPre';
+
 // Defaults
 const KEY = 'DialogProvider';
+// Have all of these to trigger a reset effect
+// when the next action is dispatched;
 const DEFAULT_VALUES = {
 	title: 'Preview',
-	// content: '',
-	// bodyComponent: PrettyPre,
-	// infoComponent: null,
-	// actionButtons: [],
-	// bg: 'default',
-	// type: 'text',
-	// scroll: 'paper',
-	// isOpen: false,
-	// hasFullScreenButton: false,
-	// isFullScreenToggled: false,
-	// onFullScreenToggle: false,
-	// hasDynamicWidth: true,
-	// fullScreen: false,
-	// pending: false,
-	// maxHeight: false,
-	// enableBackdropClick: false,
-	// disableEnforceFocus: false,
+	content: '',
+	bodyComponent: PrettyPre,
+	infoComponent: null,
+	actionButtons: [],
+	bg: 'default',
+	type: 'text',
+	scroll: 'paper',
+	isOpen: false,
+	hasFullScreenButton: false,
+	isFullScreenToggled: false,
+	onFullScreenToggle: false,
+	hasDynamicWidth: true,
+	fullScreen: false,
+	pending: false,
+	maxHeight: false,
+	enableBackdropClick: false,
+	disableEnforceFocus: false,
 };
 
 // Types
