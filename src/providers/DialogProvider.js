@@ -15,7 +15,7 @@ const DialogProvider = () => {
 		dispatch,
 	]);
 	const onCancel = useCallback(() => dispatch(hideDialog()), [dispatch]);
-	console.log(dialogProps);
+
 	return (
 		<Dialog
 			{...dialogProps}

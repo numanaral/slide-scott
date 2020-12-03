@@ -73,6 +73,8 @@ const VerticalTabs = ({ list, ...rest }) => {
 				value={value}
 				onChange={handleChange}
 				aria-label="Vertical tabs"
+				indicatorColor="secondary"
+				textColor="secondary"
 			>
 				{tabs}
 			</StyledTabs>

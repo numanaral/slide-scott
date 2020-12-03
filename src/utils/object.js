@@ -13,4 +13,18 @@
 const hasAnyFrom = (source, from) =>
 	source?.length === 0 || source.some(e => from.indexOf(e) >= 0);
 
-export { hasAnyFrom };
+const addToArray = (arr, item, where = 'first') =>
+	where === 'first' ? [item, ...arr] : [...arr, item];
+
+const editItemInArray = (arr, ind, newItem) => [
+	...arr.slice(0, ind),
+	newItem,
+	...arr.slice(ind + 1),
+];
+
+const removeItemInArray = (arr, ind) => [
+	...arr.slice(0, ind),
+	...arr.slice(ind + 1),
+];
+
+export { hasAnyFrom, addToArray, editItemInArray, removeItemInArray };

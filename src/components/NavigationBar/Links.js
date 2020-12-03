@@ -9,8 +9,9 @@ import styled from 'styled-components';
 const StyledLink = styled(Link)`
 	margin-left: 20px;
 	&.active {
+		font-weight: bold;
 		${({ theme }) => `
-			color: ${theme.palette.primary.main}
+			border-bottom: 2px solid ${theme.palette.primary.main};
 		`}
 	}
 `;

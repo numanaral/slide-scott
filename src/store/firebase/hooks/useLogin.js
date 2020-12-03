@@ -17,7 +17,6 @@ const useLogin = () => {
 	const googleLogin = () =>
 		firebase
 			.login({ provider: 'google', type: 'popup' })
-			// .then(s => {})
 			.then(notifySuccess)
 			.catch(notifyError);
 
@@ -27,17 +26,17 @@ const useLogin = () => {
 			.then(notifySuccess)
 			.catch(notifyError);
 
-	const emailLogin = creds =>
-		firebase
-			// .setPersistence(.setPersistence(this.remember.checked ? fireauth.Auth.Persistence.LOCAL : fireauth.Auth.Persistence.SESSION))
-			.login(creds)
-			.then(notifySuccess)
-			.catch(notifyError);
+	const emailLogin = credentials =>
+		firebase.login(credentials).then(notifySuccess).catch(notifyError);
+
+	const emailSignUp = credentials =>
+		firebase.createUser(credentials).then(notifySuccess).catch(notifyError);
 
 	return {
 		googleLogin,
 		githubLogin,
 		emailLogin,
+		emailSignUp,
 		logOut,
 	};
 };

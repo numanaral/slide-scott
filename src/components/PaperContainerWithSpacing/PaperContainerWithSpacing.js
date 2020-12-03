@@ -9,7 +9,7 @@ const PaperWrapper = styled(Paper)`
 	text-align: left;
 	${({ theme }) => `
 		margin-bottom: ${theme.spacing(2)}px;
-		background-color: ${theme.palette.background.level1};
+		background-color: ${theme.palette.background.paper};
 	`}
 `;
 

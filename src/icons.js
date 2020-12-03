@@ -20,6 +20,7 @@ export {
 	Star as StarIcon,
 	FeaturedPlayList as TemplateIcon,
 	Add as AddIcon,
+	Send as SubmitIcon,
 	// Temp on the preferences
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,

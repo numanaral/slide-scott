@@ -9,7 +9,7 @@ const NotificationProvider = () => {
 	const snackbarProps = useSelector(makeSelectSnackbarProps());
 	const dispatch = useDispatch();
 	const hideSnackbar = useCallback(() => dispatch(hideNotification()), [
-		// dispatch,
+		dispatch,
 	]);
 
 	return <Snackbar {...snackbarProps} onClose={hideSnackbar} />;

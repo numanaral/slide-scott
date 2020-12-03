@@ -69,7 +69,10 @@ const TopNavigationBar = () => {
 		menuProps: {
 			PaperProps: {
 				style: {
-					backgroundColor: theme.palette.secondary.main,
+					backgroundColor:
+						theme.palette.secondary[
+							(theme.palette.type === 'dark' && 'dark') || 'main'
+						],
 				},
 			},
 		},
@@ -94,18 +97,21 @@ const TopNavigationBar = () => {
 	return (
 		<StyledAppBar position="sticky" color="secondary">
 			<Toolbar>
-				<div style={{ flexGrow: 1 }} />
-				<Links />
-				<LogoPlaceholder />
+				{isLoggedIn && (
+					<>
+						<div style={{ flexGrow: 1 }} />
+						<Links />
+						<LogoPlaceholder />
+					</>
+				)}
 				<StyledLink component={ReactRouterLink} to="/">
 					<StyledLogo src={logo} alt="logo" />
 				</StyledLink>
 				<div style={{ flexGrow: 1 }} />
-				<ClearLocalStorageButton />
+				{/* <ClearLocalStorageButton /> */}
 				<ThemeToggle />
 				<Menu {...menuProps} />
-				<div style={{ flexGrow: 1 }} />
-				<div style={{ flexGrow: 1 }} />
+				{isLoggedIn && <div style={{ flexGrow: 1 }} />}
 			</Toolbar>
 		</StyledAppBar>
 	);

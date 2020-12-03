@@ -29,12 +29,13 @@ const reactReduxFirebaseConfig = {
 	],
 	// Add "User" role to the user on signUp
 	profileFactory: user => {
+		const _user = user?.user || user;
 		const profile = {
-			email: user.email || user.providerData[0].email,
+			email: _user.email || _user.providerData[0].email,
 			roles: ['User'],
 		};
-		if (user.providerData && user.providerData.length) {
-			profile.providerData = user.providerData;
+		if (_user.providerData && _user.providerData.length) {
+			profile.providerData = _user.providerData;
 		}
 		return profile;
 	},
