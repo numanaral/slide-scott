@@ -14,23 +14,23 @@ import Spacer from 'components/Spacer';
 
 const customIcons = {
 	1: {
-		icon: <SentimentVeryDissatisfiedIcon />,
+		icon: <SentimentVeryDissatisfiedIcon style={{ fontSize: 90 }} />,
 		label: 'Very Dissatisfied',
 	},
 	2: {
-		icon: <SentimentDissatisfiedIcon />,
+		icon: <SentimentDissatisfiedIcon style={{ fontSize: 90 }} />,
 		label: 'Dissatisfied',
 	},
 	3: {
-		icon: <SentimentSatisfiedIcon />,
+		icon: <SentimentSatisfiedIcon style={{ fontSize: 90 }} />,
 		label: 'Neutral',
 	},
 	4: {
-		icon: <SentimentSatisfiedAltIcon />,
+		icon: <SentimentSatisfiedAltIcon style={{ fontSize: 90 }} />,
 		label: 'Satisfied',
 	},
 	5: {
-		icon: <SentimentVerySatisfiedIcon />,
+		icon: <SentimentVerySatisfiedIcon style={{ fontSize: 90 }} />,
 		label: 'Very Satisfied',
 	},
 };
@@ -102,11 +102,8 @@ const Analytics = () => {
 		'insane',
 		'vicious',
 		'unwise',
-		'nobody',
 		'abysmal',
 		'quit',
-		'sobbing',
-		'messy',
 		'corrupt',
 		'ruthless',
 		'plain',
@@ -146,17 +143,29 @@ const Analytics = () => {
 	return (
 		<ContainerWithCenteredItems>
 			<Typography component="h2" variant="h4">
-				Average Student Rating:
+				Average student rating:
+			</Typography>
+			<Spacer direction="bottom" />
+			<PaperContainerWithSpacing>
+				<Spacer direction="top" />
+				<ContainerWithCenteredItems>
+					<Rating
+						name="customized-icons"
+						defaultValue={4}
+						getLabelText={value => customIcons[value].label}
+						IconContainerComponent={IconContainer}
+					/>
+				</ContainerWithCenteredItems>
+				<Spacer direction="bottom" />
+			</PaperContainerWithSpacing>
+			<Spacer direction="top" spacing="3" />
+			<Typography component="h2" variant="h4">
+				Average duration spent on slides:
 			</Typography>
 			<Spacer direction="bottom" />
 			<PaperContainerWithSpacing>
 				<ContainerWithCenteredItems>
-					<Rating
-						name="customized-icons"
-						defaultValue={4.5}
-						getLabelText={value => customIcons[value].label}
-						IconContainerComponent={IconContainer}
-					/>
+					<Typography variant="h1">35 s</Typography>
 				</ContainerWithCenteredItems>
 			</PaperContainerWithSpacing>
 			<Spacer direction="top" spacing="3" />

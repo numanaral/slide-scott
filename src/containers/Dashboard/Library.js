@@ -28,21 +28,22 @@ const Library = () => {
 		notifySuccess,
 		notifyError,
 		notifyInfo,
+		notifyWarning,
 	} = useNotificationProvider();
 	// const { push } = useHistory();
 
-	const onClick = v => {
-		switch (v) {
-			case 'delete':
-				notifyInfo('Coming soon');
-				break;
-			case 'templateFrom':
-				notifyInfo('Coming soon');
-				break;
-			default:
-				break;
-		}
-	};
+	// const onClick = v => {
+	// 	switch (v) {
+	// 		case 'delete':
+	// 			notifyInfo('Coming soon');
+	// 			break;
+	// 		case 'templateFrom':
+	// 			notifyInfo('Coming soon');
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// };
 
 	// const menuProps = useMenu({
 	// 	label: 'Options',
@@ -63,16 +64,16 @@ const Library = () => {
 		notifySuccess('Play');
 	};
 	const onFavorite = () => {
-		notifySuccess('Favorite');
+		notifyInfo('Favorite');
 	};
 	const onShare = () => {
-		notifySuccess('Share');
+		notifyInfo('Share');
 	};
 	const onTemplate = () => {
-		notifySuccess('Template');
+		notifyInfo('Template');
 	};
 	const onEdit = () => {
-		notifySuccess('Edit');
+		notifyWarning('Edit');
 	};
 
 	const buttons = {
@@ -91,11 +92,7 @@ const Library = () => {
 			/>
 		),
 		SHARE: (
-			<TooltipButton
-				tooltip="Share"
-				onClick={onFavorite}
-				icon={ShareIcon}
-			/>
+			<TooltipButton tooltip="Share" onClick={onShare} icon={ShareIcon} />
 		),
 		TEMPLATE: (
 			<TooltipButton
@@ -114,15 +111,13 @@ const Library = () => {
 		),
 	};
 
-	const onCardClick = (props, v) => {
-		console.log(props, v);
-	};
+	const onCardClick = onPlay;
 	// const headerAction = <Menu {...menuProps} />;
 	const headerAction = buttons.DELETE;
 	const bottomActions = [
 		buttons.FAVORITE,
 		buttons.SHARE,
-		buttons.PRESENT,
+		buttons.TEMPLATE,
 		buttons.EDIT,
 	];
 
