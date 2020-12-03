@@ -53,6 +53,7 @@ const LazyDevSettings = loadable(() => import(`routes/pages/DevSettings`));
 const LazyNotFound = loadable(() => import(`./pages/NotFound`));
 const LazyUnauthorized = loadable(() => import(`./pages/Unauthorized`));
 const LazyLogin = loadable(() => import(`./pages/Login`));
+const LazySignUp = loadable(() => import(`./pages/SignUp`));
 /* eslint-enable prettier/prettier */
 
 const PRIVATE_ROUTES = [
@@ -99,16 +100,22 @@ const ROUTE_LIST = [
 		roles: PAGE_ROLES.DEV,
 	},
 	{
-		title: 'Unauthorized',
-		description: `User does not have access to the following page.`,
-		path: '/unauthorized',
-		component: <LazyUnauthorized />,
-	},
-	{
 		title: 'Login',
 		description: `Login to the app.`,
 		path: '/login',
 		component: <LazyLogin />,
+	},
+	{
+		title: 'SignUp',
+		description: `Sign up for an account.`,
+		path: '/signup',
+		component: <LazySignUp />,
+	},
+	{
+		title: 'Unauthorized',
+		description: `User does not have access to the following page.`,
+		path: '/unauthorized',
+		component: <LazyUnauthorized />,
 	},
 	{
 		title: 'Not Found',
@@ -137,12 +144,6 @@ const SHARED_DISPLAY_PAGES = [
 			tooltip: 'Dashboard',
 			text: 'Dashboard',
 			to: '/dashboard',
-		},
-		{
-			label: 'Preferences',
-			tooltip: 'Preferences',
-			text: 'Preferences',
-			to: '/preferences',
 		},
 		{
 			label: 'Slide Builder',

@@ -42,53 +42,51 @@ const RouteWrapper = ({
 	const { isAuthorizing, user } = useAuth();
 	const { isAuthorizing: isAuthorizingProfile, profile } = useProfile();
 
-	const userName = user.displayName;
-	const userRoles = profile.roles || [];
-	const userAuthError = '';
+	const userName = user?.displayName || user?.email;
+	const userRoles = profile?.roles || [];
+	// const userAuthError = '';
 
 	const _isAuthorizing = isAuthorizing || isAuthorizingProfile;
 
 	const {
 		push,
-		location: { state },
+		location: { state, search },
 	} = useHistory();
 	const { pathname } = useLocation();
 	const referrerRoles = state?.roles || [];
 
-	const isAuthRequired = roles.length;
-	const isReferrerAuthRequired = referrerRoles.length;
-	const requiredRoles = (isAuthRequired && roles) || referrerRoles;
+	const isAuthRequiredForTheCurrentPage = !!roles.length;
+	const isAuthRequiredForTheReferrerPage = !!referrerRoles.length;
+	const requiredRoles =
+		(isAuthRequiredForTheCurrentPage && roles) || referrerRoles;
+	const isAuthRequired =
+		isAuthRequiredForTheCurrentPage || isAuthRequiredForTheReferrerPage;
 
 	const render = renderProps => {
-		if (isAuthRequired && _isAuthorizing) {
+		// Redirect to Authorizing via Login when auth is taking place
+		if (isAuthRequiredForTheCurrentPage && _isAuthorizing) {
 			return <LazyLogin {...renderProps} authorizing />;
 		}
-		if (!userName) {
-			if (isAuthRequired && pathname !== '/login') {
-				push(`${BASE_PATH}/login?returnUrl=${pathname}`, { roles });
-			}
 
-			if (pathname === '/login') {
-				if (
-					userAuthError ||
-					(isReferrerAuthRequired && !_isAuthorizing)
-				)
-					return (
-						<LazyLogin
-							{...renderProps}
-							error={userAuthError || 'Please login to continue'}
-						/>
-					);
-			}
+		// If user is not logged in and auth is required
+		if (!userName && isAuthRequired && pathname !== `${BASE_PATH}/login`) {
+			push(`${BASE_PATH}/login?returnUrl=${pathname}`, { roles });
 		}
 
-		if (isAuthRequired) {
-			// If logged in, don't allow to /login or /unauthorized directly
-			if (pathname === '/login' || pathname === '/unauthorized') {
-				push(`${BASE_PATH}/learn`);
-			}
+		// If logged in and
+		if (userName) {
+			const returnUrl = (search || '').replace('?returnUrl=', '');
 
-			if (!hasAnyFrom(requiredRoles, userRoles)) {
+			if (returnUrl) {
+				push(returnUrl);
+			} else if (
+				// If logged in, don't allow to /login or /unauthorized directly
+				pathname === `${BASE_PATH}/login` ||
+				pathname === `${BASE_PATH}/unauthorized`
+			) {
+				// Redirect back to home
+				push(`${BASE_PATH}/`);
+			} else if (!hasAnyFrom(requiredRoles, userRoles)) {
 				return <LazyUnauthorized {...renderProps} />;
 			}
 		}
