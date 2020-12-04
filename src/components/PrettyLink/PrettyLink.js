@@ -1,7 +1,11 @@
+import React from 'react';
+import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const PrettyLink = styled(Link)`
+import { propTypes, defaultProps } from './types';
+
+const StyledLink = styled(Typography)`
 	${({ theme, $arrow, $color }) => `
 		position: relative;
 		display: inline-block;
@@ -43,5 +47,19 @@ const PrettyLink = styled(Link)`
 		}
 	`}
 `;
+
+const PrettyLink = ({ external, to, arrow, ...props }) => (
+	<StyledLink
+		$arrow={arrow}
+		{...((external && { component: 'a', href: to, target: '_blank' }) || {
+			to,
+			component: Link,
+		})}
+		{...props}
+	/>
+);
+
+PrettyLink.propTypes = propTypes;
+PrettyLink.defaultProps = defaultProps;
 
 export default PrettyLink;

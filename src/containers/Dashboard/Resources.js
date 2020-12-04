@@ -309,23 +309,6 @@ const PROFESSIONAL_DEVELOPMENT_RESOURCES = [
 
 /* eslint-enable max-len */
 
-const ExternalLink = ({ link, text }) => (
-	<PrettyLink
-		$arrow
-		to={{
-			pathname: link,
-		}}
-		target="_blank"
-	>
-		{text}
-	</PrettyLink>
-);
-
-ExternalLink.propTypes = {
-	link: string.isRequired,
-	text: string.isRequired,
-};
-
 const StyledImg = styled.img`
 	max-height: 120px;
 	max-width: 120px;
@@ -337,7 +320,10 @@ const LinkWrapper = (onEdit, onDelete) => values => {
 	const { description, imageLink, imageAlt, link, linkName, id } = values;
 	const hasEditAndDelete = onEdit && onDelete;
 	return (
-		<PaperContainerWithSpacing key={id || link}>
+		<PaperContainerWithSpacing
+			key={id || link}
+			containerProps={{ style: { marginBottom: 16 } }}
+		>
 			<Grid container>
 				<Grid item xs={2}>
 					<StyledImg src={imageLink} alt={imageAlt} />
@@ -349,7 +335,9 @@ const LinkWrapper = (onEdit, onDelete) => values => {
 					alignContent="space-between"
 				>
 					<Grid item xs={12}>
-						<ExternalLink link={link} text={linkName} />
+						<PrettyLink to={link} external>
+							{linkName}
+						</PrettyLink>
 					</Grid>
 					<Grid item xs={12}>
 						<Typography>{description}</Typography>
@@ -549,10 +537,12 @@ const Resources = () => {
 			<Spacer direction="top" spacing="3" />
 			<Typography component="h1" variant="h3">
 				Educator Resources{' '}
-				<ExternalLink
-					link="https://www.refseek.com/directory/teacher_resources.html"
-					text="Source"
-				/>
+				<PrettyLink
+					to="https://www.refseek.com/directory/teacher_resources.html"
+					external
+				>
+					Source
+				</PrettyLink>
 			</Typography>
 			<Spacer direction="top" spacing="2" />
 			{EDUCATOR_RESOURCES.map(LinkWrapper())}
@@ -560,10 +550,12 @@ const Resources = () => {
 			<Spacer direction="top" spacing="5" />
 			<Typography component="h1" variant="h3">
 				Professional Development{' '}
-				<ExternalLink
-					link="https://www.refseek.com/directory/teacher_resources.html"
-					text="Source"
-				/>
+				<PrettyLink
+					to="https://www.refseek.com/directory/teacher_resources.html"
+					external
+				>
+					Source
+				</PrettyLink>
 			</Typography>
 			<Spacer direction="top" spacing="2" />
 			{PROFESSIONAL_DEVELOPMENT_RESOURCES.map(LinkWrapper())}
