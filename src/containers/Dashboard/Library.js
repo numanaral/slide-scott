@@ -4,24 +4,9 @@ import styled from 'styled-components';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 // import { LazyIcon } from 'icons';
 import Card from 'components/Card';
-import useMenu from 'components/Menu/useMenu';
-import {
-	DeleteIcon,
-	MoreItemsIcon,
-	ShareIcon,
-	StarIcon,
-	EditIcon,
-	TemplateIcon,
-} from 'icons';
+import { DeleteIcon, ShareIcon, StarIcon, EditIcon, TemplateIcon } from 'icons';
 import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
-import Menu from 'components/Menu';
-import { Grid } from '@material-ui/core';
 import TooltipButton from 'components/TooltipButton';
-
-const Wrapper = styled(Grid)`
-	width: 400px;
-	height: 400px;
-`;
 
 const Library = () => {
 	const {
@@ -124,7 +109,7 @@ const Library = () => {
 	const cards = [
 		{
 			id: 'asdad12d12dasd',
-			imageUrl: `https://pixabay.com/get/54e3d1414b4fad0bffd89960c62e37781d36d8e15a59_1280.png`,
+			imageUrl: `https://cdn.pixabay.com/photo/2015/10/12/14/50/calculator-983900_1280.jpg`,
 			creator: '',
 			title: 'Addition',
 			description: 'Teaching additions for Gr1',
@@ -146,7 +131,7 @@ const Library = () => {
 		},
 		{
 			id: 'asfasddad12d12dasd',
-			imageUrl: `https://pixabay.com/get/54e3d1414b4fad0bffd89960c62e37781d36d8e15a59_1280.png`,
+			imageUrl: `https://cdn.pixabay.com/photo/2015/10/12/14/50/calculator-983900_1280.jpg`,
 			creator: '',
 			title: 'Multiplications',
 			description: 'Teaching Multiplications for Gr1',

@@ -44,18 +44,18 @@ const Form = ({
 		items.forEach(({ name }) => {
 			inputRefs.current[name] = createRef();
 		});
-	}, []);
+	}, [items]);
 	const onInvalid = err => {
 		const errorKeys = Object.keys(err);
 		if (errorKeys.length) {
 			const refName = errorKeys[0];
-			if (inputRefs.current[refName].current) {
+			if (inputRefs.current?.[refName]?.current) {
 				inputRefs.current[refName].current.focus();
 				return;
 			}
 			// Give just enough time for refs to load
 			setTimeout(() => {
-				inputRefs.current[refName].current.focus();
+				inputRefs.current?.[refName]?.current?.focus();
 			}, 100);
 		}
 	};

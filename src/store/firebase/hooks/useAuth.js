@@ -24,7 +24,9 @@ const useAuth = () => {
 	const isLoggedIn =
 		!isAuthorizing && !isEmpty && (user.displayName || user.email);
 
-	return { isAuthorizing, isLoggedIn, user };
+	const userId = user.uid;
+
+	return { isAuthorizing, isLoggedIn, user, userId };
 };
 
 export default useAuth;

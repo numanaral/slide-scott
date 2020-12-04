@@ -9,6 +9,7 @@ export {
 	WbSunny as LightThemeIcon,
 	Brightness2 as DarkThemeIcon,
 	SentimentVeryDissatisfied as SadIcon,
+	SentimentSatisfied as HappyIcon,
 	AccountCircleRounded as AccountIcon,
 	Assessment as AnalyticsIcon,
 	Bookmarks as BookmarksIcon,
@@ -28,6 +29,15 @@ export {
 	// Modal
 	Fullscreen as FullscreenIcon,
 	FullscreenExit as ExitFullscreenIcon,
+	// Tools
+	TextFields as TextQuestionIcon,
+	Toc as MultipleChoiceQuestionIcon,
+	Image as ImageIcon,
+	Movie as VideoIcon,
+	Audiotrack as AudioIcon,
+	Assignment as TextIcon,
+	Link as LinkIcon,
+	ChangeHistory as ShapeIcon,
 } from '@material-ui/icons';
 
 const LazyIcon = loadable(async ({ name }) => {

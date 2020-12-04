@@ -16,7 +16,7 @@ const DEFAULT_VALUES = {
 	isOpen: false,
 	hasFullScreenButton: false,
 	isFullScreenToggled: false,
-	onFullScreenToggle: false,
+	onFullScreenToggle: null,
 	hasDynamicWidth: true,
 	fullScreen: false,
 	pending: false,

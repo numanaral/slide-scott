@@ -18,9 +18,9 @@ const DialogProvider = () => {
 
 	return (
 		<Dialog
-			{...dialogProps}
 			onFullScreenToggle={onFullScreenToggle}
 			onCancel={onCancel}
+			{...dialogProps}
 		/>
 	);
 };
