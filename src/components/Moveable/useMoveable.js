@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
+import useTool from 'containers/SlideBuilder/Toolbox/useTool';
 import { useRef, useState } from 'react';
 
 // 	1: {
@@ -9,8 +10,23 @@ import { useRef, useState } from 'react';
 // 	2: {
 // 		frames: {},
 // 	},
-const useMoveable = (previousFrames, setFramesForSlide) => {
-	// debugger;
+const useMoveable = (previousFrames, setSlides) => {
+	const setFramesForSlide = (frames, slideId) => {
+		if (!slideId) return;
+		setSlides(prev => {
+			// const index = prev.findIndex(data => data.id === slideId);
+			// return editItemInArray(prev, index, frames);
+			return {
+				...prev,
+				[slideId]: {
+					frames,
+				},
+			};
+		});
+	};
+	const handleDraggable = useTool(setSlides);
+	
+
 	const slideId = useRef('');
 	const targetId = useRef('');
 	const frames = useRef(previousFrames);
@@ -18,8 +34,8 @@ const useMoveable = (previousFrames, setFramesForSlide) => {
 	// Update saved frames and trigger a refresh to update the Json
 	// This won't be needed after the testing phase
 	const [, setTriggerCounter] = useState(0);
-	const updateLocalStorageFrames = () => {
-		setFramesForSlide(frames.current[slideId.current].frames, slideId.current);
+	const updateLocalStorageFrames = (newFrames = null) => {
+		setFramesForSlide(newFrames || frames.current[slideId.current].frames, slideId.current);
 	};
 	const updateTriggerCounter = () => {
 		setTriggerCounter(v => v + 1);
@@ -117,7 +133,27 @@ const useMoveable = (previousFrames, setFramesForSlide) => {
 		},
 	});
 
-	const setTarget = (target, slide) => {
+	const removeTarget = (id, slide) => {
+		slideId.current = slide;
+
+		delete frames.current[slide].frames[id];
+		updateLocalStorageFrames();
+	};
+
+	const handleDraggableUpdate = (slide, draggableType, _setTarget, newProps = {}, draggableId = null, defaultValues = {}) => {
+		_setTarget(null, slide);
+		handleDraggable(slide, draggableType, (newFramesForSlide, newTargetId) => {
+			updateLocalStorageFrames(newFramesForSlide)
+			frames.current[slide].frames = newFramesForSlide
+			setTimeout(() => {
+				const target = document.getElementById(newTargetId);
+				_setTarget(target, slide);
+			}, 150);
+		}, newProps, draggableId, defaultValues);
+	}
+
+	const setTarget = (target, slide, newElementProps = null) => {
+		// debugger;
 		setOptions(v => ({
 			...v,
 			target,
@@ -125,35 +161,18 @@ const useMoveable = (previousFrames, setFramesForSlide) => {
 
 		// Set the current targetId
 		targetId.current = target?.id;
+
+		// Set the current slide
 		slideId.current = slide;
 
-		if (target) {debugger;
-			// Update current frame
-			if (!frames.current[slideId.current].frames[target.id]) {
-				frames.current[slideId.current].frames[target.id] = {
-					translateXY: [0, 0],
-					widthHeight: [
-						parseFloat(target.style.width),
-						parseFloat(target.style.height),
-					],
-					topLeft: [
-						parseFloat(target.style.top),
-						parseFloat(target.style.left),
-					],
-					rotate: 0,
-					transformOrigin: '50% 50%',
-				};
-			}
+		// Update current frame
+		if (newElementProps) {
+			handleDraggableUpdate(slide, newElementProps.draggableType, setTarget, newElementProps);
+		} else if (target) {
 			updateLocalStorageFrames();
 		}
 	};
 
-	const removeTarget = (id, slide) => {
-		slideId.current = slide;
-
-		delete [slideId.current].frames[id];
-		updateLocalStorageFrames();
-	};
 
 	return {
 		setTarget,
@@ -161,6 +180,8 @@ const useMoveable = (previousFrames, setFramesForSlide) => {
 		options,
 		setOptions,
 		frames,
+		updateLocalStorageFrames,
+		handleDraggableUpdate,
 	};
 };
 

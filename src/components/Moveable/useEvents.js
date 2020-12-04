@@ -12,8 +12,8 @@ const useEvents = (
 
 	const onDragStart = e => {
 		e.dataTransfer.setData(
-			'draggableClassifier',
-			e.target.getAttribute('draggable-classifier')
+			'draggableType',
+			e.target.getAttribute('draggable-type')
 		);
 		e.dataTransfer.setData('size', e.target.getAttribute('tool-size'));
 		// eslint-disable-next-line no-param-reassign
@@ -22,15 +22,27 @@ const useEvents = (
 
 	const onDrop = e => {
 		e.preventDefault();
+
 		const slideId = getContainerId(e.target);
-		const newElement = cloneNewElement(
-			e.dataTransfer.getData('draggableClassifier'),
-			e.dataTransfer.getData('size'),
-			e.target,
-			e.clientX,
-			e.clientY
-		);
-		setTarget(newElement, slideId);
+		const size = e.dataTransfer.getData('size');
+		const container = e.target;
+
+		const rect = container.getBoundingClientRect();
+		const left = e.clientX - rect.left - size; // x position within the element.
+		const top = e.clientY - rect.top - size; // y position within the element.
+		const width = size * 2;
+		const height = size * 2;
+
+		const newElementProps = {
+			draggableType: e.dataTransfer.getData('draggableType'),
+			translateXY: [0, 0],
+			widthHeight: [width, height],
+			topLeft: [top, left],
+			rotate: 0,
+			transformOrigin: '50% 50%',
+		};
+
+		setTarget(null, slideId, newElementProps);
 	};
 
 	const allowDrop = e => {
@@ -51,23 +63,25 @@ const useEvents = (
 	 * @param {EventWithElement} e - The observable event.
 	 */
 	const onDropZoneClick = e => {
-		document.querySelectorAll('.cloned-draggable').forEach(() => {
-			// https://codepen.io/pistell/pen/XWWdZrv
-			// https://stackoverflow.com/questions/24183286/drag-and-drop-to-div-behind-absolutely-positioned-div
-			const elements = document.elementsFromPoint(e.clientX, e.clientY);
-			const chosenTarget = elements.find(key =>
-				key.matches('.cloned-draggable')
-			);
-
-			showCurrentDeleteButtonAndHideOthers(chosenTarget);
-
-			const parentContainer = e.target.closest('.container');
-			const slideId = getContainerId(parentContainer);
-
-			// Select / Deselect <Moveable /> control box
-			if (chosenTarget) setTarget(chosenTarget, slideId);
-			else setTarget(undefined, slideId);
-		});
+		// document.querySelectorAll('.cloned-draggable').forEach(() => {
+		// 	// https://codepen.io/pistell/pen/XWWdZrv
+		// 	// https://stackoverflow.com/questions/24183286/drag-and-drop-to-div-behind-absolutely-positioned-div
+		// 	const elements = document.elementsFromPoint(e.clientX, e.clientY);
+		// 	const chosenTarget = elements.find(key =>
+		// 		key.matches('.cloned-draggable')
+		// 	);
+		// 	showCurrentDeleteButtonAndHideOthers(chosenTarget);
+		// 	const parentContainer = e.target.closest('.container');
+		// 	const slideId = getContainerId(parentContainer);
+		// 	// Select / Deselect <Moveable /> control box
+		// 	if (chosenTarget) {
+		// 		if (!chosenTarget.classList.contains('clone')) return;
+		// 		setTarget(chosenTarget, slideId);
+		// 	} else {
+		// 		debugger;
+		// 		setTarget(undefined, slideId);
+		// 	}
+		// });
 	};
 
 	return {

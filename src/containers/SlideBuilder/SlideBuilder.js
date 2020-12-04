@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Typography } from '@material-ui/core';
 
 import LazyMoveable from 'components/Moveable/Lazy';
 import FullSizeGrid from 'components/FullSizeGrid';
@@ -7,10 +8,8 @@ import TooltipButton from 'components/TooltipButton';
 import { AddIcon } from 'icons';
 import PrettyJson from 'components/PrettyJson';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
-import { Typography } from '@material-ui/core';
 import Spacer from 'components/Spacer';
 import useLocalStorage from 'hooks/useLocalStorage';
-import useUtils from 'components/Moveable/useUtils';
 import useMoveable from 'components/Moveable/useMoveable';
 import useEvents from 'components/Moveable/useEvents';
 import { smoothScroll } from 'utils';
@@ -22,59 +21,56 @@ import ContainerTitle from './shared/ContainerTitle';
 const SLIDES_LOCAL_STORAGE_KEY = 'slides-draft';
 
 const SlideBuilder = () => {
+	const [currentlyFocusedElement, setCurrentlyFocusedElement] = useState({});
 	const [slides, setSlides] = useLocalStorage(SLIDES_LOCAL_STORAGE_KEY, {
 		[Date.now().toString()]: {
 			frames: {},
 		},
 	});
 
-	const setFramesForSlide = (frames, slideId) => {
-		debugger;
-		if (!slideId) return;
+	const deleteSlide = slideId => {
 		setSlides(prev => {
-			// const index = prev.findIndex(data => data.id === slideId);
-			// return editItemInArray(prev, index, frames);
-			return {
-				...prev,
-				[slideId]: {
-					frames,
-				},
-			};
+			const clone = { ...prev };
+			delete clone[slideId];
+			return clone;
 		});
 	};
+	// handleDraggable('textQuestion', 'Text Question');
 
-	const { setTarget, removeTarget, options, frames } = useMoveable(
-		slides,
-		setFramesForSlide
-	);
-	const { generateElements } = useUtils(removeTarget, setTarget);
+	const {
+		setTarget,
+		removeTarget,
+		options,
+		frames,
+		handleDraggableUpdate,
+	} = useMoveable(slides, setSlides);
+	// const { generateElements } = useUtils(removeTarget, setTarget);
 	const { onDragStart } = useEvents();
 
-	console.log({
-		slides,
-		frames,
-	});
-
-	// const [previousFrames, setPreviousFrames] = useLocalStorage(
-	// 	SLIDE_BUILDER_PREVIOUS_FRAMES_KEY,
-	// 	{}
-	// );
-
-	// Only generate the previous elements in the first render
 	useEffect(() => {
-		const generatePreviousElements = async () => {
-			// NOTE: We can just call non-lazy versions but
-			// this preloading is only temporary so...
-			// This waits for these two components to load
-			// before generating the previous frames
-			await LazyToolBox.load();
-			await LazySlideBox.load();
-			generateElements(slides);
+		const onDelete = e => {
+			if (
+				currentlyFocusedElement.draggableId &&
+				currentlyFocusedElement.slideId &&
+				e.key === 'Delete'
+			) {
+				setTarget(null, currentlyFocusedElement.slideId);
+				removeTarget(
+					currentlyFocusedElement.draggableId,
+					currentlyFocusedElement.slideId
+				);
+			}
 		};
-
-		generatePreviousElements();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		document.addEventListener('keyup', onDelete);
+		return () => {
+			document.removeEventListener('keyup', onDelete);
+		};
+	}, [
+		currentlyFocusedElement.draggableId,
+		currentlyFocusedElement.slideId,
+		removeTarget,
+		setTarget,
+	]);
 
 	const onAddNewSlide = () => {
 		const newId = Date.now().toString();
@@ -92,13 +88,16 @@ const SlideBuilder = () => {
 		// I better put this in useEffect but will keep it here for now
 		setTimeout(() => {
 			smoothScroll(document.getElementById(`container-${newId}`));
-		}, 200);
+		}, 100);
 	};
 
 	const sharedProps = {
 		setTarget,
 		removeTarget,
-		setFramesForSlide,
+		deleteSlide,
+		handleDraggableUpdate,
+		currentlyFocusedElement,
+		setCurrentlyFocusedElement,
 	};
 
 	return (
@@ -119,7 +118,7 @@ const SlideBuilder = () => {
 				<ContainerTitle> Slides </ContainerTitle>
 				<ContainerWithCenteredItems
 					style={{
-						height: 500,
+						height: '85%',
 						overflow: 'auto',
 						position: 'relative',
 					}}
@@ -132,7 +131,7 @@ const SlideBuilder = () => {
 							{...slides[key]}
 							// key={slide.id}
 							// frames={slide.frames}
-							id={key}
+							slideId={key}
 							index={ind + 1}
 						/>
 					))}

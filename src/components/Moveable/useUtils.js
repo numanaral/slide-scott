@@ -23,6 +23,7 @@ const useUtils = (onDelete, setTarget) => {
 	/**
 	 * Clones and configures the element style and children
 	 *
+	 * @param {String} draggableType Draggable element's type
 	 * @param {HtmlElement} original Draggable element - cloning from
 	 * @param {String} id
 	 * @param {String|Number} top
@@ -35,6 +36,7 @@ const useUtils = (onDelete, setTarget) => {
 	 * @param {String|Number} transformOrigin
 	 */
 	const cloneAndConfigure = (
+		draggableType,
 		original,
 		id,
 		container,
@@ -68,8 +70,9 @@ const useUtils = (onDelete, setTarget) => {
 					.getPropertyValue('background-color')};
 			`
 		);
-		clonedContainer.className = 'cloned-draggable';
+		clonedContainer.className = 'cloned-draggable clone';
 		clonedContainer.id = id;
+		clonedContainer.setAttribute('draggable-type', draggableType);
 
 		// SVG
 		clonedSvg.setAttribute('style', 'width: 100%; height: 100%;');
@@ -102,11 +105,11 @@ const useUtils = (onDelete, setTarget) => {
 		deleteButton.addEventListener('click', e => {
 			e.preventDefault();
 			e.stopPropagation();
-			clonedContainer.remove();
 
 			const parentContainer = e.target.closest('.container');
-			const slideId = parentContainer?.id.replace('container-', '');
-
+			const slideId = parentContainer?.id.split('-').pop();
+			debugger;
+			clonedContainer.remove();
 			onDelete(id, slideId);
 			setTarget(null);
 		});
@@ -118,15 +121,15 @@ const useUtils = (onDelete, setTarget) => {
 
 	/** @type {cloneNewElement} */
 	const cloneNewElement = (
-		draggableClassifier,
+		draggableType,
 		size,
 		container,
 		clientX,
 		clientY
 	) => {
-		const id = `cloned-${draggableClassifier}-${Date.now()}`;
+		const id = `cloned-${draggableType}-${Date.now()}`;
 		const original = document.querySelector(
-			`div[draggable-classifier="${draggableClassifier}"`
+			`div[draggable-type="${draggableType}"`
 		);
 
 		// https://stackoverflow.com/a/42111623/13161405
@@ -136,6 +139,7 @@ const useUtils = (onDelete, setTarget) => {
 		const top = clientY - rect.top; // y position within the element.
 
 		const clonedElement = cloneAndConfigure(
+			draggableType,
 			original,
 			id,
 			container,
@@ -154,6 +158,7 @@ const useUtils = (onDelete, setTarget) => {
 	// TODO2: Remove duplicate code, generate an extra method
 	/** @type {generateElement} */
 	const generateElement = (
+		draggableType,
 		id,
 		translateXY,
 		widthHeight,
@@ -166,16 +171,16 @@ const useUtils = (onDelete, setTarget) => {
 		// cloned-draggable-image-1605254768341
 		// cloneNameConvention - classifierNameConvention - classifierType - uid
 		const idParts = id.split('-');
-		const [, , classifierType] = idParts;
-		const draggableClassifier = `draggable-${classifierType}`;
+		const [, classifierType] = idParts;
 		const original = document.querySelector(
-			`div[draggable-classifier="${draggableClassifier}"`
+			`div[draggable-type="${classifierType}"`
 		);
 
 		const [translateX, translateY] = translateXY;
 		const [width, height] = widthHeight;
 		const [top, left] = topLeft;
 		cloneAndConfigure(
+			draggableType,
 			original,
 			id,
 			_container,
@@ -198,21 +203,27 @@ const useUtils = (onDelete, setTarget) => {
 			if (frames) {
 				Object.keys(frames).forEach(frameKey => {
 					const {
+						draggableType,
 						translateXY,
 						widthHeight,
 						topLeft,
 						rotate,
 						transformOrigin,
+						componentType,
 					} = frames[frameKey];
-					generateElement(
-						frameKey,
-						translateXY,
-						widthHeight,
-						topLeft,
-						rotate,
-						transformOrigin,
-						key
-					);
+
+					if (!componentType) {
+						generateElement(
+							draggableType,
+							frameKey,
+							translateXY,
+							widthHeight,
+							topLeft,
+							rotate,
+							transformOrigin,
+							key
+						);
+					}
 				});
 			}
 		});

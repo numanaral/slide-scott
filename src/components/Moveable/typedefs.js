@@ -3,7 +3,7 @@
  * dropped into the droppable area
  *
  * @callback cloneNewElement
- * @param {String} draggableClassifier getAttribute('draggable-classifier')
+ * @param {String} draggableType getAttribute('draggable-type')
  * @param {String|Number} size Size to be used by width and height
  * @param {HTMLElement} container e.target
  * @param {Number} clientX e.clientX
@@ -14,6 +14,7 @@
  * Generates a pre-existing elements on the droppable area
  *
  * @callback generateElement
+ * @param {String} draggableType getAttribute('draggable-type')
  * @param {String} id Previously generated identifier, eg:
  * - cloned-draggable-image-1605254768341
  * @param {Array<Number>} translateXY style.transform.translate
@@ -28,5 +29,6 @@
  * @param {String} transformOrigin style.transformOrigin
  * - '50% 50%'
  * @param {String} slideId Container slide's Id
- * - useRef();
+ * @param {String} componentType Type of the component
+ * @param {Object} componentProps Component props
  */
