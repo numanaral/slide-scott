@@ -8,7 +8,9 @@ const useProfile = () => {
 
 	const isAuthorizing = !isLoaded;
 
-	return { isAuthorizing, profile };
+	const roles = profile.roles || [];
+
+	return { isAuthorizing, roles, profile };
 };
 
 export default useProfile;

@@ -40,10 +40,12 @@ const RouteWrapper = ({
 	...rest
 }) => {
 	const { isAuthorizing, user } = useAuth();
-	const { isAuthorizing: isAuthorizingProfile, profile } = useProfile();
+	const {
+		isAuthorizing: isAuthorizingProfile,
+		roles: userRoles,
+	} = useProfile();
 
 	const userName = user?.displayName || user?.email;
-	const userRoles = profile?.roles || [];
 	// const userAuthError = '';
 
 	const _isAuthorizing = isAuthorizing || isAuthorizingProfile;

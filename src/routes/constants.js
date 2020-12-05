@@ -1,23 +1,19 @@
-import { AccountIcon } from 'icons';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import loadable from 'utils/loadable';
 
-const ROLES = {
+const USER_ROLES = {
 	DEV: 'Developer',
-	USER: 'User',
+	FREE_USER: 'User',
 	PAID_USER: 'Paid User',
 };
 
 const PAGE_ROLES = {
 	// PUBLIC: '*',
-	DEV: [ROLES.DEV],
-	PRIVATE: [ROLES.DEV, ROLES.USER, ROLES.PAID_USER],
-	PAID: [ROLES.DEV, ROLES.PAID_USER],
+	LOGGED_IN: [USER_ROLES.DEV, USER_ROLES.PAID_USER, USER_ROLES.FREE_USER],
+	PAID: [USER_ROLES.DEV, USER_ROLES.PAID_USER],
 };
-
-const TEMP_TEST_ROLES = ['LoggedInUser'];
 
 // This is kinda required for gh-pages and SPA to work well together
 const BASE_PATH = '/slide-scott';
@@ -62,23 +58,20 @@ const PRIVATE_ROUTES = [
 		description: `Dashboard to manage your slides, templates, and other settings. You can also view your analytics.`,
 		path: '/dashboard',
 		component: <LazyDashboard />,
-		roles: TEMP_TEST_ROLES,
 	},
 	{
 		title: 'Slide Builder',
 		description: `Build your slides!`,
 		path: '/slide-builder',
 		component: <LazySlideBuilder />,
-		roles: TEMP_TEST_ROLES,
 	},
 	{
 		title: 'Preferences',
 		description: `Adjust your app preferences.`,
 		path: '/preferences',
 		component: <LazyPreferences />,
-		roles: TEMP_TEST_ROLES,
 	},
-].map(mapRoles(PAGE_ROLES.PRIVATE));
+].map(mapRoles(PAGE_ROLES.LOGGED_IN));
 
 const ROUTE_LIST = [
 	{
@@ -97,7 +90,7 @@ const ROUTE_LIST = [
 		description: `Developer settings`,
 		path: '/dev-settings',
 		component: <LazyDevSettings />,
-		roles: PAGE_ROLES.DEV,
+		roles: USER_ROLES.DEV,
 	},
 	{
 		title: 'Login',
@@ -151,7 +144,7 @@ const SHARED_DISPLAY_PAGES = [
 			text: 'Slide Builder',
 			to: '/slide-builder',
 		},
-	].map(e => ({ ...e, roles: TEMP_TEST_ROLES })),
+	].map(mapRoles(PAGE_ROLES.LOGGED_IN)),
 	// {
 	// 	label: 'Account',
 	// 	tooltip: 'Account',
@@ -177,4 +170,4 @@ const NAV_LIST_MOBILE = [
 	// },
 ].map(mapBasePathForLinks);
 
-export { BASE_PATH, ROUTE_LIST, NAV_LIST, NAV_LIST_MOBILE };
+export { BASE_PATH, USER_ROLES, ROUTE_LIST, NAV_LIST, NAV_LIST_MOBILE };
