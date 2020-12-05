@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 import LazyMoveable from 'components/Moveable/Lazy';
 import FullSizeGrid from 'components/FullSizeGrid';
 import ContainerSpacingWrapper from 'components/ContainerSpacingWrapper';
 import TooltipButton from 'components/TooltipButton';
-import { AddIcon } from 'icons';
+import { AddIcon, SettingsIcon } from 'icons';
 import PrettyJson from 'components/PrettyJson';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import Spacer from 'components/Spacer';
@@ -13,10 +13,12 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import useMoveable from 'components/Moveable/useMoveable';
 import useEvents from 'components/Moveable/useEvents';
 import { smoothScroll } from 'utils';
+import Drawer from 'components/Drawer';
 import LazyToolBox from './Toolbox/Lazy';
 import LazySlideBox from './SlideBox/Lazy';
 import LazyConfigBox from './ConfigBox/Lazy';
 import ContainerTitle from './shared/ContainerTitle';
+import SlideSettings from './SlideSettings';
 
 const SLIDES_LOCAL_STORAGE_KEY = 'slides-draft';
 
@@ -101,21 +103,42 @@ const SlideBuilder = () => {
 	};
 
 	return (
-		<FullSizeGrid container>
-			<FullSizeGrid item xs={2}>
-				<ContainerSpacingWrapper spacing={2} topBottom rightLeft>
-					<LazyToolBox onDragStart={onDragStart} />
-				</ContainerSpacingWrapper>
-			</FullSizeGrid>
-			<FullSizeGrid item xs={8}>
-				{/* <ContainerSpacingWrapper
-					spacing={2}
-					topBottom
-					style={{ height: 400 }}
-				>
-				</ContainerSpacingWrapper> */}
-				<Spacer direction="top" spacing="2" />
-				<ContainerTitle> Slides </ContainerTitle>
+		<ContainerSpacingWrapper container spacing={5}>
+			<ContainerSpacingWrapper item xs={2} spacing={1} rightLeft>
+				<ContainerWithCenteredItems
+					style={{
+						height: '3%',
+					}}
+				/>
+				<LazyToolBox onDragStart={onDragStart} />
+			</ContainerSpacingWrapper>
+			<ContainerSpacingWrapper item xs={8} spacing={1} rightLeft>
+				<ContainerWithCenteredItems
+					style={{
+						height: '3%',
+					}}
+				/>
+				<ContainerTitle>
+					Slides{' '}
+					<Drawer
+						button={
+							<TooltipButton
+								tooltip="Open settings"
+								// This will be overridden
+								onClick={() => null}
+								icon={SettingsIcon}
+							/>
+						}
+					>
+						<SlideSettings
+							onSubmit={data => {
+								console.log(data);
+								debugger;
+							}}
+							defaultValues={{}}
+						/>
+					</Drawer>
+				</ContainerTitle>
 				<ContainerWithCenteredItems
 					style={{
 						height: '85%',
@@ -136,8 +159,11 @@ const SlideBuilder = () => {
 						/>
 					))}
 				</ContainerWithCenteredItems>
-				<Spacer direction="bottom" spacing="2" />
-				<ContainerWithCenteredItems>
+				<ContainerWithCenteredItems
+					style={{
+						height: '3%',
+					}}
+				>
 					<TooltipButton
 						tooltip="Add new slide"
 						text="Add new slide"
@@ -153,13 +179,18 @@ const SlideBuilder = () => {
 					</Typography>
 					<PrettyJson json={JSON.stringify(slides)} />
 				</ContainerWithCenteredItems>
-			</FullSizeGrid>
-			<FullSizeGrid item xs={2}>
-				<ContainerSpacingWrapper spacing={2} topBottom rightLeft>
-					<LazyConfigBox />
-				</ContainerSpacingWrapper>
-			</FullSizeGrid>
-		</FullSizeGrid>
+			</ContainerSpacingWrapper>
+			<ContainerSpacingWrapper item xs={2} spacing={1} rightLeft>
+				<ContainerWithCenteredItems
+					style={{
+						height: '3%',
+					}}
+				/>
+				<LazyConfigBox />
+				{/* <ContainerSpacingWrapper spacing={2} topBottom rightLeft>
+				</ContainerSpacingWrapper> */}
+			</ContainerSpacingWrapper>
+		</ContainerSpacingWrapper>
 	);
 };
 

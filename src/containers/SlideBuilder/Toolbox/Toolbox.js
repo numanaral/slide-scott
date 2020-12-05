@@ -11,6 +11,7 @@ import FullSizeGrid from 'components/FullSizeGrid';
 // import * as icons from './icons';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import Spacer from 'components/Spacer';
+import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import { propTypes, defaultProps } from './types';
 import Tool, { MARGIN } from './Tool';
 import ContainerTitle from '../shared/ContainerTitle';
@@ -18,6 +19,7 @@ import ContainerBody from '../shared/ContainerBody';
 import TOOLS from './config';
 
 const Toolbox = ({ onDragStart }) => {
+	const { notifyInfo } = useNotificationProvider();
 	const toolboxRef = useRef();
 	const [toolSize, setToolSize] = useState(70);
 
@@ -51,7 +53,14 @@ const Toolbox = ({ onDragStart }) => {
 	);
 
 	return (
-		<FullSizeGrid innerRef={toolboxRef}>
+		<ContainerWithCenteredItems
+			style={{
+				height: '95%',
+				overflow: 'auto',
+				position: 'relative',
+			}}
+			innerRef={toolboxRef}
+		>
 			<ContainerTitle> Tools </ContainerTitle>
 			<ContainerBody container alignContent="flex-start">
 				{Object.keys(toolList).map(key => (
@@ -63,6 +72,11 @@ const Toolbox = ({ onDragStart }) => {
 						{toolList[key].map(
 							({ settings: { icon, name, type } }) => (
 								<Tool
+									onClick={() =>
+										notifyInfo(
+											'Drag into the slide container.'
+										)
+									}
 									container
 									key={name}
 									tool-size={toolSize}
@@ -96,7 +110,7 @@ const Toolbox = ({ onDragStart }) => {
 					</Fragment>
 				))}
 			</ContainerBody>
-		</FullSizeGrid>
+		</ContainerWithCenteredItems>
 	);
 };
 
