@@ -310,8 +310,8 @@ const PROFESSIONAL_DEVELOPMENT_RESOURCES = [
 /* eslint-enable max-len */
 
 const StyledImg = styled.img`
-	max-height: 120px;
-	max-width: 120px;
+	max-height: 80px;
+	max-width: 80px;
 	border-radius: 20px;
 `;
 
@@ -324,16 +324,11 @@ const LinkWrapper = (onEdit, onDelete) => values => {
 			key={id || link}
 			containerProps={{ style: { marginBottom: 16 } }}
 		>
-			<Grid container>
-				<Grid item xs={2}>
+			<Grid container spacing={3}>
+				<Grid item xs="auto">
 					<StyledImg src={imageLink} alt={imageAlt} />
 				</Grid>
-				<Grid
-					container
-					item
-					xs={(hasEditAndDelete && 9) || 10}
-					alignContent="space-between"
-				>
+				<Grid container item xs alignContent="space-between">
 					<Grid item xs={12}>
 						<PrettyLink to={link} external>
 							{linkName}
