@@ -1,3 +1,8 @@
+import { isPromise } from 'utils';
+import {
+	displayErrorMessage,
+	displaySuccessMessage,
+} from 'store/redux/reducers/snackbar/actions';
 import {
 	SET_DIALOG_PROPS,
 	HIDE_DIALOG,
@@ -129,6 +134,7 @@ const displayFormDialog = (title, formProps, rest = {}) => ({
 const displayConfirmDialog = (
 	title,
 	callback,
+	onError = null,
 	confirmText = 'Yes',
 	cancelText = 'No',
 	rest = {}
@@ -147,16 +153,23 @@ const displayConfirmDialog = (
 				{
 					text: confirmText,
 					isConfirm: true,
-					callback: () => {
+					callback: async () => {
 						dispatch(setConfirmPending(true));
-						callback(
-							() => {
-								dispatch(hideDialog());
-							},
-							() => {
-								dispatch(setConfirmPending(false));
+
+						try {
+							if (isPromise(callback)) await callback();
+							else callback();
+							dispatch(hideDialog());
+							dispatch(displaySuccessMessage('Success!'));
+						} catch (err) {
+							if (onError) {
+								onError(err);
+								return;
 							}
-						);
+							dispatch(displayErrorMessage(err.message));
+						} finally {
+							dispatch(setConfirmPending(false));
+						}
 					},
 				},
 			],

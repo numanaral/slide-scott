@@ -41,11 +41,19 @@ const useDialogProvider = () => {
 	);
 
 	const openConfirmDialog = useCallback(
-		(title, callback, confirmText = 'Yes', cancelText = 'No', rest = {}) =>
+		(
+			title,
+			callback,
+			onError = null,
+			confirmText = 'Yes',
+			cancelText = 'No',
+			rest = {}
+		) =>
 			dispatch(
 				displayConfirmDialog(
 					title,
 					callback,
+					onError,
 					confirmText,
 					cancelText,
 					rest
