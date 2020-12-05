@@ -22,12 +22,12 @@ const ThemeToggle = () => {
 			options={[
 				{
 					value: 'dark',
-					// label: 'Dark',
+					label: 'Dark',
 					icon: <DarkThemeIcon style={{ color: indigo.A700 }} />,
 				},
 				{
 					value: 'light',
-					// label: 'Light',
+					label: 'Light',
 					icon: <LightThemeIcon style={{ color: yellow[500] }} />,
 				},
 			]}

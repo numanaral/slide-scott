@@ -1,5 +1,5 @@
-import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
+import { Grid, Typography } from '@material-ui/core';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import * as yup from 'yup';
@@ -503,7 +503,6 @@ const Resources = () => {
 
 					return newResult;
 				});
-				closeDialog();
 			}
 		);
 	};

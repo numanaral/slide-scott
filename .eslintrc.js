@@ -39,6 +39,7 @@ module.exports = {
 			{ props: true, ignorePropertyModificationsFor: ['draft'] },
 		],
 		'import/no-named-as-default': OFF,
+		'import/no-unresolved': [ERROR, { caseSensitive: false }],
 		'import/prefer-default-export': OFF,
 		'linebreak-style': [ERROR, 'windows'],
 		'max-len': [

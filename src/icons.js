@@ -23,6 +23,7 @@ export {
 	Add as AddIcon,
 	Send as SubmitIcon,
 	Palette as PaletteIcon,
+	Settings as SettingsIcon,
 	// Temp on the preferences
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,

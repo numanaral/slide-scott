@@ -90,7 +90,7 @@ const ROUTE_LIST = [
 		description: `Developer settings`,
 		path: '/dev-settings',
 		component: <LazyDevSettings />,
-		roles: USER_ROLES.DEV,
+		roles: [USER_ROLES.DEV],
 	},
 	{
 		title: 'Login',
@@ -138,12 +138,12 @@ const SHARED_DISPLAY_PAGES = [
 			text: 'Dashboard',
 			to: '/dashboard',
 		},
-		{
-			label: 'Slide Builder',
-			tooltip: 'Slide Builder',
-			text: 'Slide Builder',
-			to: '/slide-builder',
-		},
+		// {
+		// 	label: 'Slide Builder',
+		// 	tooltip: 'Slide Builder',
+		// 	text: 'Slide Builder',
+		// 	to: '/slide-builder',
+		// },
 	].map(mapRoles(PAGE_ROLES.LOGGED_IN)),
 	// {
 	// 	label: 'Account',
@@ -151,6 +151,12 @@ const SHARED_DISPLAY_PAGES = [
 	// 	icon: AccountIcon,
 	// 	disabled: true,
 	// },
+	{
+		label: 'Preferences',
+		tooltip: 'Preferences',
+		text: 'Preferences',
+		to: '/preferences',
+	},
 ].map(mapBasePathForLinks);
 
 const NAV_LIST = [...SHARED_DISPLAY_PAGES];

@@ -67,6 +67,12 @@ const getErrorMessageFromFetch = (
 	return responseData.Message || fallbackError || _error;
 };
 
+/** @see https://github.com/then/is-promise/blob/master/index.js */
+const isPromise = obj =>
+	!!obj &&
+	(typeof obj === 'object' || typeof obj === 'function') &&
+	typeof obj.then === 'function';
+
 export {
 	firstCapital,
 	pascalToSentence,
@@ -75,4 +81,5 @@ export {
 	getNiceDateVanilla,
 	smoothScroll,
 	getErrorMessageFromFetch,
+	isPromise,
 };

@@ -12,6 +12,8 @@ import useAuth from 'store/firebase/hooks/useAuth';
 import { BASE_PATH } from 'routes/constants';
 import Spacer from 'components/Spacer';
 import ClearLocalStorageButton from 'components/ClearLocalStorageButton';
+import TooltipButton from 'components/TooltipButton';
+import { Home } from '@material-ui/icons';
 import Links from './Links';
 import logo from './full-logo.png';
 // import logo from './full-logo-transparent.png';
@@ -63,8 +65,20 @@ const TopNavigationBar = () => {
 		push(`${BASE_PATH}/`);
 	};
 
+	let accountName;
+
+	if (user.displayName || user.email) {
+		accountName = user.email;
+		if (user.displayName) {
+			const nameSplit = user.displayName.split(' ');
+			accountName = `${nameSplit[0][0]} ${
+				nameSplit[nameSplit.length - 1][0]
+			}`;
+		}
+	}
+
 	const menuProps = useMenu({
-		label: (!isLoggedIn && 'Account') || user.displayName || user.email,
+		label: (!isLoggedIn && 'Account') || accountName,
 		small: true,
 		menuProps: {
 			PaperProps: {
@@ -99,7 +113,7 @@ const TopNavigationBar = () => {
 			<Toolbar>
 				{isLoggedIn && (
 					<>
-						<div style={{ flexGrow: 1 }} />
+						{/* <div style={{ flexGrow: 1 }} /> */}
 						<Links />
 						<LogoPlaceholder />
 					</>
@@ -109,9 +123,16 @@ const TopNavigationBar = () => {
 				</StyledLink>
 				<div style={{ flexGrow: 1 }} />
 				{/* <ClearLocalStorageButton /> */}
-				<ThemeToggle />
+
+				{/* <ThemeToggle /> */}
+				<TooltipButton
+					tooltip="Dashboard"
+					// text="Dashboard"
+					onClick={() => null}
+					icon={Home}
+				/>
 				<Menu {...menuProps} />
-				{isLoggedIn && <div style={{ flexGrow: 1 }} />}
+				{/* {isLoggedIn && <div style={{ flexGrow: 1 }} />} */}
 			</Toolbar>
 		</StyledAppBar>
 	);
