@@ -51,7 +51,7 @@ module.exports = {
 				ignoreTrailingComments: true,
 				ignoreTemplateLiterals: true,
 			},
-		], // *
+		],
 		'no-alert': WARN,
 		'no-console': OFF,
 		'no-continue': OFF,

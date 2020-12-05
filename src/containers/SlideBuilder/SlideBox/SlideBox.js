@@ -3,12 +3,14 @@ import React, { createRef, useEffect, useRef, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
+import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import useOuterClick from 'hooks/useOuterClick';
 import FullSizeGrid from 'components/FullSizeGrid';
 import useUtils from 'components/Moveable/useUtils';
 import useEvents from 'components/Moveable/useEvents';
 import TooltipButton from 'components/TooltipButton';
-import { DeleteIcon, EditIcon } from 'icons';
+import { DeleteIcon, EditIcon, PaletteIcon } from 'icons';
+import useRoleWrapper from 'store/firebase/hooks/useRoleWrapper';
 import Droppable from './Droppable';
 import { propTypes, defaultProps } from './types';
 import ContainerBody from '../shared/ContainerBody';
@@ -18,9 +20,9 @@ const StyledTooltipButton = styled(TooltipButton)`
 	top: 10px;
 	position: absolute;
 	z-index: 1;
-	${({ $isFocused, $isSecondary, $forSlide }) => `
+	${({ $isFocused, $secondary, $forSlide }) => `
 		display: ${(($forSlide || $isFocused) && 'initial') || 'none'};
-		${($isSecondary && 'left: 10') || 'right: 10'}px;
+		${($secondary && 'left: 10') || 'right: 10'}px;
 		${($forSlide && 'right: 0; top: 0;') || ''};
 	`}
 `;
@@ -118,7 +120,7 @@ const DraggableElement = ({
 			<Component {...componentProps} />
 			<StyledTooltipButton
 				$isFocused={isFocused}
-				$isSecondary
+				$secondary
 				tooltip="Edit tool"
 				// className="cloned-delete-button"
 				onClick={() => {
@@ -159,6 +161,14 @@ const SlideBox = ({
 	currentlyFocusedElement,
 	setCurrentlyFocusedElement,
 }) => {
+	const {
+		notifySuccess,
+		notifyError,
+		notifyInfo,
+		notifyWarning,
+	} = useNotificationProvider();
+	const wrapPaidFeature = useRoleWrapper();
+
 	const { showCurrentDeleteButtonAndHideOthers, cloneNewElement } = useUtils(
 		removeTarget,
 		setTarget
@@ -191,6 +201,17 @@ const SlideBox = ({
 						deleteSlide(slideId);
 					}}
 					icon={DeleteIcon}
+				/>
+				<StyledTooltipButton
+					$forSlide
+					$secondary
+					tooltip="Select a color"
+					onClick={() => {
+						wrapPaidFeature(() => {
+							notifyInfo('Not yet implemented.');
+						});
+					}}
+					icon={PaletteIcon}
 				/>
 				<Droppable
 					className="container"

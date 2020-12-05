@@ -22,10 +22,10 @@ export {
 	FeaturedPlayList as TemplateIcon,
 	Add as AddIcon,
 	Send as SubmitIcon,
+	Palette as PaletteIcon,
 	// Temp on the preferences
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,
-	Palette as PaletteIcon,
 	// Modal
 	Fullscreen as FullscreenIcon,
 	FullscreenExit as ExitFullscreenIcon,
