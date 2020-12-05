@@ -1,13 +1,23 @@
-import { string, arrayOf, func, node, shape, oneOfType } from 'prop-types';
+import {
+	string,
+	arrayOf,
+	func,
+	node,
+	shape,
+	oneOfType,
+	elementType,
+} from 'prop-types';
 
 import { date } from 'components/types';
+import { LayerIcon } from 'icons';
 
 const propTypes = {
-	thumbnail: string,
+	thumbnail: oneOfType([string, elementType]),
 	title: string.isRequired,
 	description: string,
 	creator: string,
 	date,
+	updatedOn: date,
 	onCardClick: func,
 	headerAction: node,
 	bottomActions: arrayOf(
@@ -22,10 +32,11 @@ const propTypes = {
 };
 
 const defaultProps = {
-	thumbnail: '',
+	thumbnail: LayerIcon,
 	description: '',
 	creator: '',
 	date: '',
+	updatedOn: '',
 	onCardClick: null,
 	headerAction: null,
 	bottomActions: [],

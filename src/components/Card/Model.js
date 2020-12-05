@@ -1,5 +1,3 @@
-import { getDateFromFirebaseObject } from 'store/firebase/utils';
-
 /**
  * @example
  * ```js
@@ -24,6 +22,7 @@ class CardModel {
 		title,
 		description,
 		date,
+		updatedOn,
 		onCardClick,
 		headerAction,
 		bottomActions
@@ -34,6 +33,7 @@ class CardModel {
 		this.title = title;
 		this.description = description;
 		this.date = date;
+		this.updatedOn = updatedOn;
 		this.onCardClick = onCardClick;
 		this.headerAction = headerAction;
 		this.bottomActions = bottomActions;
@@ -46,41 +46,11 @@ class CardModel {
 		title: this.title,
 		description: this.description,
 		date: this.date,
+		updatedOn: this.updatedOn,
 		onCardClick: this.onCardClick,
 		headerAction: this.headerAction,
 		bottomActions: this.bottomActions,
 	});
-
-	static fromFirebaseObject = (firebaseObject, actions = {}) => {
-		const {
-			// userId,
-			// createdOn,
-			// slides,
-			updatedOn,
-			// props from firebase
-			id,
-			thumbnail,
-			creator,
-			title,
-			description,
-		} = firebaseObject;
-
-		const { onCardClick, headerAction, bottomActions } = actions;
-
-		const date = getDateFromFirebaseObject(updatedOn);
-
-		return new CardModel(
-			id,
-			thumbnail,
-			creator,
-			title,
-			description,
-			date,
-			onCardClick,
-			headerAction,
-			bottomActions
-		);
-	};
 }
 
 export { CardModel };

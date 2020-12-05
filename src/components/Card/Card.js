@@ -1,4 +1,10 @@
-import React, { cloneElement, Fragment, isValidElement, useState } from 'react';
+import React, {
+	cloneElement,
+	createElement,
+	Fragment,
+	isValidElement,
+	useState,
+} from 'react';
 import {
 	Card as MuiCard,
 	CardActionArea,
@@ -12,16 +18,21 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 
-import { LayerIcon } from 'icons';
 import { getNiceDateVanilla, pascalToSentence } from 'utils';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import { propTypes, defaultProps } from './types';
 
 const StyledCardMedia = styled(CardMedia)`
-	max-height: 190px;
-	max-width: 400px;
+	max-height: 200px;
+	/* max-width: 400px; */
 	${({ $hasHeader }) => `
 		${(!$hasHeader && 'max-height: 260px') || ''}
+	`}
+`;
+
+const StyledCardActionArea = styled(CardActionArea)`
+	${({ $fullHeight }) => `
+		${($fullHeight && 'height: 100%; text-align: center;') || ''}
 	`}
 `;
 
@@ -32,6 +43,7 @@ const Card = ({
 	description,
 	creator,
 	date,
+	updatedOn,
 	onCardClick,
 	headerAction,
 	bottomActions,
@@ -49,12 +61,15 @@ const Card = ({
 			avatar += split[split.length - 1][0];
 		}
 	}
-
-	const hasHeader = avatar || headerAction || creator || date;
+	const _date = updatedOn || date;
+	const hasHeader = avatar || headerAction || creator || _date;
+	const hasBottomActions = !!bottomActions.length;
+	const fullHeightCardAction = !hasBottomActions;
+	// const fullHeightCardAction = !hasHeader && !hasBottomActions;
 
 	const cardBody = (
 		<>
-			{(thumbnail && (
+			{(!!thumbnail && typeof thumbnail === 'string' && (
 				<StyledCardMedia
 					$hasHeader={hasHeader ? 1 : 0}
 					component="img"
@@ -64,10 +79,10 @@ const Card = ({
 			)) || (
 				<ContainerWithCenteredItems
 					container
-					vertical
+					// vertical
 					alignItems="center"
 				>
-					<LayerIcon style={{ fontSize: 100 }} />
+					{createElement(thumbnail, { style: { fontSize: 100 } })}
 				</ContainerWithCenteredItems>
 			)}
 			<CardContent>
@@ -103,34 +118,55 @@ const Card = ({
 						}),
 					})}
 					{...(creator && { title: creator })}
-					{...(date && { subheader: getNiceDateVanilla(date) })}
+					{...(_date && {
+						subheader: (
+							<Typography
+								component="b"
+								color="textSecondary"
+								variant="body1"
+							>
+								<b>
+									{`${
+										(updatedOn && 'Updated On') ||
+										'Created On'
+									}: `}
+								</b>
+								{getNiceDateVanilla(_date)}
+							</Typography>
+						),
+					})}
 				/>
 			)}
 			{(onCardClick && (
-				<CardActionArea onClick={() => onCardClick(id)}>
+				<StyledCardActionArea
+					$fullHeight={fullHeightCardAction}
+					onClick={() => onCardClick(id)}
+				>
 					{cardBody}
-				</CardActionArea>
+				</StyledCardActionArea>
 			)) || <> {cardBody} </>}
-			<CardActions>
-				{bottomActions.map(
-					(button, ind) =>
-						(isValidElement(button) &&
-							cloneElement(button, {
-								key: ind,
-								onClick: () => button.props.onClick(id),
-							})) ||
-						(typeof button === 'object' && (
-							<Button
-								size="small"
-								color="primary"
-								key={button.text}
-								onClick={e => button.onClick(id)}
-							>
-								{button.text}
-							</Button>
-						))
-				)}
-			</CardActions>
+			{hasBottomActions && (
+				<CardActions>
+					{bottomActions.map(
+						(button, ind) =>
+							(isValidElement(button) &&
+								cloneElement(button, {
+									key: ind,
+									onClick: () => button.props.onClick(id),
+								})) ||
+							(typeof button === 'object' && (
+								<Button
+									size="small"
+									color="primary"
+									key={button.text}
+									onClick={e => button.onClick(id)}
+								>
+									{button.text}
+								</Button>
+							))
+					)}
+				</CardActions>
+			)}
 		</MuiCard>
 	);
 };

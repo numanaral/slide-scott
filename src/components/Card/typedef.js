@@ -13,6 +13,8 @@
  * @property {String} [creator = ''] Creator name / title
  * @property {String} [description = ''] Description for the card
  * @property {String} [date = ''] Date
+ * @property {String} [updatedOn = ''] Updated On Date
+ * - This will replace the date if exists
  * @property {Function} [onCardClick = ''] - Function called when the card is clicked
  * - id => {}
  * @param {import("react").ReactElement} [headerAction = ''] Header element, a react node
