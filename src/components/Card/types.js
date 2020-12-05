@@ -3,11 +3,11 @@ import { string, arrayOf, func, node, shape, oneOfType } from 'prop-types';
 import { date } from 'components/types';
 
 const propTypes = {
-	imageUrl: string,
+	thumbnail: string,
 	title: string.isRequired,
 	description: string,
 	creator: string,
-	date: date.isRequired,
+	date,
 	onCardClick: func,
 	headerAction: node,
 	bottomActions: arrayOf(
@@ -22,9 +22,10 @@ const propTypes = {
 };
 
 const defaultProps = {
-	imageUrl: '',
+	thumbnail: '',
 	description: '',
 	creator: '',
+	date: '',
 	onCardClick: null,
 	headerAction: null,
 	bottomActions: [],
