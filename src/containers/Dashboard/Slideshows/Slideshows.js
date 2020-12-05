@@ -1,24 +1,24 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 
-import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import Spacer from 'components/Spacer';
+import FullSizeGrid from 'components/FullSizeGrid';
 import DemoCards from './DemoCards';
 import MySlideshows from './MySlideshows';
 
 const Library = () => {
 	return (
-		<ContainerWithCenteredItems container horizontal spacing={3}>
-			<ContainerWithCenteredItems>
+		<FullSizeGrid container spacing={3}>
+			<FullSizeGrid style={{ marginLeft: 10 }}>
 				<Typography variant="h3"> My Slides </Typography>
-			</ContainerWithCenteredItems>
+			</FullSizeGrid>
 			<MySlideshows />
 			<Spacer direction="top" spacing="5" />
-			<ContainerWithCenteredItems>
+			<FullSizeGrid style={{ marginLeft: 10 }}>
 				<Typography variant="h3"> Demo Slideshows </Typography>
-			</ContainerWithCenteredItems>
+			</FullSizeGrid>
 			<DemoCards />
-		</ContainerWithCenteredItems>
+		</FullSizeGrid>
 	);
 };
 
