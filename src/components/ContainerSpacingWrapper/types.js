@@ -1,4 +1,4 @@
-const { bool } = require('prop-types');
+import { bool } from 'prop-types';
 
 const propTypes = {
 	topBottom: bool,

@@ -1,4 +1,4 @@
-const { string, oneOf } = require('prop-types');
+import { string, oneOf } from 'prop-types';
 
 const propTypes = {
 	html: string.isRequired,

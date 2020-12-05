@@ -1,4 +1,4 @@
-const { useRef, useEffect } = require('react');
+import { useRef, useEffect } from 'react';
 
 /** @see https://stackoverflow.com/a/54292872/13161405 */
 const useOuterClick = cb => {

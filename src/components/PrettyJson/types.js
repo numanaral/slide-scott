@@ -1,4 +1,4 @@
-const { string, oneOfType, object, array } = require('prop-types');
+import { string, oneOfType, object, array } from 'prop-types';
 
 const codeType = oneOfType([string, object, array]);
 

@@ -1,4 +1,4 @@
-const { shape, string } = require('prop-types');
+import { shape, string } from 'prop-types';
 
 const routerBasePropTypes = {
 	location: shape({
