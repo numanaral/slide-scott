@@ -1,46 +1,21 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import useTool from 'containers/SlideBuilder/Toolbox/useTool';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import deepClone from 'clone-deep';
 
-// 	1: {
-// 		frames: {},
-// 	},
-// 	2: {
-// 		frames: {},
-// 	},
-const useMoveable = (previousFrames, setSlides) => {
-	const setFramesForSlide = (frames, slideId) => {
-		if (!slideId) return;
-		setSlides(prev => {
-			// const index = prev.findIndex(data => data.id === slideId);
-			// return editItemInArray(prev, index, frames);
-			return {
-				...prev,
-				[slideId]: {
-					frames,
-				},
-			};
-		});
-	};
+const useMoveable = setSlides => {
+	const [currentlyFocusedElement, setCurrentlyFocusedElement] = useState({});
+	const { draggableId: targetId, slideId } = currentlyFocusedElement;
+
+	const currentTargetId = useRef(targetId);
+	const currentSlideId = useRef(slideId);
+
+	useEffect(() => {
+		currentTargetId.current = targetId;
+		currentSlideId.current = slideId;
+	}, [targetId, slideId]);
+
 	const handleDraggable = useTool(setSlides);
-	
-
-	const slideId = useRef('');
-	const targetId = useRef('');
-	const frames = useRef(previousFrames);
-
-	// Update saved frames and trigger a refresh to update the Json
-	// This won't be needed after the testing phase
-	const [, setTriggerCounter] = useState(0);
-	const updateLocalStorageFrames = (newFrames = null) => {
-		setFramesForSlide(newFrames || frames.current[slideId.current].frames, slideId.current);
-	};
-	const updateTriggerCounter = () => {
-		setTriggerCounter(v => v + 1);
-		updateLocalStorageFrames();
-	};
 
 	const [options, setOptions] = useState({
 		// Set the target as null until someone moves and clones it onto the yellow background
@@ -63,125 +38,234 @@ const useMoveable = (previousFrames, setSlides) => {
 		padding: { left: 0, top: 0, right: 0, bottom: 0 },
 		onResizeStart: ({ setOrigin, dragStart }) => {
 			setOrigin(['%', '%']);
-			if (!targetId.current || !dragStart) return;
+			if (!currentTargetId.current || !dragStart) return;
 
-			dragStart.set(frames.current[slideId.current].frames[targetId.current].translateXY);
+			setSlides(prev => {
+				dragStart.set(
+					prev[currentSlideId.current].frames[currentTargetId.current]
+						.translateXY
+				);
+
+				return prev;
+			});
 		},
 		onResize: ({ target, width, height, drag }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
 			const { beforeTranslate } = drag;
 
-			frames.current[slideId.current].frames[targetId.current].translateXY = beforeTranslate;
-			frames.current[slideId.current].frames[targetId.current].widthHeight = [width, height];
+			setSlides(prev => {
+				return {
+					...prev,
+					[currentSlideId.current]: {
+						frames: {
+							...prev[currentSlideId.current].frames,
+							[currentTargetId.current]: {
+								...prev[currentSlideId.current].frames[
+									currentTargetId.current
+								],
+								translateXY: beforeTranslate,
+								widthHeight: [width, height],
+							},
+						},
+					},
+				};
+			});
 			target.style.width = `${width}px`;
 			target.style.height = `${height}px`;
 			target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
 		},
-		onResizeEnd: () => {
-			updateTriggerCounter();
-		},
+		// onResizeEnd: () => {
+		// 	updateTriggerCounter();
+		// },
 		onRotateStart: ({ set }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
 
-			set(frames.current[slideId.current].frames[targetId.current].rotate);
+			setSlides(prev => {
+				set(
+					prev[currentSlideId.current].frames[currentTargetId.current]
+						.rotate
+				);
+
+				return prev;
+			});
 		},
 		onRotate: ({ target, beforeRotate }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
 
-			frames.current[slideId.current].frames[targetId.current].rotate = beforeRotate;
+			setSlides(prev => {
+				return {
+					...prev,
+					[currentSlideId.current]: {
+						frames: {
+							...prev[currentSlideId.current].frames,
+							[currentTargetId.current]: {
+								...prev[currentSlideId.current].frames[
+									currentTargetId.current
+								],
+								rotate: beforeRotate,
+							},
+						},
+					},
+				};
+			});
 			target.style.transform = `rotate(${beforeRotate}deg)`;
 		},
-		onRotateEnd: () => {
-			updateTriggerCounter();
-		},
+		// onRotateEnd: () => {
+		// 	updateTriggerCounter();
+		// },
 		onDragOriginStart: ({ dragStart }) => {
-			if (!targetId.current || !dragStart) return;
+			if (!currentTargetId.current || !dragStart) return;
 
-			dragStart.set(frames.current[slideId.current].frames[targetId.current].translateXY);
+			setSlides(prev => {
+				dragStart.set(
+					prev[currentSlideId.current].frames[currentTargetId.current]
+						.translateXY
+				);
+
+				return prev;
+			});
 		},
 		onDragOrigin: ({ drag, transformOrigin }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
+			const { beforeTranslate } = drag;
 
-			frames.current[slideId.current].frames[targetId.current].translateXY = drag.beforeTranslate;
-			frames.current[slideId.current].frames[targetId.current].transformOrigin = transformOrigin;
+			setSlides(prev => {
+				return {
+					...prev,
+					[currentSlideId.current]: {
+						frames: {
+							...prev[currentSlideId.current].frames,
+							[currentTargetId.current]: {
+								...prev[currentSlideId.current].frames[
+									currentTargetId.current
+								],
+								translateXY: beforeTranslate,
+								transformOrigin,
+							},
+						},
+					},
+				};
+			});
 		},
-		onDragOriginEnd: () => {
-			updateTriggerCounter();
-		},
+		// onDragOriginEnd: () => {
+		// 	updateTriggerCounter();
+		// },
 		onDragStart: ({ set }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
 
-			set(frames.current[slideId.current].frames[targetId.current].translateXY);
+			setSlides(prev => {
+				set(
+					prev[currentSlideId.current].frames[currentTargetId.current]
+						.translateXY
+				);
+
+				return prev;
+			});
 		},
 		onDrag: ({ beforeTranslate }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
 
-			frames.current[slideId.current].frames[targetId.current].translateXY = beforeTranslate;
+			setSlides(prev => {
+				return {
+					...prev,
+					[currentSlideId.current]: {
+						frames: {
+							...prev[currentSlideId.current].frames,
+							[currentTargetId.current]: {
+								...prev[currentSlideId.current].frames[
+									currentTargetId.current
+								],
+								translateXY: beforeTranslate,
+							},
+						},
+					},
+				};
+			});
 		},
 		// This is auto updating on every change, not needed
 		// onDragEnd: () => {
 		// 	updateTriggerCounter();
 		// },
 		onRender: ({ target }) => {
-			if (!targetId.current) return;
+			if (!currentTargetId.current) return;
+			const _target =
+				target || document.getElementById(currentTargetId.current);
 
-			const { translateXY, rotate, transformOrigin } = frames.current[slideId.current].frames[targetId.current];
-			target.style.transformOrigin = transformOrigin;
-			target.style.transform =
-				`translate(${translateXY[0]}px, ${translateXY[1]}px)` +
-				` rotate(${rotate}deg)`;
+			setSlides(prev => {
+				const { translateXY, rotate, transformOrigin } = prev[
+					currentSlideId.current
+				].frames[currentTargetId.current];
+				_target.style.transformOrigin = transformOrigin;
+				_target.style.transform =
+					`translate(${translateXY[0]}px, ${translateXY[1]}px)` +
+					` rotate(${rotate}deg)`;
+
+				return prev;
+			});
 		},
 	});
 
-	const removeTarget = (id, slide) => {
-		slideId.current = slide;
+	const removeTarget = () => {
+		setSlides(prev => {
+			const clone = deepClone(prev);
 
-		delete frames.current[slide].frames[id];
-		updateLocalStorageFrames();
+			delete clone[currentSlideId.current].frames[
+				currentTargetId.current
+			];
+			return clone;
+		});
+		// updateLocalStorageFrames();
 	};
 
-	const handleDraggableUpdate = (slide, draggableType, _setTarget, newProps = {}, draggableId = null, defaultValues = {}) => {
-		_setTarget(null, slide);
-		handleDraggable(slide, draggableType, (newFramesForSlide, newTargetId) => {
-			updateLocalStorageFrames(newFramesForSlide)
-			frames.current[slide].frames = newFramesForSlide
-			setTimeout(() => {
-				const target = document.getElementById(newTargetId);
-				_setTarget(target, slide);
-			}, 150);
-		}, newProps, draggableId, defaultValues);
-	}
-
-	const setTarget = (target, slide, newElementProps = null) => {
-		// debugger;
+	const updateTarget = (target = null) => {
 		setOptions(v => ({
 			...v,
 			target,
 		}));
+	};
 
-		// Set the current targetId
-		targetId.current = target?.id;
+	const addNewDraggable = (newProps, slide) => {
+		updateTarget();
+		handleDraggable(slide, newProps, newTargetId => {
+			setTimeout(() => {
+				const target = document.getElementById(newTargetId);
+				updateTarget(target);
+			}, 150);
+		});
+	};
 
-		// Set the current slide
-		slideId.current = slide;
+	const updateDraggable = (draggableType, defaultValues) => {
+		updateTarget();
+		handleDraggable(
+			currentSlideId.current,
+			{ draggableType },
+			newTargetId => {
+				setTimeout(() => {
+					const target = document.getElementById(newTargetId);
+					updateTarget(target);
+				}, 150);
+			},
+			currentTargetId.current,
+			defaultValues
+		);
+	};
 
-		// Update current frame
+	const setTarget = (target, newElementProps = null, slide = null) => {
+		updateTarget(target);
+		// If we have a new draggable, add it to the slide
 		if (newElementProps) {
-			handleDraggableUpdate(slide, newElementProps.draggableType, setTarget, newElementProps);
-		} else if (target) {
-			updateLocalStorageFrames();
+			addNewDraggable(newElementProps, slide);
 		}
 	};
 
-
 	return {
+		currentlyFocusedElement,
+		setCurrentlyFocusedElement,
 		setTarget,
 		removeTarget,
 		options,
-		setOptions,
-		frames,
-		updateLocalStorageFrames,
-		handleDraggableUpdate,
+		addNewDraggable,
+		updateDraggable,
 	};
 };
 

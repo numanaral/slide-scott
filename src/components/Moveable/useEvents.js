@@ -3,11 +3,7 @@
  * @param {cloneNewElement} cloneNewElement
  * @param {cloneNewElement} setTarget
  */
-const useEvents = (
-	cloneNewElement,
-	setTarget,
-	showCurrentDeleteButtonAndHideOthers
-) => {
+const useEvents = setTarget => {
 	const getContainerId = element => element?.id.replace('container-', '');
 
 	const onDragStart = e => {
@@ -42,53 +38,18 @@ const useEvents = (
 			transformOrigin: '50% 50%',
 		};
 
-		setTarget(null, slideId, newElementProps);
+		setTarget(null, newElementProps, slideId);
+		// setTarget(null, slideId, newElementProps);
 	};
 
 	const allowDrop = e => {
 		e.preventDefault();
 	};
 
-	/**
-	 * @typedef {object} HtmlElement
-	 * @property {HTMLElement} target
-	 */
-
-	/**
-	 * @typedef {Event&HtmlElement} EventWithElement
-	 * @listens Event
-	 */
-
-	/**
-	 * @param {EventWithElement} e - The observable event.
-	 */
-	const onDropZoneClick = e => {
-		// document.querySelectorAll('.cloned-draggable').forEach(() => {
-		// 	// https://codepen.io/pistell/pen/XWWdZrv
-		// 	// https://stackoverflow.com/questions/24183286/drag-and-drop-to-div-behind-absolutely-positioned-div
-		// 	const elements = document.elementsFromPoint(e.clientX, e.clientY);
-		// 	const chosenTarget = elements.find(key =>
-		// 		key.matches('.cloned-draggable')
-		// 	);
-		// 	showCurrentDeleteButtonAndHideOthers(chosenTarget);
-		// 	const parentContainer = e.target.closest('.container');
-		// 	const slideId = getContainerId(parentContainer);
-		// 	// Select / Deselect <Moveable /> control box
-		// 	if (chosenTarget) {
-		// 		if (!chosenTarget.classList.contains('clone')) return;
-		// 		setTarget(chosenTarget, slideId);
-		// 	} else {
-		// 		debugger;
-		// 		setTarget(undefined, slideId);
-		// 	}
-		// });
-	};
-
 	return {
 		onDragStart,
 		onDrop,
 		allowDrop,
-		onDropZoneClick,
 	};
 };
 
