@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 /** @see https://stackoverflow.com/a/54292872/13161405 */
-const useOuterClick = cb => {
+const useOuterClick = (cb, exc) => {
 	const callbackRef = useRef(); // initialize mutable callback ref
 	const innerRef = useRef(); // returned to client, who sets the "border" element
 
@@ -17,6 +17,15 @@ const useOuterClick = cb => {
 				!innerRef.current.contains(e.target) &&
 				innerRef.current.classList.contains('isFocused')
 			) {
+				if (exc) {
+					// eslint-disable-next-line no-restricted-syntax
+					for (const elm of document.querySelectorAll(exc)) {
+						if (elm.contains(e.target)) {
+							// debugger;
+							return;
+						}
+					}
+				}
 				callbackRef.current(e);
 			}
 		};

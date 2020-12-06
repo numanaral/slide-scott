@@ -42,9 +42,10 @@ const DraggableElement = ({
 
 	// Close open cards when when clicked elsewhere
 	const currentDraggable = useOuterClick(() => {
-		setTarget(null, slideId);
+		setTarget(null);
+		// setTarget(null, slideId);
 		setIsFocused(false);
-	});
+	}, 'div[class^="moveable-"]');
 
 	useEffect(() => {
 		if (isFocused && currentlyFocusedElement.draggableId !== draggableId) {
