@@ -1,9 +1,11 @@
 import { useFirestore } from 'react-redux-firebase';
 import { toFirestore } from 'store/firebase/utils';
 
+import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import useAuth from '../useAuth';
 
-const useSlides = () => {
+const useSlides = slideId => {
+	const { notifyError } = useNotificationProvider();
 	const { userId } = useAuth();
 	const firestore = useFirestore({
 		collection: 'slides',
@@ -12,7 +14,7 @@ const useSlides = () => {
 
 	const createSlideshow = async props => {
 		const date = new Date();
-		const id = await firestore.add(
+		const { id } = await firestore.add(
 			'slides',
 			toFirestore({
 				...props,
@@ -24,11 +26,15 @@ const useSlides = () => {
 		return id;
 	};
 
-	const updateSlideshow = (slideId, props) => {
-		return firestore.update(`slides/${slideId}`, toFirestore(props));
+	const updateSlideshow = async props => {
+		try {
+			await firestore.update(`slides/${slideId}`, toFirestore(props));
+		} catch (err) {
+			notifyError(err);
+		}
 	};
 
-	const deleteSlideshow = slideId => {
+	const deleteSlideshow = () => {
 		return firestore.delete(`slides/${slideId}`);
 	};
 

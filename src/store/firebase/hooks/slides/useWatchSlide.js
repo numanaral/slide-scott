@@ -1,34 +1,39 @@
 import React from 'react';
 import { isEmpty, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
 
 // import useAuth from 'store/firebase/hooks/useAuth';
-import LoadingIndicator from 'components/LoadingIndicator';
 import { fromFirestore } from 'store/firebase/utils';
-
-const NoAccess = () => (
-	<Typography>
-		Such slide doesn&apos;t exist or you don&apos;t have access to it
-	</Typography>
-);
+import LoadingIndicator from 'components/LoadingIndicator';
+import NoAccess from 'components/NoAccess';
 
 const useWatchSlide = slideId => {
 	// const { userId } = useAuth();
 	useFirestoreConnect({
 		collection: 'slides',
 		doc: slideId,
-		// where: ['userId', '==', userId],
+		// where: [
+		// 	[firebase.firestore.FieldPath.documentId(), '==', slideId],
+		// 	['userId', '==', userId],
+		// ],
 	});
 
-	const slide = useSelector(
+	const slideFromFirestore = useSelector(
 		({ firestore: { data } }) => data.slides && data.slides[slideId]
 	);
 
-	if (!isLoaded(slide)) return <LoadingIndicator />;
-	if (isEmpty(slide)) return <NoAccess />;
+	const pending = !isLoaded(slideFromFirestore) && <LoadingIndicator />;
+	const error = isEmpty(slideFromFirestore) && <NoAccess />;
 
-	return fromFirestore(slide);
+	const slide =
+		(slideFromFirestore && fromFirestore(slideFromFirestore, ['slides'])) ||
+		[];
+
+	return {
+		slide,
+		pending,
+		error,
+	};
 };
 
 export default useWatchSlide;
