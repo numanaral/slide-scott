@@ -7,16 +7,14 @@ const useTool = setSlides => {
 
 	const handleDraggable = async (
 		slideId,
-		draggableType,
+		newProps,
 		successCallback,
-		newProps = {},
 		draggableId = null,
 		defaultValues = {}
 	) => {
+		const { draggableType } = newProps;
 		const { default: TOOLS } = await import('./config');
-		const { name, schema, items, icon, type, component } = TOOLS[
-			draggableType
-		].settings;
+		const { name, schema, items, type } = TOOLS[draggableType].settings;
 
 		const targetId = draggableId || `cloned-${draggableType}-${Date.now()}`;
 
@@ -40,7 +38,7 @@ const useTool = setSlides => {
 						};
 
 						closeDialog();
-						successCallback(newFramesForSlide, targetId);
+						successCallback(targetId);
 						return {
 							...prev,
 

@@ -1,4 +1,4 @@
-const { func } = require('prop-types');
+import { func } from 'prop-types';
 
 const propTypes = {
 	onDragStart: func.isRequired,

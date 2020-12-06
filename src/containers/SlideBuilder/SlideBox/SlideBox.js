@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import useOuterClick from 'hooks/useOuterClick';
 import FullSizeGrid from 'components/FullSizeGrid';
-import useUtils from 'components/Moveable/useUtils';
 import useEvents from 'components/Moveable/useEvents';
 import TooltipButton from 'components/TooltipButton';
 import { DeleteIcon, EditIcon, PaletteIcon } from 'icons';
@@ -33,7 +32,7 @@ const DraggableElement = ({
 	setTarget,
 	removeTarget,
 	draggableId,
-	handleDraggableUpdate,
+	updateDraggable,
 	currentlyFocusedElement,
 	setCurrentlyFocusedElement,
 }) => {
@@ -51,8 +50,7 @@ const DraggableElement = ({
 		if (isFocused && currentlyFocusedElement.draggableId !== draggableId) {
 			setIsFocused(false);
 		}
-	}, [currentlyFocusedElement.draggableId]);
-	// }, [currentlyFocusedElement, draggableId, isFocused, setTarget, slideId]);
+	}, [currentlyFocusedElement.draggableId, draggableId, isFocused]);
 
 	const {
 		draggableType,
@@ -103,9 +101,12 @@ const DraggableElement = ({
 			key={draggableId}
 			id={draggableId}
 			// role="button"
-			onMouseEnter={() => {
-				if (!isFocused) {
-					setTarget(currentDraggable.current, slideId);
+			onMouseEnter={e => {
+				// We don't want to switch target whilst resizing
+				const leftMouseButtonDown = e.nativeEvent.buttons === 1;
+				if (!isFocused && !leftMouseButtonDown) {
+					setTarget(currentDraggable.current);
+					// setTarget(currentDraggable.current, slideId);
 					setIsFocused(true);
 					setCurrentlyFocusedElement({
 						draggableId,
@@ -125,14 +126,7 @@ const DraggableElement = ({
 				tooltip="Edit tool"
 				// className="cloned-delete-button"
 				onClick={() => {
-					handleDraggableUpdate(
-						slideId,
-						draggableType,
-						setTarget,
-						{},
-						draggableId,
-						componentProps
-					);
+					updateDraggable(draggableType, componentProps);
 				}}
 				icon={EditIcon}
 			/>
@@ -141,9 +135,10 @@ const DraggableElement = ({
 				tooltip="Remove tool"
 				// className="cloned-delete-button"
 				onClick={() => {
-					removeTarget(draggableId, slideId);
+					removeTarget();
 					// This should automatically be called in useMoveable
-					setTarget(null);
+					setTarget();
+					// setTarget(null);
 				}}
 				icon={DeleteIcon}
 			/>
@@ -152,34 +147,18 @@ const DraggableElement = ({
 };
 
 const SlideBox = ({
-	setTarget,
-	removeTarget,
+	frames,
 	slideId,
 	index,
-	frames,
+	setTarget,
+	removeTarget,
 	deleteSlide,
-	handleDraggableUpdate,
-	currentlyFocusedElement,
-	setCurrentlyFocusedElement,
+	...rest
 }) => {
-	const {
-		notifySuccess,
-		notifyError,
-		notifyInfo,
-		notifyWarning,
-	} = useNotificationProvider();
+	const { notifyInfo } = useNotificationProvider();
 	const wrapPaidFeature = useRoleWrapper();
 
-	const { showCurrentDeleteButtonAndHideOthers, cloneNewElement } = useUtils(
-		removeTarget,
-		setTarget
-	);
-
-	const { onDrop, allowDrop, onDropZoneClick } = useEvents(
-		cloneNewElement,
-		setTarget,
-		showCurrentDeleteButtonAndHideOthers
-	);
+	const { onDrop, allowDrop } = useEvents(setTarget);
 
 	// const [selected, setSelected] = useState(false);
 
@@ -219,7 +198,6 @@ const SlideBox = ({
 					id={`container-${slideId}`}
 					onDrop={onDrop}
 					onDragOver={allowDrop}
-					onClick={onDropZoneClick}
 				>
 					{Object.keys(frames).map(key => (
 						<DraggableElement
@@ -229,11 +207,7 @@ const SlideBox = ({
 							removeTarget={removeTarget}
 							key={key}
 							draggableId={key}
-							handleDraggableUpdate={handleDraggableUpdate}
-							currentlyFocusedElement={currentlyFocusedElement}
-							setCurrentlyFocusedElement={
-								setCurrentlyFocusedElement
-							}
+							{...rest}
 						/>
 					))}
 				</Droppable>
