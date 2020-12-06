@@ -15,4 +15,19 @@ const routerBaseDefaultProps = {
 	error: '',
 };
 
-export { routerBasePropTypes, routerBaseDefaultProps };
+const singleViewRouterPropTypes = {
+	match: shape({
+		params: shape({
+			id: string.isRequired,
+		}),
+	}),
+};
+
+const singleViewRouterDefaultProps = {};
+
+export {
+	routerBasePropTypes,
+	routerBaseDefaultProps,
+	singleViewRouterPropTypes,
+	singleViewRouterDefaultProps,
+};

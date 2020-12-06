@@ -28,7 +28,7 @@ const toFirestore = props =>
  * @param {Object} props Properties returned from the firebase request
  * @param {Array<String>} keys List of keys that need their value string parsed as JSON object
  */
-const fromFirestore = (props, keys) =>
+const fromFirestore = (props, keys = []) =>
 	Object.keys(props).reduce((acc, key) => {
 		const value = props[key];
 		// eslint-disable-next-line no-param-reassign

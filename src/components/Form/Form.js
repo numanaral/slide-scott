@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, createRef } from 'react';
+import React, { useRef, useEffect, createRef, forwardRef } from 'react';
 import styled from 'styled-components';
 import { FormGroup, Grid, TextField } from '@material-ui/core';
 import { useForm, Controller } from 'react-hook-form';
@@ -16,12 +16,16 @@ const StyledTextField = styled(TextField)`
 
 const FORM_COMPONENT_TYPES = {
 	TEXT: 'text',
+	PASSWORD: 'password',
 };
 
-const { TEXT } = FORM_COMPONENT_TYPES;
+const { TEXT, PASSWORD } = FORM_COMPONENT_TYPES;
 
 const COMPONENTS = {
 	[TEXT]: StyledTextField,
+	[PASSWORD]: forwardRef((props, ref) => (
+		<StyledTextField type="password" {...props} ref={ref} />
+	)),
 };
 
 // TODO: Keep the form simple for now
@@ -86,20 +90,28 @@ const Form = ({
 		>
 			<Spacer direction="bottom" spacing="2" />
 			{items.map(
-				({
-					type,
-					name,
-					label,
-					required = false,
-					defaultValue = '',
-					variant = 'outlined',
-				}) => {
+				(
+					{
+						type,
+						name,
+						label,
+						required = false,
+						defaultValue = '',
+						variant = 'outlined',
+					},
+					ind
+				) => {
 					const As = COMPONENTS[type];
 					const ref = inputRefs.current[name];
 					return (
 						<FormGroup key={name}>
 							<Controller
-								as={<As inputRef={ref} />}
+								as={
+									<As
+										{...(ind === 0 && { autoFocus: true })}
+										inputRef={ref}
+									/>
+								}
 								control={control}
 								defaultValue={defaultValue}
 								name={name}

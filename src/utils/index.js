@@ -34,6 +34,17 @@ const getNiceDateVanilla = d => {
 	});
 };
 
+const getNiceDateTimeVanilla = d => {
+	if (!d) return d;
+
+	return new Date(d).toLocaleString('en-US', {
+		hour: 'numeric',
+		minute: 'numeric',
+		second: 'numeric',
+		hour12: true,
+	});
+};
+
 const smoothScroll = element =>
 	element?.scrollIntoView({
 		block: 'center',
@@ -79,6 +90,7 @@ export {
 	getImmerState,
 	updateImmerDraft,
 	getNiceDateVanilla,
+	getNiceDateTimeVanilla,
 	smoothScroll,
 	getErrorMessageFromFetch,
 	isPromise,

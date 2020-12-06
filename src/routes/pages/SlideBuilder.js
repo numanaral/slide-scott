@@ -1,6 +1,6 @@
 import React from 'react';
 import LazySlideBuilder from 'containers/SlideBuilder/Lazy';
 
-const SlideBuilder = () => <LazySlideBuilder>Home Page</LazySlideBuilder>;
+const SlideBuilder = props => <LazySlideBuilder {...props} />;
 
 export default SlideBuilder;

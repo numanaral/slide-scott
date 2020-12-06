@@ -102,13 +102,13 @@ const SignUp = ({ location }) => {
 								required: true,
 							},
 							{
-								type: FORM_COMPONENT_TYPES.TEXT,
+								type: FORM_COMPONENT_TYPES.PASSWORD,
 								label: 'Password',
 								name: 'password',
 								required: true,
 							},
 							{
-								type: FORM_COMPONENT_TYPES.TEXT,
+								type: FORM_COMPONENT_TYPES.PASSWORD,
 								label: 'Confirm Password',
 								name: 'confirmPassword',
 								required: true,

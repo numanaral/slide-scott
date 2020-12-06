@@ -11,8 +11,14 @@ const NewSlideshow = () => {
 	const onNewSlideshow = async () => {
 		const id = await createSlideshow({
 			title: `Create at ${getNiceDateVanilla(new Date())}`,
+			slides: {
+				[Date.now().toString()]: {
+					frames: {},
+				},
+			},
 		});
-		console.log('id', id);
+
+		return id;
 	};
 
 	const props = {

@@ -102,7 +102,7 @@ const Login = ({ location, error, authorizing }) => {
 									required: true,
 								},
 								{
-									type: FORM_COMPONENT_TYPES.TEXT,
+									type: FORM_COMPONENT_TYPES.PASSWORD,
 									label: 'Password',
 									name: 'password',
 									required: true,
