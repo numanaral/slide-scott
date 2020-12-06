@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
-import usePageView from 'store/firebase/hooks/usePageView';
+// import usePageView from 'store/firebase/hooks/usePageView';
 import RouteWrapper from './RouteWrapper';
 import { BASE_PATH, ROUTE_LIST } from './constants';
 
