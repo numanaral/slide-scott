@@ -92,8 +92,8 @@ const TopNavigationBar = () => {
 		},
 		icon: AccountIcon,
 		options: (isLoggedIn && [
+			{ label: 'Profile', value: '/profile' },
 			{ label: 'Log Out', value: 'logout' },
-			{ label: 'Preferences', value: '/preferences' },
 		]) || [
 			{ label: 'Log In', value: '/login' },
 			{ label: 'Sign Up', value: '/signup' },

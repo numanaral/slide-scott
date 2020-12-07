@@ -24,7 +24,11 @@ export {
 	Send as SubmitIcon,
 	Palette as PaletteIcon,
 	Settings as SettingsIcon,
-	// Temp on the preferences
+	ArrowBack as PreviousIcon,
+	ArrowForward as NextIcon,
+	Replay as ReplayIcon,
+	Slideshow as PresentIcon,
+	Clear as ClearIcon,
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,
 	// Modal

@@ -40,7 +40,13 @@ const LazyHome = loadable(() => import(`routes/pages/Home`));
 // Private routes
 const LazyDashboard = loadable(() => import(`routes/pages/Dashboard`));
 const LazySlideBuilder = loadable(() => import(`routes/pages/SlideBuilder`));
-const LazyPreferences = loadable(() => import(`routes/pages/Preferences`));
+const LazyProfile = loadable(() => import(`routes/pages/Profile`));
+
+const LazySlidePresenter = loadable(() => import(`routes/pages/Present`));
+const LazySlideViewer = loadable(() => import(`routes/pages/ViewSlide`));
+const LazySlideViewerLive = loadable(() =>
+	import(`routes/pages/ViewSlideLive`)
+);
 
 // Dev route
 const LazyDevSettings = loadable(() => import(`routes/pages/DevSettings`));
@@ -62,14 +68,20 @@ const PRIVATE_ROUTES = [
 	{
 		title: 'Slide Builder',
 		description: `Build your slides!`,
-		path: '/slide-builder',
+		path: '/slide-builder/:id',
 		component: <LazySlideBuilder />,
 	},
 	{
-		title: 'Preferences',
-		description: `Adjust your app preferences.`,
-		path: '/preferences',
-		component: <LazyPreferences />,
+		title: 'Profile',
+		description: `Adjust your app profile.`,
+		path: '/profile',
+		component: <LazyProfile />,
+	},
+	{
+		title: 'Present',
+		description: `Present the current slide in real time.`,
+		path: '/present/:id',
+		component: <LazySlidePresenter />,
 	},
 ].map(mapRoles(PAGE_ROLES.LOGGED_IN));
 
@@ -85,6 +97,18 @@ const ROUTE_LIST = [
 		component: <Redirect to={BASE_PATH} />,
 	},
 	...PRIVATE_ROUTES,
+	{
+		title: 'View Slide',
+		description: `Study a slide.`,
+		path: '/slides/:id',
+		component: <LazySlideViewer />,
+	},
+	{
+		title: 'Watch Live Slide',
+		description: `Watch a slide that's currently presented.`,
+		path: '/live/:id',
+		component: <LazySlideViewerLive />,
+	},
 	{
 		title: 'Dev Settings',
 		description: `Developer settings`,
@@ -152,10 +176,10 @@ const SHARED_DISPLAY_PAGES = [
 	// 	disabled: true,
 	// },
 	{
-		label: 'Preferences',
-		tooltip: 'Preferences',
-		text: 'Preferences',
-		to: '/preferences',
+		label: 'Profile',
+		tooltip: 'Profile',
+		text: 'Profile',
+		to: '/profile',
 	},
 ].map(mapBasePathForLinks);
 

@@ -46,10 +46,6 @@ const PREFERENCE_LIST = [
 		icon: PaletteIcon,
 		secondaryAction: ComingSoon,
 	},
-	{
-		type: itemTypes.SECTION_TITLE,
-		primaryText: '... more color settings',
-	},
 	SPACER,
 	{
 		type: itemTypes.SECTION_TITLE_WITH_DIVIDER,
@@ -63,22 +59,9 @@ const PREFERENCE_LIST = [
 		secondaryAction: Switch,
 		disabled: true,
 	},
-	SPACER,
-	{
-		type: itemTypes.SECTION_TITLE_WITH_DIVIDER,
-		primaryText: 'SOME OTHER SETTINGS',
-		secondaryText: 'Moar settings',
-	},
-	{
-		primaryText: 'Some setting',
-		secondaryText: 'Does something',
-		icon: AnimationIcon,
-		secondaryAction: Switch,
-		disabled: true,
-	},
 ];
 
-const Preferences = () => (
+const Profile = () => (
 	<ContainerWithCenteredItems vertical horizontal>
 		<PaperContainerWithSpacing padding="50px !important">
 			<LazyList list={PREFERENCE_LIST} />
@@ -86,4 +69,4 @@ const Preferences = () => (
 	</ContainerWithCenteredItems>
 );
 
-export default Preferences;
+export default Profile;
