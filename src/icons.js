@@ -28,7 +28,9 @@ export {
 	ArrowForward as NextIcon,
 	Replay as ReplayIcon,
 	Slideshow as PresentIcon,
+	Info as InfoIcon,
 	Clear as ClearIcon,
+	Clear as CloseIcon,
 	SlowMotionVideo as AnimationIcon,
 	SettingsBrightness as ThemeIcon,
 	// Modal
@@ -43,6 +45,9 @@ export {
 	Assignment as TextIcon,
 	Link as LinkIcon,
 	ChangeHistory as ShapeIcon,
+	EmojiPeopleOutlined as BitmojiIcon,
+	ChatBubbleOutline as ChatBubbleIcon,
+	CheckBoxOutlineBlank as CheckboxIcon,
 } from '@material-ui/icons';
 
 const LazyIcon = loadable(async ({ name }) => {
