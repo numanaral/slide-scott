@@ -21,7 +21,6 @@ const useOuterClick = (cb, exc) => {
 					// eslint-disable-next-line no-restricted-syntax
 					for (const elm of document.querySelectorAll(exc)) {
 						if (elm.contains(e.target)) {
-							// debugger;
 							return;
 						}
 					}

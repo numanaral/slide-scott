@@ -21,6 +21,7 @@ import styled from 'styled-components';
 
 import { getNiceDateVanilla, pascalToSentence } from 'utils';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
+import { LayerIcon } from 'icons';
 import { propTypes, defaultProps } from './types';
 
 const StyledCardMedia = styled(CardMedia)`
@@ -83,7 +84,9 @@ const Card = ({
 					// vertical
 					alignItems="center"
 				>
-					{createElement(thumbnail, { style: { fontSize: 100 } })}
+					{createElement(thumbnail || LayerIcon, {
+						style: { fontSize: 100 },
+					})}
 				</ContainerWithCenteredItems>
 			)}
 			<CardContent>

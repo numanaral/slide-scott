@@ -26,8 +26,6 @@ const Form = ({
 		defaultValues,
 	});
 
-	console.log(watch());
-
 	// For auto-focusing on the first error
 	const inputRefs = useRef({});
 	useEffect(() => {
