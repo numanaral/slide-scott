@@ -13,6 +13,7 @@
       - Position
       - Size
       - Orientation
+      - Rotation
       - Colors
       - Text
       - Other settings...
