@@ -65,6 +65,7 @@ const RouteWrapper = ({
 		isAuthRequiredForTheCurrentPage || isAuthRequiredForTheReferrerPage;
 
 	const render = renderProps => {
+		debugger;
 		// Redirect to Authorizing via Login when auth is taking place
 		if (isAuthRequiredForTheCurrentPage && _isAuthorizing) {
 			return <LazyLogin {...renderProps} authorizing />;
@@ -83,6 +84,7 @@ const RouteWrapper = ({
 				push(returnUrl);
 			} else if (
 				// If logged in, don't allow to /login or /unauthorized directly
+				pathname === `${BASE_PATH}/signup` ||
 				pathname === `${BASE_PATH}/login` ||
 				pathname === `${BASE_PATH}/unauthorized`
 			) {
