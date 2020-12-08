@@ -68,7 +68,7 @@ const PRIVATE_ROUTES = [
 	{
 		title: 'Slide Builder',
 		description: `Build your slides!`,
-		path: '/slide-builder/:id',
+		path: '/create/:id',
 		component: <LazySlideBuilder />,
 	},
 	{
@@ -175,12 +175,12 @@ const SHARED_DISPLAY_PAGES = [
 	// 	icon: AccountIcon,
 	// 	disabled: true,
 	// },
-	{
-		label: 'Profile',
-		tooltip: 'Profile',
-		text: 'Profile',
-		to: '/profile',
-	},
+	// {
+	// 	label: 'Profile',
+	// 	tooltip: 'Profile',
+	// 	text: 'Profile',
+	// 	to: '/profile',
+	// },
 ].map(mapBasePathForLinks);
 
 const NAV_LIST = [...SHARED_DISPLAY_PAGES];

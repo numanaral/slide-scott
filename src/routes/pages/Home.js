@@ -39,7 +39,7 @@ const Home = () => {
 				<GetStartedButton
 					tooltip="Create an account and start creating slides."
 					text="Get Started."
-					onClick={() => push(`${BASE_PATH}/slide-builder`)}
+					onClick={() => push(`${BASE_PATH}/dashboard`)}
 					bg="secondary"
 				/>
 			</ContainerWithCenteredItems>

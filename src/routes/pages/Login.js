@@ -13,7 +13,7 @@ import useLogin from 'store/firebase/hooks/useLogin';
 import Spacer from 'components/Spacer';
 import { BASE_PATH } from 'routes/constants';
 import PrettyLink from 'components/PrettyLink';
-import Form, { FORM_COMPONENT_TYPES } from 'components/Form/Form';
+import Form, { FORM_COMPONENT_TYPES } from 'components/Form';
 import { routerBasePropTypes, routerBaseDefaultProps } from './types';
 
 const StyledSadIcon = styled(SadIcon)`
