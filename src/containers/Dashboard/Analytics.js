@@ -150,6 +150,7 @@ const Analytics = () => {
 				<Spacer direction="top" />
 				<ContainerWithCenteredItems>
 					<Rating
+						disabled
 						name="customized-icons"
 						defaultValue={4}
 						getLabelText={value => customIcons[value].label}

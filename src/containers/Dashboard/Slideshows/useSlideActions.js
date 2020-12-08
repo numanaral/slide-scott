@@ -1,12 +1,21 @@
 import React from 'react';
 
-import { DeleteIcon, ShareIcon, StarIcon, EditIcon, TemplateIcon } from 'icons';
+import {
+	DeleteIcon,
+	ShareIcon,
+	StarIcon,
+	EditIcon,
+	TemplateIcon,
+	PresentIcon,
+} from 'icons';
 import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import TooltipButton from 'components/TooltipButton';
-import useSlides from 'store/firebase/hooks/slides/useSlides';
+import useSlide from 'store/firebase/hooks/slides/useSlide';
 import useDialogProvider from 'store/redux/hooks/useDialogProvider';
 import { useHistory } from 'react-router-dom';
 import { BASE_PATH } from 'routes/constants';
+import { copyToClipboard } from 'store/firebase/utils';
+import usePresent from 'store/firebase/hooks/usePresent';
 
 const useSlideActions = () => {
 	const {
@@ -17,7 +26,8 @@ const useSlideActions = () => {
 	const { openConfirmDialog } = useDialogProvider();
 	const { push } = useHistory();
 
-	const { deleteSlideshow } = useSlides();
+	const { deleteSlideshow } = useSlide();
+	const { createLiveOptions } = usePresent();
 
 	const onDelete = async id => {
 		openConfirmDialog(
@@ -26,7 +36,7 @@ const useSlideActions = () => {
 				openConfirmDialog(
 					'Are you sure you want to delete this slideshow?'
 				);
-				deleteSlideshow(id);
+				await deleteSlideshow(id);
 			}
 		);
 	};
@@ -42,7 +52,18 @@ const useSlideActions = () => {
 	};
 
 	const onShare = id => {
-		notifyInfo('To be implemented');
+		const link = `https://numanaral.github.io/slide-scott/slides/${id}`;
+		copyToClipboard(
+			link,
+			() => {
+				notifySuccess('Link has been copied to the clipboard!');
+			},
+			() => {
+				notifyError(
+					`Error copying to the clipboard.. \nThe link is: ${link}`
+				);
+			}
+		);
 	};
 
 	const onTemplate = id => {
@@ -53,9 +74,30 @@ const useSlideActions = () => {
 		// 	notifyError(err.message);
 		// }
 	};
+	const onPresent = async id => {
+		try {
+			await createLiveOptions({}, id);
+		} catch (err) {
+			notifyError(err);
+			return;
+		}
+		const link = `https://numanaral.github.io/slide-scott/live/${id}`;
+		copyToClipboard(
+			link,
+			() => {
+				notifySuccess('Share link has been copied to the clipboard!');
+			},
+			() => {
+				notifyError(
+					`Error copying to the clipboard.. \nThe link is: ${link}`
+				);
+			}
+		);
+		push(`${BASE_PATH}/present/${id}`);
+	};
 
 	const onEdit = id => {
-		push(`${BASE_PATH}/slide-builder/${id}`);
+		push(`${BASE_PATH}/create/${id}`);
 	};
 
 	const buttons = {
@@ -83,6 +125,13 @@ const useSlideActions = () => {
 				icon={TemplateIcon}
 			/>
 		),
+		PRESENT: (
+			<TooltipButton
+				tooltip="Present"
+				onClick={onPresent}
+				icon={PresentIcon}
+			/>
+		),
 		EDIT: (
 			<TooltipButton
 				tooltip="Edit"
@@ -100,6 +149,7 @@ const useSlideActions = () => {
 		buttons.FAVORITE,
 		buttons.SHARE,
 		buttons.TEMPLATE,
+		buttons.PRESENT,
 		buttons.EDIT,
 	];
 

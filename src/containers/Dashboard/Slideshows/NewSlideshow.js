@@ -1,12 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { WrappedCard } from 'components/Card';
 import { AddIcon } from 'icons';
-import useSlides from 'store/firebase/hooks/slides/useSlides';
+import useSlide from 'store/firebase/hooks/slides/useSlide';
 import { getNiceDateVanilla } from 'utils';
+import { BASE_PATH } from 'routes/constants';
 
 const NewSlideshow = () => {
-	const { createSlideshow } = useSlides();
+	const { createSlideshow } = useSlide();
+	const { push } = useHistory();
 
 	const onNewSlideshow = async () => {
 		const id = await createSlideshow({
@@ -18,7 +21,7 @@ const NewSlideshow = () => {
 			},
 		});
 
-		return id;
+		push(`${BASE_PATH}/create/${id}`);
 	};
 
 	const props = {

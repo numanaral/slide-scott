@@ -16,7 +16,6 @@ const Dashboard = () => {
 
 	return (
 		<>
-			{/* <ContainerWithCenteredItems>Dashboard</ContainerWithCenteredItems> */}
 			<ContainerWithCenteredItems vertical>
 				<LazyVerticalTabs list={list} />
 			</ContainerWithCenteredItems>
