@@ -7,6 +7,7 @@ import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import useAuth from 'store/firebase/hooks/useAuth';
 import LoadingIndicator from 'components/LoadingIndicator';
 import NoAccess from 'components/NoAccess';
+import { toFirestore } from 'store/firebase/utils';
 
 const useSlide = slideId => {
 	const { notifyError } = useNotificationProvider();
@@ -16,7 +17,11 @@ const useSlide = slideId => {
 		null
 	);
 	const { userId } = useAuth();
-	const firestore = useFirestore();
+
+	const firestore = useFirestore({
+		collection: 'slides',
+		where: ['userId', '==', userId],
+	});
 
 	useEffect(() => {
 		const getCurrentSlideBuilderSlide = async () => {
@@ -43,6 +48,41 @@ const useSlide = slideId => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const createSlideshow = async props => {
+		try {
+			const date = new Date();
+			const { id } = await firestore.add(
+				'slides',
+				toFirestore({
+					...props,
+					createdOn: date,
+					updatedOn: date,
+					userId,
+				})
+			);
+			return id;
+		} catch (err) {
+			notifyError(err);
+			return '';
+		}
+	};
+
+	const updateSlideshow = async props => {
+		try {
+			await firestore.update(`slides/${slideId}`, toFirestore(props));
+		} catch (err) {
+			notifyError(err);
+		}
+	};
+
+	const deleteSlideshow = async (id = slideId) => {
+		try {
+			await firestore.delete(`slides/${id}`);
+		} catch (err) {
+			notifyError(err);
+		}
+	};
+
 	const pending = isPending && <LoadingIndicator />;
 	const error = hasError && <NoAccess />;
 
@@ -61,6 +101,9 @@ const useSlide = slideId => {
 		error,
 		hasEditAccess,
 		canEdit,
+		createSlideshow,
+		updateSlideshow,
+		deleteSlideshow,
 	};
 };
 

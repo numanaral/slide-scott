@@ -24,7 +24,9 @@ const useWatchSlides = () => {
 		state => state.firestore.ordered.slides
 	);
 
-	const pending = !isLoaded(slidesFromFirestore) && <LoadingIndicator />;
+	const pending = !isLoaded(slidesFromFirestore) && (
+		<LoadingIndicator size="xlarge" fullWidth />
+	);
 	const error = isEmpty(slidesFromFirestore) && <NotFound key={-2} />;
 
 	const slides =
