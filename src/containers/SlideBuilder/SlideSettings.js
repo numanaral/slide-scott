@@ -1,7 +1,7 @@
 import React from 'react';
 import * as yup from 'yup';
 
-import Form, { FORM_COMPONENT_TYPES } from 'components/Form/Form';
+import Form, { FORM_COMPONENT_TYPES } from 'components/Form';
 import { Box } from '@material-ui/core';
 
 const items = [

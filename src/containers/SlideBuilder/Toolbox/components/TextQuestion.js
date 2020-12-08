@@ -13,8 +13,8 @@ import TooltipButton from 'components/TooltipButton';
 import Spacer from 'components/Spacer';
 import Wrapper from './Wrapper';
 
-const TextQuestion = ({ question, correctAnswer }) => (
-	<Wrapper correctAnswer={correctAnswer}>
+const TextQuestion = ({ question, correctAnswer, hasBg, bg }) => (
+	<Wrapper correctAnswer={correctAnswer} noBg={!hasBg} bg={bg}>
 		{({ studentAnswer, onAnswer }) => (
 			<>
 				<Typography component="b" color="primary">
@@ -26,7 +26,9 @@ const TextQuestion = ({ question, correctAnswer }) => (
 				<TextField
 					value={studentAnswer}
 					onChange={onAnswer}
-					// onClick={e => e.stopPropagation()}
+					onClick={e => {
+						e.target.focus();
+					}}
 					name="answer"
 					label="Answer"
 					variant="outlined"

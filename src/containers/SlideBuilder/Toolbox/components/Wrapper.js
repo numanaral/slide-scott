@@ -10,7 +10,14 @@ const FormWrapper = ({ correctAnswer, children }) => {
 	return <form onSubmit={onSubmit}>{children({ ...formProps })}</form>;
 };
 
-const Wrapper = ({ noPadding, noBg, correctAnswer, children, ...props }) => (
+const Wrapper = ({
+	noPadding,
+	noBg,
+	bg,
+	correctAnswer,
+	children,
+	...props
+}) => (
 	<PaperContainerWithSpacing
 		containerProps={{ style: { height: '100%' } }}
 		noBg={noBg}
@@ -21,6 +28,11 @@ const Wrapper = ({ noPadding, noBg, correctAnswer, children, ...props }) => (
 		alignItems="center"
 		justifyContent="center"
 		{...props}
+		paperProps={{
+			// eslint-disable-next-line react/destructuring-assignment
+			...(props.paperProps || {}),
+			$bg: bg,
+		}}
 	>
 		{(correctAnswer && (
 			<FormWrapper correctAnswer={correctAnswer}>{children}</FormWrapper>

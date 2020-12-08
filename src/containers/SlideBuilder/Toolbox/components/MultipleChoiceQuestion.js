@@ -30,8 +30,10 @@ const MultipleChoiceQuestion = ({
 	answerC,
 	answerD,
 	correctAnswer,
+	hasBg,
+	bg,
 }) => (
-	<Wrapper correctAnswer={correctAnswer}>
+	<Wrapper correctAnswer={correctAnswer} noBg={!hasBg} bg={bg}>
 		{({ studentAnswer, onAnswer, error }) => (
 			<>
 				<Typography component="b" color="primary">

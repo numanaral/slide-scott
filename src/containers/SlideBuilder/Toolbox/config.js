@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { FORM_COMPONENT_TYPES } from 'components/Form/Form';
+import { FORM_COMPONENT_TYPES } from 'components/Form';
 import {
 	TextQuestionIcon,
 	MultipleChoiceQuestionIcon,
@@ -9,6 +9,8 @@ import {
 	AudioIcon,
 	TextIcon,
 	LinkIcon,
+	BitmojiIcon,
+	ChatBubbleIcon,
 	// ShapeIcon,
 } from 'icons';
 import MultipleChoiceQuestion from './components/MultipleChoiceQuestion';
@@ -18,6 +20,8 @@ import Video from './components/Video';
 import Audio from './components/Audio';
 import Link from './components/Link';
 import Text from './components/Text';
+import Bitmoji from './components/Bitmoji';
+import ChatBubble from './components/ChatBubble';
 // import Shape from './components/Shape';
 
 const TOOL_TYPES = {
@@ -28,6 +32,8 @@ const TOOL_TYPES = {
 	AUDIO: 'audio',
 	LINK: 'link',
 	TEXT: 'text',
+	BITMOJI: 'bitmoji',
+	CHAT_BUBBLE: 'chatBubble',
 	// SHAPE: 'shape'
 };
 
@@ -39,6 +45,8 @@ const {
 	AUDIO,
 	LINK,
 	TEXT,
+	BITMOJI,
+	CHAT_BUBBLE,
 	// SHAPE
 } = TOOL_TYPES;
 
@@ -50,6 +58,8 @@ const TOOL_COMPONENTS = {
 	[AUDIO]: Audio,
 	[LINK]: Link,
 	[TEXT]: Text,
+	[BITMOJI]: Bitmoji,
+	[CHAT_BUBBLE]: ChatBubble,
 	// [SHAPE]: Shape,
 };
 
@@ -72,10 +82,23 @@ const TOOLS_SETTINGS = {
 					name: 'correctAnswer',
 					required: true,
 				},
+				{
+					type: FORM_COMPONENT_TYPES.CHECKBOX,
+					label: 'Display background',
+					name: 'hasBg',
+					defaultValue: true,
+				},
+				{
+					type: FORM_COMPONENT_TYPES.COLOR_PICKER,
+					label: 'Background color',
+					name: 'bg',
+				},
 			],
 			schema: yup.object().shape({
 				question: yup.string().label('Question').required(),
 				correctAnswer: yup.string().label('Correct Answer').required(),
+				hasBg: yup.boolean().label('Display background'),
+				bg: yup.string().label('Background color'),
 			}),
 		},
 		MULTIPLE_CHOICE: {
@@ -119,6 +142,17 @@ const TOOLS_SETTINGS = {
 					name: 'correctAnswer',
 					required: true,
 				},
+				{
+					type: FORM_COMPONENT_TYPES.CHECKBOX,
+					label: 'Display background',
+					name: 'hasBg',
+					defaultValue: true,
+				},
+				{
+					type: FORM_COMPONENT_TYPES.COLOR_PICKER,
+					label: 'Background color',
+					name: 'bg',
+				},
 			],
 			schema: yup.object().shape({
 				question: yup.string().label('Question').required(),
@@ -132,6 +166,8 @@ const TOOLS_SETTINGS = {
 					.length(1)
 					.oneOf(['A', 'B', 'C', 'D', 'a', 'b', 'c', 'd'])
 					.required(),
+				hasBg: yup.boolean().label('Display background'),
+				bg: yup.string().label('Background color'),
 			}),
 		},
 	},
@@ -239,6 +275,40 @@ const TOOLS_SETTINGS = {
 					name: 'text',
 					required: true,
 				},
+				{
+					type: FORM_COMPONENT_TYPES.CHECKBOX,
+					label: 'Display background',
+					name: 'hasBg',
+					defaultValue: true,
+				},
+				{
+					type: FORM_COMPONENT_TYPES.COLOR_PICKER,
+					label: 'Background color',
+					name: 'bg',
+				},
+			],
+			schema: yup.object().shape({
+				text: yup.string().label('Text').required(),
+				hasBg: yup.boolean().label('Display background'),
+				bg: yup.string().label('Background color'),
+			}),
+		},
+		BITMOJI: {
+			icon: BitmojiIcon,
+			name: 'Bitmoji',
+			type: TOOL_TYPES.BITMOJI,
+		},
+		CHAT_BUBBLE: {
+			icon: ChatBubbleIcon,
+			name: 'Chat Bubble',
+			type: TOOL_TYPES.CHAT_BUBBLE,
+			items: [
+				{
+					type: FORM_COMPONENT_TYPES.TEXT,
+					label: 'Text',
+					name: 'text',
+					required: true,
+				},
 			],
 			schema: yup.object().shape({
 				text: yup.string().label('Text').required(),
@@ -256,6 +326,18 @@ const TOOLS = {
 		settings: TOOLS_SETTINGS.INTERACTABLE.MULTIPLE_CHOICE,
 		interactive: true,
 	},
+	[BITMOJI]: {
+		settings: TOOLS_SETTINGS.STATIC.BITMOJI,
+	},
+	[TEXT]: {
+		settings: TOOLS_SETTINGS.STATIC.TEXT,
+	},
+	[CHAT_BUBBLE]: {
+		settings: TOOLS_SETTINGS.STATIC.CHAT_BUBBLE,
+	},
+	[LINK]: {
+		settings: TOOLS_SETTINGS.STATIC.LINK,
+	},
 	[IMAGE]: {
 		settings: TOOLS_SETTINGS.STATIC.IMAGE,
 	},
@@ -264,12 +346,6 @@ const TOOLS = {
 	},
 	[AUDIO]: {
 		settings: TOOLS_SETTINGS.STATIC.AUDIO,
-	},
-	[LINK]: {
-		settings: TOOLS_SETTINGS.STATIC.LINK,
-	},
-	[TEXT]: {
-		settings: TOOLS_SETTINGS.STATIC.TEXT,
 	},
 	// [SHAPE]: {
 	// 	settings: TOOLS_SETTINGS.STATIC.SHAPE,

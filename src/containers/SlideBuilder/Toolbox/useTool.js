@@ -1,8 +1,12 @@
 import React from 'react';
+
 import useDialogProvider from 'store/redux/hooks/useDialogProvider';
 import Form from 'components/Form';
+import useProfile from 'store/firebase/hooks/useProfile';
+import { TOOL_TYPES } from './config';
 
 const useTool = setSlides => {
+	const { bitmoji } = useProfile();
 	const { openComponentDialog, closeDialog } = useDialogProvider();
 
 	const handleDraggable = async (
@@ -18,6 +22,42 @@ const useTool = setSlides => {
 
 		const targetId = draggableId || `cloned-${draggableType}-${Date.now()}`;
 
+		const updateSlides = (
+			componentProps = null,
+			shouldCloseDialog = false
+		) => {
+			setSlides(prev => {
+				const newFramesForSlide = {
+					...prev[slideId].frames,
+					[targetId]: {
+						...prev[slideId].frames[targetId],
+						...newProps,
+						componentType: type,
+						componentProps: componentProps || {},
+					},
+				};
+
+				if (shouldCloseDialog) closeDialog();
+				successCallback(targetId);
+				return {
+					...prev,
+
+					[slideId]: {
+						frames: newFramesForSlide,
+					},
+				};
+			});
+		};
+
+		if (!items) {
+			if (type === TOOL_TYPES.BITMOJI) {
+				updateSlides(bitmoji);
+				return;
+			}
+			// prop-less elements
+			updateSlides();
+		}
+
 		openComponentDialog(
 			`Create new ${name}`,
 			<Form
@@ -26,27 +66,7 @@ const useTool = setSlides => {
 				submitText="Save"
 				defaultValues={defaultValues}
 				onSubmit={data => {
-					setSlides(prev => {
-						const newFramesForSlide = {
-							...prev[slideId].frames,
-							[targetId]: {
-								...prev[slideId].frames[targetId],
-								...newProps,
-								componentType: type,
-								componentProps: data,
-							},
-						};
-
-						closeDialog();
-						successCallback(targetId);
-						return {
-							...prev,
-
-							[slideId]: {
-								frames: newFramesForSlide,
-							},
-						};
-					});
+					updateSlides(data, true);
 				}}
 			/>
 		);

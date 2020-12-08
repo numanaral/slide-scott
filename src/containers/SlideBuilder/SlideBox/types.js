@@ -6,9 +6,7 @@ const propTypes = {
 	index: number.isRequired,
 	setTarget: func.isRequired,
 	removeTarget: func.isRequired,
-	draggableId: string.isRequired,
 	updateDraggable: func.isRequired,
-	addOrUpdateDraggable: func.isRequired,
 	currentlyFocusedElement: shape({
 		draggableId: string,
 		slideId: string,

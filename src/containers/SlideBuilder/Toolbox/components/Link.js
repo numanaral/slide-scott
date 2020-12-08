@@ -1,8 +1,8 @@
 // TODO: prop-types
 /* eslint-disable react/prop-types */
-import PrettyLink from 'components/PrettyLink';
 import React from 'react';
 
+import PrettyLink from 'components/PrettyLink';
 import Wrapper from './Wrapper';
 
 const Link = ({ url, displayText, arrow }) => (

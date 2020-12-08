@@ -62,7 +62,11 @@ const Toolbox = ({ onDragStart }) => {
 			innerRef={toolboxRef}
 		>
 			<ContainerTitle> Tools </ContainerTitle>
-			<ContainerBody container alignContent="flex-start">
+			<ContainerBody
+				container
+				justify="flex-start"
+				alignContent="flex-start"
+			>
 				{Object.keys(toolList).map(key => (
 					<Fragment key={key}>
 						<Spacer direction="top" spacing="2" />

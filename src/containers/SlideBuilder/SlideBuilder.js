@@ -7,9 +7,7 @@ import LazyMoveable from 'components/Moveable/Lazy';
 import ContainerSpacingWrapper from 'components/ContainerSpacingWrapper';
 import TooltipButton from 'components/TooltipButton';
 import { AddIcon, SettingsIcon } from 'icons';
-import PrettyJson from 'components/PrettyJson';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
-import Spacer from 'components/Spacer';
 import useMoveable from 'components/Moveable/useMoveable';
 import useEvents from 'components/Moveable/useEvents';
 import { getNiceDateTimeVanilla, smoothScroll } from 'utils';
@@ -19,7 +17,6 @@ import {
 	singleViewRouterDefaultProps,
 } from 'routes/pages/types';
 import useWatchSlide from 'store/firebase/hooks/slides/useWatchSlide';
-import useSlides from 'store/firebase/hooks/slides/useSlides';
 import useSlide from 'store/firebase/hooks/slides/useSlide';
 import NoAccess from 'components/NoAccess';
 import LazyToolBox from './Toolbox/Lazy';
@@ -57,8 +54,7 @@ const SaveLogger = ({ time }) => (
 	</HighlightedText>
 );
 
-const Wrapper = ({ id, slide, children }) => {
-	const { updateSlideshow } = useSlides(id);
+const Wrapper = ({ id, slide, updateSlideshow, children }) => {
 	const [lastSave, setLastSave] = useState('');
 
 	// We want to keep a local state because we don't want to make a request to
@@ -87,7 +83,7 @@ const Wrapper = ({ id, slide, children }) => {
 
 				return prev;
 			});
-		}, 15 * 1000);
+		}, 3 * 1000);
 
 		return () => {
 			clearInterval(interval);
@@ -183,6 +179,7 @@ const SlideBuilder = ({
 	const { slide, pending, error } = useWatchSlide(id);
 	const {
 		hasEditAccess,
+		updateSlideshow,
 		pending: hasEditAccessPending,
 		error: hasEditAccessError,
 	} = useSlide(id);
@@ -190,6 +187,7 @@ const SlideBuilder = ({
 	const wrapperProps = {
 		id,
 		slide,
+		updateSlideshow,
 	};
 
 	return (
@@ -288,13 +286,13 @@ const SlideBuilder = ({
 									icon={AddIcon}
 								/>
 							</ContainerWithCenteredItems>
-							<Spacer direction="bottom" spacing="2" />
+							{/* <Spacer direction="bottom" spacing="2" />
 							<ContainerWithCenteredItems>
 								<Typography variant="h5">
 									Config (Temporary - For Dev)
 								</Typography>
 								<PrettyJson json={JSON.stringify(slides)} />
-							</ContainerWithCenteredItems>
+							</ContainerWithCenteredItems> */}
 						</ContainerSpacingWrapper>
 						<ContainerSpacingWrapper
 							item
