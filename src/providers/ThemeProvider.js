@@ -1,39 +1,44 @@
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { func } from 'prop-types';
+import React from 'react';
+import { node } from 'prop-types';
 import { CssBaseline } from '@material-ui/core';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
-import getMuiTheme, { ConstGlobalStyle, VariantGlobalStyle } from 'theme';
-import { makeSelectTheme } from 'store/redux/reducers/userPreference/selectors';
-import { toggleTheme } from 'store/redux/reducers/userPreference/actions';
+import getMuiTheme, {
+	ConstGlobalStyle,
+	VariantGlobalStyle,
+	PRIMARY_COLOR,
+	SECONDARY_COLOR,
+} from 'theme';
+import useProfile from 'store/firebase/hooks/useProfile';
+import { DARK_THEME } from 'store/redux/reducers/userPreference/constants';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 export const ThemeProvider = ({ children }) => {
-	const dispatch = useDispatch();
-	const onToggleTheme = useCallback(() => dispatch(toggleTheme()), [
-		dispatch,
-	]);
-	const theme = useSelector(makeSelectTheme());
-
-	const themeConfig = getMuiTheme(theme);
+	const { isAuthorizing, theme, primaryColor, secondaryColor } = useProfile();
+	const themeConfig = getMuiTheme(theme || DARK_THEME, {
+		primaryColor: primaryColor || PRIMARY_COLOR,
+		secondaryColor: secondaryColor || SECONDARY_COLOR,
+	});
 
 	return (
-		<StylesProvider injectFirst>
-			<MuiThemeProvider theme={themeConfig}>
-				<ScThemeProvider theme={themeConfig}>
-					<CssBaseline />
-					{children({ theme, setTheme: onToggleTheme })}
-				</ScThemeProvider>
-			</MuiThemeProvider>
-			<ConstGlobalStyle />
-			<VariantGlobalStyle $theme={themeConfig} />
-		</StylesProvider>
+		(isAuthorizing && <LoadingIndicator fullSize />) || (
+			<StylesProvider injectFirst>
+				<MuiThemeProvider theme={themeConfig}>
+					<ScThemeProvider theme={themeConfig}>
+						<CssBaseline />
+						{children}
+					</ScThemeProvider>
+				</MuiThemeProvider>
+				<ConstGlobalStyle />
+				<VariantGlobalStyle $theme={themeConfig} />
+			</StylesProvider>
+		)
 	);
 };
 
 ThemeProvider.propTypes = {
-	children: func.isRequired,
+	children: node.isRequired,
 };
 
 export default ThemeProvider;

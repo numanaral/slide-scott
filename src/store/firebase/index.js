@@ -3,6 +3,8 @@ import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { createFirestoreInstance } from 'redux-firestore';
+import { DEFAULT_BITMOJI_SETTINGS } from 'components/Bitmoji/useBitmoji';
+import { DARK_THEME } from 'store/redux/reducers/userPreference/constants';
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_API_KEY,
@@ -33,6 +35,8 @@ const reactReduxFirebaseConfig = {
 		const profile = {
 			email: _user.email || _user.providerData[0].email,
 			roles: ['User'],
+			bitmoji: DEFAULT_BITMOJI_SETTINGS,
+			theme: DARK_THEME,
 		};
 		if (_user.providerData && _user.providerData.length) {
 			profile.providerData = _user.providerData;

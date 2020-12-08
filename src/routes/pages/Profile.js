@@ -6,22 +6,10 @@ import { ThemeIcon, AnimationIcon, PaletteIcon } from 'icons';
 import LazyList from 'components/List/Lazy';
 import { itemTypes, SPACER } from 'components/List/constants';
 import ThemeToggle from 'containers/ThemeToggle';
-import TooltipButton from 'components/TooltipButton';
 import PaperContainerWithSpacing from 'components/PaperContainerWithSpacing';
+import BitmojiPicker from 'containers/BitmojiPicker/BitmojiPicker';
+import ThemeColorPicker from 'containers/ThemeColorPicker';
 
-const noop = () => null;
-
-const ComingSoon = () => (
-	<TooltipButton
-		tooltip="Pick a color"
-		text="Pick a color"
-		variant="contained"
-		color="primary"
-		icon={PaletteIcon}
-		onClick={noop}
-		disabled
-	/>
-);
 const Switch = () => <MuiSwitch disabled />;
 
 const PREFERENCE_LIST = [
@@ -39,12 +27,12 @@ const PREFERENCE_LIST = [
 	{
 		primaryText: 'Primary Color',
 		icon: PaletteIcon,
-		secondaryAction: ComingSoon,
+		secondaryAction: <ThemeColorPicker type="primary" />,
 	},
 	{
 		primaryText: 'Secondary Color',
 		icon: PaletteIcon,
-		secondaryAction: ComingSoon,
+		secondaryAction: <ThemeColorPicker type="secondary" />,
 	},
 	SPACER,
 	{
@@ -61,12 +49,15 @@ const PREFERENCE_LIST = [
 	},
 ];
 
-const Profile = () => (
-	<ContainerWithCenteredItems vertical horizontal>
-		<PaperContainerWithSpacing padding="50px !important">
-			<LazyList list={PREFERENCE_LIST} />
-		</PaperContainerWithSpacing>
-	</ContainerWithCenteredItems>
-);
+const Profile = () => {
+	return (
+		<ContainerWithCenteredItems vertical horizontal>
+			<PaperContainerWithSpacing padding="50px !important">
+				<BitmojiPicker />
+				<LazyList list={PREFERENCE_LIST} />
+			</PaperContainerWithSpacing>
+		</ContainerWithCenteredItems>
+	);
+};
 
 export default Profile;

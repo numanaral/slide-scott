@@ -8,6 +8,10 @@ import {
 // import { blue, pink } from '@material-ui/core/colors';
 import { createGlobalStyle } from 'styled-components';
 import 'fontsource-montserrat';
+import {
+	DARK_THEME,
+	LIGHT_THEME,
+} from 'store/redux/reducers/userPreference/constants';
 
 const TRANSITION_CSS_PROPS = [
 	'background',
@@ -46,6 +50,7 @@ const ConstGlobalStyle = createGlobalStyle`
 			transition: ${THEME_COLOR_TRANSITION};
 			overflow: auto;
 			position: relative;
+			overflow-y: hidden;
 		}
 
 		pre {
@@ -124,27 +129,35 @@ const VariantGlobalStyle = createGlobalStyle`
 // const defaultTheme = createMuiTheme();
 const defaultTheme = unstable_createMuiStrictModeTheme();
 
-const DEFAULT_THEME = 'dark';
-const appThemes = ['dark', 'light'];
-const getThemeOptions = mode => {
-	const isDark = mode === 'dark';
+const DEFAULT_THEME = DARK_THEME;
+const PRIMARY_COLOR = '#30BFCE';
+const SECONDARY_COLOR = '#FFB249';
+const appThemes = [DARK_THEME, LIGHT_THEME];
+const getThemeOptions = (
+	mode,
+	{ primaryColor, secondaryColor } = {
+		primaryColor: PRIMARY_COLOR,
+		secondaryColor: SECONDARY_COLOR,
+	}
+) => {
+	const isDark = mode === DARK_THEME;
 	return {
 		palette: {
 			type: mode,
 			// primary: blue,
 			primary: {
-				light: '#71f2ff',
-				main: '#30BFCE',
-				dark: '#008e9d',
+				// light: '#71f2ff',
+				main: primaryColor || PRIMARY_COLOR,
+				// dark: '#008e9d',
 				contrastText:
 					(isDark && '#fff') ||
 					defaultTheme.palette.getContrastText('#30BFCE'),
 			},
 			// secondary: pink,
 			secondary: {
-				light: '#ffe479',
-				main: '#FFB249',
-				dark: '#c88214',
+				// light: '#ffe479',
+				main: secondaryColor || SECONDARY_COLOR,
+				// dark: '#c88214',
 				contrastText:
 					(isDark && '#fff') ||
 					defaultTheme.palette.getContrastText('#FFB249'),
@@ -279,12 +292,19 @@ const getThemeOptions = mode => {
  * @returns {import('@material-ui/core/styles/unstable_createMuiStrictModeTheme').Theme} mode
  * //returns {import('@material-ui/core/styles/createMuiTheme').Theme} mode
  */
-const getMuiTheme = mode =>
+const getMuiTheme = (mode, colors) =>
 	responsiveFontSizes(
-		unstable_createMuiStrictModeTheme(getThemeOptions(mode))
+		unstable_createMuiStrictModeTheme(getThemeOptions(mode, colors))
 	);
 // responsiveFontSizes(createMuiTheme(getThemeOptions(mode)));
 
-export { DEFAULT_THEME, ConstGlobalStyle, VariantGlobalStyle, appThemes };
+export {
+	DEFAULT_THEME,
+	PRIMARY_COLOR,
+	SECONDARY_COLOR,
+	ConstGlobalStyle,
+	VariantGlobalStyle,
+	appThemes,
+};
 
 export default getMuiTheme;

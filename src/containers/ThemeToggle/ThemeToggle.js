@@ -1,24 +1,17 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { yellow, indigo } from '@material-ui/core/colors';
 
 import Toggle from 'components/Toggle';
 import { LightThemeIcon, DarkThemeIcon } from 'icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { makeSelectTheme } from 'store/redux/reducers/userPreference/selectors';
-import { toggleTheme } from 'store/redux/reducers/userPreference/actions';
+import useProfile from 'store/firebase/hooks/useProfile';
 
 const ThemeToggle = () => {
-	const theme = useSelector(makeSelectTheme());
-	const dispatch = useDispatch();
-
-	const setTheme = useCallback(() => {
-		dispatch(toggleTheme());
-	}, []);
+	const { theme, updateTheme } = useProfile();
 
 	return (
 		<Toggle
 			value={theme}
-			onChange={setTheme}
+			onChange={updateTheme}
 			options={[
 				{
 					value: 'dark',
