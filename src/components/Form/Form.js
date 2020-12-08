@@ -1,32 +1,16 @@
-import React, { useRef, useEffect, createRef, forwardRef } from 'react';
-import styled from 'styled-components';
-import { FormGroup, Grid, TextField } from '@material-ui/core';
+import React, { useRef, useEffect, createRef } from 'react';
+import { FormGroup, Grid } from '@material-ui/core';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import TooltipButton from 'components/TooltipButton';
 import Spacer from 'components/Spacer';
+import COMPONENTS, { FORM_COMPONENT_TYPES } from './components';
 
-const StyledTextField = styled(TextField)`
-	${({ theme }) => `
-		margin-bottom: ${theme.spacing(2)}px;
-	`}
-`;
-
-const FORM_COMPONENT_TYPES = {
-	TEXT: 'text',
-	PASSWORD: 'password',
-};
-
-const { TEXT, PASSWORD } = FORM_COMPONENT_TYPES;
-
-const COMPONENTS = {
-	[TEXT]: StyledTextField,
-	[PASSWORD]: forwardRef((props, ref) => (
-		<StyledTextField type="password" {...props} ref={ref} />
-	)),
-};
+// const FormItem = ({}) => {
+// 	const inputRef = useRef();
+// };
 
 // TODO: Keep the form simple for now
 /* eslint-disable react/prop-types */
@@ -37,10 +21,12 @@ const Form = ({
 	defaultValues,
 	submitText = 'Submit',
 }) => {
-	const { control, handleSubmit, errors } = useForm({
+	const { control, handleSubmit, errors, watch } = useForm({
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
+
+	console.log(watch());
 
 	// For auto-focusing on the first error
 	const inputRefs = useRef({});
@@ -49,6 +35,7 @@ const Form = ({
 			inputRefs.current[name] = createRef();
 		});
 	}, [items]);
+	// }, [items]);
 	const onInvalid = err => {
 		const errorKeys = Object.keys(err);
 		if (errorKeys.length) {
@@ -103,21 +90,48 @@ const Form = ({
 				) => {
 					const As = COMPONENTS[type];
 					const ref = inputRefs.current[name];
+
+					const props = {};
+
+					// NOTE: rhfProps contains: onChange, onBlur and value
+					if (type === FORM_COMPONENT_TYPES.CHECKBOX) {
+						props.render = rhfProps => (
+							<As
+								onChange={e =>
+									rhfProps.onChange(e.target.checked)
+								}
+								// eslint-disable-next-line react/destructuring-assignment
+								checked={rhfProps.value}
+								label={label}
+							/>
+						);
+					} else if (type === FORM_COMPONENT_TYPES.COLOR_PICKER) {
+						props.render = rhfProps => (
+							<As
+								color={rhfProps.value}
+								onColorChange={rhfProps.onChange}
+								label={label}
+							/>
+						);
+					} else {
+						props.as = (
+							<As
+								{...(ind === 0 && { autoFocus: true })}
+								inputRef={ref}
+							/>
+						);
+					}
+
 					return (
 						<FormGroup key={name}>
 							<Controller
-								as={
-									<As
-										{...(ind === 0 && { autoFocus: true })}
-										inputRef={ref}
-									/>
-								}
 								control={control}
 								defaultValue={defaultValue}
 								name={name}
 								label={label}
-								variant={variant}
+								{...(variant && { variant })}
 								{...(required && getRequiredField(name))}
+								{...props}
 							/>
 						</FormGroup>
 					);
@@ -140,5 +154,4 @@ const Form = ({
 	);
 };
 
-export { FORM_COMPONENT_TYPES };
 export default Form;
