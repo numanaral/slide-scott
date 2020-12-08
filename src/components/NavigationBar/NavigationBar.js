@@ -12,6 +12,7 @@ import TooltipButton from 'components/TooltipButton';
 import { Home } from '@material-ui/icons';
 import Bitmoji from 'components/Bitmoji';
 import useProfile from 'store/firebase/hooks/useProfile';
+import { AccountIcon } from 'icons';
 import Links from './Links';
 import logo from './full-logo.png';
 // import logo from './full-logo-transparent.png';
@@ -89,7 +90,11 @@ const TopNavigationBar = () => {
 				},
 			},
 		},
-		icon: <Bitmoji {...bitmoji} style={{ width: 24, height: 24 }} />,
+		icon:
+			(isLoggedIn && (
+				<Bitmoji {...bitmoji} style={{ width: 24, height: 24 }} />
+			)) ||
+			AccountIcon,
 		options: (isLoggedIn && [
 			{ label: 'Profile', value: '/profile' },
 			{ label: 'Log Out', value: 'logout' },
