@@ -1,1 +1,0 @@
-(this["webpackJsonpslide-scott"]=this["webpackJsonpslide-scott"]||[]).push([[26],{729:function(t,s,c){"use strict";c.r(s),c.d(s,"default",(function(){return u}));var e=c(7),n=c(5),i=(c(0),c(703)),u=function(t){return Object(n.jsx)(i.a,Object(e.a)({},t))}}}]);
