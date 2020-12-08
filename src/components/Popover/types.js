@@ -1,4 +1,4 @@
-import { element, bool, objectOf, string } from 'prop-types';
+import { element, bool, objectOf, string, node } from 'prop-types';
 
 import { icon } from 'components/types';
 
@@ -10,6 +10,7 @@ const propTypes = {
 	tooltip: string,
 	text: string,
 	icon,
+	buttonComponent: node,
 };
 
 const defaultProps = {
@@ -25,6 +26,7 @@ const defaultProps = {
 	tooltip: '',
 	text: null,
 	icon: null,
+	buttonComponent: null,
 };
 
 export { propTypes, defaultProps };

@@ -33,6 +33,8 @@ const Popover = ({
 	tooltip,
 	text,
 	icon,
+	buttonComponent,
+	passCallback,
 	...rest
 }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -50,13 +52,26 @@ const Popover = ({
 
 	return (
 		<Wrapper>
-			<TooltipButton
-				aria-describedby={id}
-				tooltip={tooltip}
-				onClick={onClick}
-				text={text}
-				icon={icon}
-			/>
+			{(buttonComponent &&
+				cloneElement(buttonComponent, {
+					onClick: e => {
+						// If you need to do a check before executing on click,
+						// pass it back. (Eg: auth)
+						if (passCallback) {
+							buttonComponent.props.onClick(() => onClick(e));
+							return;
+						}
+						onClick(e);
+					},
+				})) || (
+				<TooltipButton
+					aria-describedby={id}
+					tooltip={tooltip}
+					onClick={onClick}
+					text={text}
+					icon={icon}
+				/>
+			)}
 			<MuiPopover
 				id={id}
 				open={isPopoverOpen}

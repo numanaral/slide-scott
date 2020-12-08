@@ -15,6 +15,7 @@ import {
 	Typography,
 	CardHeader,
 	Avatar,
+	Tooltip,
 } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -138,12 +139,14 @@ const Card = ({
 				/>
 			)}
 			{(onCardClick && (
-				<StyledCardActionArea
-					$fullHeight={fullHeightCardAction}
-					onClick={() => onCardClick(id)}
-				>
-					{cardBody}
-				</StyledCardActionArea>
+				<Tooltip title="Play">
+					<StyledCardActionArea
+						$fullHeight={fullHeightCardAction}
+						onClick={() => onCardClick(id)}
+					>
+						{cardBody}
+					</StyledCardActionArea>
+				</Tooltip>
 			)) || <> {cardBody} </>}
 			{hasBottomActions && (
 				<CardActions>

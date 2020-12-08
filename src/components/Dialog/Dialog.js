@@ -12,11 +12,16 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 
-import { Close as CloseIcon, Info as InfoIcon } from '@material-ui/icons';
+import {
+	CloseIcon,
+	InfoIcon,
+	FullscreenIcon,
+	ExitFullscreenIcon,
+	EditIcon,
+} from 'icons';
 import Popover from 'components/Popover';
 import HtmlContainer from 'components/HtmlContainer/Lazy';
 import PrettyPre from 'components/PrettyPre';
-import { FullscreenIcon, ExitFullscreenIcon, EditIcon } from 'icons';
 import TooltipButton from 'components/TooltipButton';
 import LoadingIndicator from 'components/LoadingIndicator';
 import { propTypes, defaultProps } from './types';

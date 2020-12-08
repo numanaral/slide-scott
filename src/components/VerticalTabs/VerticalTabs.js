@@ -32,10 +32,11 @@ const StyledTabs = styled(Tabs)`
  *
  * @example
  * ```js
- * const list = [
- * 	{ label: 'Label', panel: <SomeComponent /> },
- * 	{ label: 'Label2', panel: <SomeComponent2 /> },
- * ]
+ * 	const list = [
+ * 			{ label: 'Slideshows', panel: <Slideshows />, icon: LayerIcon },
+ * 			{ label: 'Analytics', panel: <Analytics />, icon: AnalyticsIcon },
+ * 			{ label: 'Resources', panel: <Resources />, icon: BookmarksIcon },
+ * 	];
  * ```
  */
 const VerticalTabs = ({ list, ...rest }) => {
@@ -43,7 +44,6 @@ const VerticalTabs = ({ list, ...rest }) => {
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
-		console.log(newValue);
 	};
 
 	const tabs = [];
@@ -66,7 +66,7 @@ const VerticalTabs = ({ list, ...rest }) => {
 	});
 
 	return (
-		<Wrapper>
+		<Wrapper {...rest}>
 			<StyledTabs
 				orientation="vertical"
 				variant="scrollable"

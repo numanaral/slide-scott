@@ -8,9 +8,15 @@ import { propTypes, defaultProps } from './types';
 const PaperWrapper = styled(Paper)`
 	width: 100%;
 	text-align: left;
-	${({ theme }) => `
+	${({ theme, $bg }) => `
 		// margin-bottom: ${theme.spacing(2)}px;
-		background-color: ${theme.palette.background.paper};
+		background-color: ${
+			($bg &&
+				(theme.palette[$bg]?.main ||
+					theme.palette.background[$bg] ||
+					$bg)) ||
+			theme.palette.background.paper
+		};
 	`}
 `;
 

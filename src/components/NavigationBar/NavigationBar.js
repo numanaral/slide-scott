@@ -1,19 +1,17 @@
 import React from 'react';
 import { AppBar, Link, Toolbar, useTheme } from '@material-ui/core';
-import ThemeToggle from 'containers/ThemeToggle';
 import { Link as ReactRouterLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Menu from 'components/Menu';
 import useMenu from 'components/Menu/useMenu';
 import useLogin from 'store/firebase/hooks/useLogin';
-import { AccountIcon } from 'icons';
 import useAuth from 'store/firebase/hooks/useAuth';
 import { BASE_PATH } from 'routes/constants';
-import Spacer from 'components/Spacer';
-import ClearLocalStorageButton from 'components/ClearLocalStorageButton';
 import TooltipButton from 'components/TooltipButton';
 import { Home } from '@material-ui/icons';
+import Bitmoji from 'components/Bitmoji';
+import useProfile from 'store/firebase/hooks/useProfile';
 import Links from './Links';
 import logo from './full-logo.png';
 // import logo from './full-logo-transparent.png';
@@ -57,6 +55,7 @@ const TopNavigationBar = () => {
 	const { isLoggedIn, user } = useAuth();
 	const { push } = useHistory();
 	const theme = useTheme();
+	const { bitmoji } = useProfile();
 
 	const onLogOut = () => {
 		logOut();
@@ -90,7 +89,7 @@ const TopNavigationBar = () => {
 				},
 			},
 		},
-		icon: AccountIcon,
+		icon: <Bitmoji {...bitmoji} style={{ width: 24, height: 24 }} />,
 		options: (isLoggedIn && [
 			{ label: 'Profile', value: '/profile' },
 			{ label: 'Log Out', value: 'logout' },
