@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import styled, { css, keyframes } from 'styled-components';
 import isDeepEqual from 'fast-deep-equal';
@@ -19,9 +19,9 @@ import {
 import useWatchSlide from 'store/firebase/hooks/slides/useWatchSlide';
 import useSlide from 'store/firebase/hooks/slides/useSlide';
 import NoAccess from 'components/NoAccess';
+import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import LazyToolBox from './Toolbox/Lazy';
 import LazySlideBox from './SlideBox/Lazy';
-import LazyConfigBox from './ConfigBox/Lazy';
 import ContainerTitle from './shared/ContainerTitle';
 import SlideSettings from './SlideSettings';
 
@@ -176,6 +176,7 @@ const SlideBuilder = ({
 		params: { id },
 	},
 }) => {
+	const { notifySuccess } = useNotificationProvider();
 	const { slide, pending, error } = useWatchSlide(id);
 	const {
 		hasEditAccess,
@@ -189,6 +190,8 @@ const SlideBuilder = ({
 		slide,
 		updateSlideshow,
 	};
+
+	const drawerRef = useRef();
 
 	return (
 		pending ||
@@ -221,7 +224,7 @@ const SlideBuilder = ({
 						</ContainerSpacingWrapper>
 						<ContainerSpacingWrapper
 							item
-							xs={8}
+							xs={10}
 							spacing={1}
 							rightLeft
 						>
@@ -233,6 +236,7 @@ const SlideBuilder = ({
 							<ContainerTitle>
 								Slides{' '}
 								<Drawer
+									ref={drawerRef}
 									button={
 										<TooltipButton
 											tooltip="Open settings"
@@ -244,12 +248,16 @@ const SlideBuilder = ({
 								>
 									<SlideSettings
 										onSubmit={data => {
-											console.log(data);
+											updateSlideshow(data);
+											drawerRef.current?.click();
+											notifySuccess(
+												`Slide configuration was successfully updated`
+											);
 										}}
 										defaultValues={{
 											title: slide.title,
 											description: slide.description,
-											thumbnailUrl: slide.thumbnailUrl,
+											thumbnail: slide.thumbnail,
 										}}
 									/>
 								</Drawer>
@@ -294,7 +302,7 @@ const SlideBuilder = ({
 								<PrettyJson json={JSON.stringify(slides)} />
 							</ContainerWithCenteredItems> */}
 						</ContainerSpacingWrapper>
-						<ContainerSpacingWrapper
+						{/* <ContainerSpacingWrapper
 							item
 							xs={2}
 							spacing={1}
@@ -306,9 +314,7 @@ const SlideBuilder = ({
 								}}
 							/>
 							<LazyConfigBox />
-							{/* <ContainerSpacingWrapper spacing={2} topBottom rightLeft>
-				</ContainerSpacingWrapper> */}
-						</ContainerSpacingWrapper>
+						</ContainerSpacingWrapper> */}
 					</ContainerSpacingWrapper>
 				)}
 			</Wrapper>

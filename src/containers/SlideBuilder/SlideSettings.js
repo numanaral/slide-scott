@@ -15,20 +15,20 @@ const items = [
 		type: FORM_COMPONENT_TYPES.TEXT,
 		label: 'Description',
 		name: 'description',
-		required: true,
+		defaultValue: '',
 	},
 	{
 		type: FORM_COMPONENT_TYPES.TEXT,
 		label: 'Thumbnail Image Url',
-		name: 'thumbnailUrl',
-		required: true,
+		name: 'thumbnail',
+		defaultValue: '',
 	},
 ];
 
 const slideSettingsSchema = yup.object().shape({
 	title: yup.string().label('Title').required(),
-	description: yup.string().label('Description').required(),
-	thumbnailUrl: yup.string().url().label('Thumbnail Image Url'),
+	description: yup.string().label('Description'),
+	thumbnail: yup.string().url().label('Thumbnail Image Url'),
 });
 
 // eslint-disable-next-line react/prop-types
