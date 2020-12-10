@@ -59,7 +59,7 @@ const displayWarningMessage = message => ({
 	type: SET_SNACKBAR_PROPS,
 	payload: {
 		...DEFAULT_VALUES,
-		autoHideDuration: 2500,
+		autoHideDuration: 15000,
 		severity: 'warning',
 		message,
 		open: true,

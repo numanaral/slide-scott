@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
 import usePageView from 'store/firebase/hooks/usePageView';
+import useIsNotMobileFriendly from 'hooks/useIsNotMobileFriendlyHook';
 import RouteWrapper from './RouteWrapper';
 import { BASE_PATH, ROUTE_LIST } from './constants';
 
@@ -26,6 +27,7 @@ const RedirectToNotFound = () => {
 };
 
 const Routes = props => {
+	useIsNotMobileFriendly();
 	usePageView();
 	return (
 		<Switch>
