@@ -165,7 +165,7 @@ const Card = ({
 									size="small"
 									color="primary"
 									key={button.text}
-									onClick={e => button.onClick(id)}
+									onClick={() => button.onClick(id)}
 								>
 									{button.text}
 								</Button>

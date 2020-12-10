@@ -45,7 +45,7 @@ const useSlideActions = () => {
 		push(`${BASE_PATH}/slides/${id}`);
 	};
 
-	const onFavorite = id => {
+	const onFavorite = (/* id */) => {
 		notifyInfo(
 			`This will be implemented when slideshows can be shared between users`
 		);
@@ -66,7 +66,7 @@ const useSlideActions = () => {
 		);
 	};
 
-	const onTemplate = id => {
+	const onTemplate = (/* id */) => {
 		notifyInfo('To be implemented');
 
 		// try {

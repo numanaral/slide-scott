@@ -61,6 +61,7 @@ const Present = ({
 			canvasRef.current.loadSaveData(presenterCoordinates.drawing);
 			isCalled.current = true;
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [presenterCoordinates.drawing]);
 
 	return (

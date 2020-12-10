@@ -30,7 +30,8 @@ const useOuterClick = (cb, exc) => {
 		};
 		document.addEventListener('click', handleClick);
 		return () => document.removeEventListener('click', handleClick);
-	}, []); // no dependencies -> stable click listener
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return innerRef; // convenience for client (doesn't need to init ref himself)
 };

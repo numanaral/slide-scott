@@ -21,7 +21,7 @@ const Form = ({
 	defaultValues,
 	submitText = 'Submit',
 }) => {
-	const { control, handleSubmit, errors, watch } = useForm({
+	const { control, handleSubmit, errors } = useForm({
 		resolver: yupResolver(schema),
 		defaultValues,
 	});

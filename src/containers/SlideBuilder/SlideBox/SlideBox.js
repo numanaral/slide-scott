@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
 import useOuterClick from 'hooks/useOuterClick';
-import FullSizeGrid from 'components/FullSizeGrid';
 import useEvents from 'components/Moveable/useEvents';
 import TooltipButton from 'components/TooltipButton';
 import { DeleteIcon, EditIcon, PaletteIcon } from 'icons';
@@ -172,6 +171,7 @@ const SlideBox = ({
 		Object.keys(frames).forEach(key => {
 			containerRefs.current[key] = createRef();
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

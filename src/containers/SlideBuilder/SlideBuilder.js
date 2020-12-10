@@ -98,6 +98,7 @@ const Wrapper = ({ /* id, */ slide, updateSlideshow, children }) => {
 		return () => {
 			clearInterval(interval);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [slide.slides]);
 
 	const deleteSlide = slideId => {
