@@ -8,14 +8,11 @@ import useMenu from 'components/Menu/useMenu';
 import useLogin from 'store/firebase/hooks/useLogin';
 import useAuth from 'store/firebase/hooks/useAuth';
 import { BASE_PATH } from 'routes/constants';
-import TooltipButton from 'components/TooltipButton';
-import { Home } from '@material-ui/icons';
 import Bitmoji from 'components/Bitmoji';
 import useProfile from 'store/firebase/hooks/useProfile';
 import { AccountIcon } from 'icons';
 import Links from './Links';
 import logo from './full-logo.png';
-// import logo from './full-logo-transparent.png';
 
 const StyledAppBar = styled(AppBar)`
 	${({ theme }) => `
@@ -129,12 +126,12 @@ const TopNavigationBar = () => {
 				{/* <ClearLocalStorageButton /> */}
 
 				{/* <ThemeToggle /> */}
-				<TooltipButton
+				{/* <TooltipButton
 					tooltip="Dashboard"
 					// text="Dashboard"
 					onClick={() => null}
 					icon={Home}
-				/>
+				/> */}
 				<Menu {...menuProps} />
 				{/* {isLoggedIn && <div style={{ flexGrow: 1 }} />} */}
 			</Toolbar>
