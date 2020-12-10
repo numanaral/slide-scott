@@ -11,14 +11,8 @@
     "lint:fix": "npm run lint:fix && prettier --write .",
     "lint:f": "npm run lint:fix && prettier --write .",
     "lint:fp": "prettier --write .",
-    "predeploy": "npm run build",
+    "predeploy": "npm run lint:f && npm run build",
     "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "shared-config"
-    ]
   },
   "browserslist": {
     "production": [
