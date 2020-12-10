@@ -6,7 +6,7 @@ const Background = styled(Grid)`
 	overflow: auto;
 	${({ theme }) => `
 		height: calc(100% - ${NAVIGATION_BAR_HEIGHT}px);
-		// padding: ${theme.spacing(2)}px;
+		padding-bottom: ${theme.spacing(2)}px;
 	`}
 `;
 
