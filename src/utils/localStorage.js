@@ -1,3 +1,5 @@
+import { doesNotExist } from 'utils';
+
 const getLocalStorageItem = key => JSON.parse(window.localStorage.getItem(key));
 
 const clearLocalStorageItem = key => {
@@ -34,7 +36,7 @@ const setLocalStorageItem = (key, value, storedValue) => {
 // Only updates, does not set
 const updateLocalStorageItem = (key, value) => {
 	const lastValue = getLocalStorageItem(key);
-	if (!lastValue) {
+	if (doesNotExist(lastValue)) {
 		console.warn(
 			`Error setting the local storage value for key "${key}". The key doesn't exist in the local storage..`
 		);
@@ -46,7 +48,7 @@ const updateLocalStorageItem = (key, value) => {
 const getOrSetLocalStorageItem = (key, value) => {
 	try {
 		const storedValue = getLocalStorageItem(key);
-		if (!storedValue) return setLocalStorageItem(key, value);
+		if (doesNotExist(storedValue)) return setLocalStorageItem(key, value);
 
 		return storedValue;
 	} catch (ex) {
