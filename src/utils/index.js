@@ -84,6 +84,8 @@ const isPromise = obj =>
 	(typeof obj === 'object' || typeof obj === 'function') &&
 	typeof obj.then === 'function';
 
+const doesNotExist = value => value === null || value === undefined;
+
 export {
 	firstCapital,
 	pascalToSentence,
@@ -94,4 +96,5 @@ export {
 	smoothScroll,
 	getErrorMessageFromFetch,
 	isPromise,
+	doesNotExist,
 };
