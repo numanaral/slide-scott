@@ -8,6 +8,8 @@ import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import TooltipButton from 'components/TooltipButton';
 import { BASE_PATH } from 'routes/constants';
 import Spacer from 'components/Spacer';
+import Bitmoji from 'components/Bitmoji';
+import { Bubble } from 'containers/SlideBuilder/Toolbox/components/ChatBubble';
 
 const StyledTypography = styled(Typography)`
 	font-size: 150px;
@@ -23,6 +25,24 @@ const TutorialButton = styled(TooltipButton)`
 	width: 200px;
 `;
 
+const NUMAN_BITMOJI = {
+	accessoriesType: 'Blank',
+	avatarStyle: 'Transparent',
+	clotheType: 'BlazerSweater',
+	eyeType: 'Side',
+	eyebrowType: 'UpDownNatural',
+	facialHairType: 'BeardLight',
+	hairColor: 'BrownDark',
+	skinColor: 'Light',
+	topType: 'LongHairDreads',
+};
+
+const BubbleContainer = styled.div`
+	position: relative;
+	width: 100px;
+	height: 50px;
+`;
+
 const Home = () => {
 	const { notifyInfo } = useNotificationProvider();
 	const { push } = useHistory();
@@ -34,7 +54,15 @@ const Home = () => {
 					SlideScott
 				</StyledTypography>
 			</ContainerWithCenteredItems>
-			<Spacer direction="bottom" spacing="3" />
+			<ContainerWithCenteredItems>
+				<Bitmoji {...NUMAN_BITMOJI} />
+				<BubbleContainer>
+					<Bubble $width={100} $height={50}>
+						<Typography> Hi! </Typography>
+					</Bubble>
+				</BubbleContainer>
+			</ContainerWithCenteredItems>
+			<Spacer direction="bottom" spacing="5" />
 			<ContainerWithCenteredItems>
 				<GetStartedButton
 					tooltip="Create an account and start creating slides."
@@ -48,7 +76,9 @@ const Home = () => {
 				<TutorialButton
 					tooltip="Watch a tutorial on how to use SlideScott."
 					text="Tutorial"
-					onClick={() => notifyInfo('Coming soon')}
+					onClick={() =>
+						notifyInfo('Coming soon', { autoHide: false })
+					}
 					bg="primary"
 				/>
 			</ContainerWithCenteredItems>

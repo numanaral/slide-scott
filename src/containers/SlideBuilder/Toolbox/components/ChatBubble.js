@@ -48,4 +48,5 @@ const ChatBubble = ({ text }) => {
 	);
 };
 
+export { Bubble };
 export default ChatBubble;
