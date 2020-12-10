@@ -2,13 +2,15 @@ import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import React from 'react';
 import { Switch as MuiSwitch } from '@material-ui/core';
 
-import { ThemeIcon, AnimationIcon, PaletteIcon } from 'icons';
+import { ThemeIcon, AnimationIcon, PaletteIcon, AnalyticsIcon } from 'icons';
 import LazyList from 'components/List/Lazy';
 import { itemTypes, SPACER } from 'components/List/constants';
 import ThemeToggle from 'containers/ThemeToggle';
 import PaperContainerWithSpacing from 'components/PaperContainerWithSpacing';
 import BitmojiPicker from 'containers/BitmojiPicker/BitmojiPicker';
 import ThemeColorPicker from 'containers/ThemeColorPicker';
+import useRoles from 'store/firebase/hooks/useRoles';
+import AnalyticsToggle from 'containers/AnalyticsToggle';
 
 const Switch = () => <MuiSwitch disabled />;
 
@@ -49,12 +51,32 @@ const PREFERENCE_LIST = [
 	},
 ];
 
+const getPreferenceList = (isDevUser = false) => [
+	...((isDevUser && [
+		{
+			type: itemTypes.SECTION_TITLE_WITH_DIVIDER,
+			primaryText: 'DEV SETTINGS',
+		},
+		{
+			primaryText: 'Analytics',
+			icon: AnalyticsIcon,
+			// TODO: If I decide to add redux, won't need this complication here
+			// but it's not needed right now
+			secondaryAction: <AnalyticsToggle />,
+		},
+		SPACER,
+	]) ||
+		[]),
+	...PREFERENCE_LIST,
+];
+
 const Profile = () => {
+	const { isDevUser } = useRoles();
 	return (
 		<ContainerWithCenteredItems vertical horizontal>
 			<PaperContainerWithSpacing padding="50px !important">
 				<BitmojiPicker />
-				<LazyList list={PREFERENCE_LIST} />
+				<LazyList list={getPreferenceList(isDevUser)} />
 			</PaperContainerWithSpacing>
 		</ContainerWithCenteredItems>
 	);

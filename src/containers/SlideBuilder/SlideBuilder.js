@@ -54,7 +54,7 @@ const SaveLogger = ({ time }) => (
 	</HighlightedText>
 );
 
-const Wrapper = ({ id, slide, updateSlideshow, children }) => {
+const Wrapper = ({ /* id, */ slide, updateSlideshow, children }) => {
 	const [lastSave, setLastSave] = useState('');
 
 	// We want to keep a local state because we don't want to make a request to

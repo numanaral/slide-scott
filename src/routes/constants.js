@@ -48,9 +48,6 @@ const LazySlideViewerLive = loadable(() =>
 	import(`routes/pages/ViewSlideLive`)
 );
 
-// Dev route
-const LazyDevSettings = loadable(() => import(`routes/pages/DevSettings`));
-
 // Handler Pages
 const LazyNotFound = loadable(() => import(`./pages/NotFound`));
 const LazyUnauthorized = loadable(() => import(`./pages/Unauthorized`));
@@ -108,13 +105,6 @@ const ROUTE_LIST = [
 		description: `Watch a slide that's currently presented.`,
 		path: '/live/:id',
 		component: <LazySlideViewerLive />,
-	},
-	{
-		title: 'Dev Settings',
-		description: `Developer settings`,
-		path: '/dev-settings',
-		component: <LazyDevSettings />,
-		roles: [USER_ROLES.DEV],
 	},
 	{
 		title: 'Login',

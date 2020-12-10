@@ -93,7 +93,7 @@ const usePresent = slideId => {
 		}
 	};
 
-	const deleteLiveOptions = async props => {
+	const deleteLiveOptions = async () => {
 		try {
 			await firebase.remove(`live/${slideId}`);
 		} catch (err) {

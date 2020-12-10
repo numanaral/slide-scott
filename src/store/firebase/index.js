@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/analytics';
 import { createFirestoreInstance } from 'redux-firestore';
 import { DEFAULT_BITMOJI_SETTINGS } from 'components/Bitmoji/useBitmoji';
 import { DARK_THEME } from 'store/redux/reducers/userPreference/constants';
@@ -23,6 +24,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Initialize other services on firebase instance
 firebase.firestore();
+firebase.analytics();
 
 /** @type {import('react-redux-firebase').ReactReduxFirebaseConfig} */
 const reactReduxFirebaseConfig = {

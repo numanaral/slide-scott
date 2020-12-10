@@ -7,8 +7,6 @@ import React, {
 } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
-import FullSizeGrid from 'components/FullSizeGrid';
-// import * as icons from './icons';
 import ContainerWithCenteredItems from 'components/ContainerWithCenteredItems';
 import Spacer from 'components/Spacer';
 import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';

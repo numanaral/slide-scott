@@ -1,20 +1,19 @@
-// import { useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import { useAnalytics } from 'reactfire';
+import firebase from 'firebase/app';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-// import useIsAnalyticsEnabled from 'hooks/useIsAnalyticsEnabled';
+import useAnalytics from 'store/redux/hooks/useAnalytics';
 
-// const usePageView = () => {
-// 	const [analyticsIsEnabled] = useIsAnalyticsEnabled();
-// 	const { pathname } = useLocation();
-// 	const analytics = useAnalytics();
+const usePageView = () => {
+	const { pathname } = useLocation();
+	const { isAnalyticsEnabled } = useAnalytics();
 
-// 	useEffect(() => {
-// 		if (!analyticsIsEnabled) return;
+	useEffect(() => {
+		if (!isAnalyticsEnabled) return;
 
-// 		console.log('ga:page-view', pathname);
-// 		analytics.logEvent('page-view', { path_name: pathname });
-// 	}, [analytics, analyticsIsEnabled, pathname]);
-// };
+		console.log('ga:page-view', pathname);
+		firebase.analytics().logEvent('page-view', { path_name: pathname });
+	}, [isAnalyticsEnabled, pathname]);
+};
 
-// export default usePageView;
+export default usePageView;
