@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 import useNotificationProvider from 'store/redux/hooks/useNotificationProvider';
@@ -24,6 +24,11 @@ const StyledTooltipButton = styled(TooltipButton)`
 		${($secondary && 'left: 10') || 'right: 10'}px;
 		${($forSlide && 'right: 0; top: 0;') || ''};
 	`}
+`;
+
+const SlideContainer = styled(Grid)`
+	width: 100%;
+	height: 90%;
 `;
 
 const DraggableElement = ({
@@ -170,8 +175,8 @@ const SlideBox = ({
 	}, []);
 
 	return (
-		<FullSizeGrid>
-			<ContainerBody style={{ position: 'relative' }}>
+		<SlideContainer>
+			<ContainerBody style={{ position: 'relative', height: '98%' }}>
 				<Typography> Slide {index} </Typography>
 
 				<StyledTooltipButton
@@ -212,7 +217,7 @@ const SlideBox = ({
 					))}
 				</Droppable>
 			</ContainerBody>
-		</FullSizeGrid>
+		</SlideContainer>
 	);
 };
 

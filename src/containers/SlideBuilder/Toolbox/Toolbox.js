@@ -53,7 +53,7 @@ const Toolbox = ({ onDragStart }) => {
 	return (
 		<ContainerWithCenteredItems
 			style={{
-				height: '95%',
+				height: '94%',
 				overflow: 'auto',
 				position: 'relative',
 			}}

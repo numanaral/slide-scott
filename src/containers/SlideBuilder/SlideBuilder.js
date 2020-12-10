@@ -25,6 +25,16 @@ import LazySlideBox from './SlideBox/Lazy';
 import ContainerTitle from './shared/ContainerTitle';
 import SlideSettings from './SlideSettings';
 
+const SlidesContainer = styled(ContainerWithCenteredItems)`
+	height: 82%;
+	overflow: auto;
+	position: relative;
+	padding: 5px;
+	${({ theme }) => `
+		background-color: ${theme.palette.background.default};
+	`}
+`;
+
 const highlightText = theme => keyframes`
 	0% {
 		color: ${theme.palette.text.primary};
@@ -263,13 +273,7 @@ const SlideBuilder = ({
 								</Drawer>
 								{lastSave && <SaveLogger time={lastSave} />}
 							</ContainerTitle>
-							<ContainerWithCenteredItems
-								style={{
-									height: '85%',
-									overflow: 'auto',
-									position: 'relative',
-								}}
-							>
+							<SlidesContainer>
 								<LazyMoveable {...options} />
 								{Object.keys(slides).map((key, ind) => (
 									<LazySlideBox
@@ -280,10 +284,15 @@ const SlideBuilder = ({
 										index={ind + 1}
 									/>
 								))}
-							</ContainerWithCenteredItems>
+							</SlidesContainer>
 							<ContainerWithCenteredItems
 								style={{
-									height: '3%',
+									height: '2.5%',
+								}}
+							/>
+							<ContainerWithCenteredItems
+								style={{
+									height: '4%',
 								}}
 							>
 								<TooltipButton
