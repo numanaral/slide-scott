@@ -88,7 +88,7 @@ const Wrapper = ({ /* id, */ slide, updateSlideshow, children }) => {
 		return () => {
 			clearInterval(interval);
 		};
-	}, [setSlides, slide.slides, updateSlideshow]);
+	}, [slide.slides]);
 
 	const deleteSlide = slideId => {
 		setSlidesIfHasPermissions(prev => {
