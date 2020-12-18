@@ -1,6 +1,15 @@
 # slide-scott
 **Create interactive slides and share with your students!**
 
+## General Screenshots
+![landing page](docs/landing-page.png)
+![dashboard page](docs/dashboard-page.png)
+![slide creator page](docs/slide-creator-page.png)
+![live present page](docs/present-live-page.png)
+
+## First Place (Enti 415 / CPSC 405 Pitch Competition)
+![first place winner certificate](docs/first-place.jpg)
+
 ## Features:
 - **Slide builder**
   - Drag and drop tools into the slide screen
